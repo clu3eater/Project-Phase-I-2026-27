@@ -1,0 +1,868 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "ASTRA Engine Digital Twin - Implemented Architecture",
+    "output": "docs/diagrams/astra-architecture.html",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1365,
+      760
+    ],
+    "repository": {
+      "url": "https://github.com/omkar-sarswat/ASTRA",
+      "provider": "github",
+      "revision": "06cbaa6357e24e0e4c493e8b6fe33f4304692327"
+    },
+    "views": [
+      {
+        "id": "telemetry-path",
+        "label": "Telemetry path",
+        "focus": [
+          "physics",
+          "can",
+          "ingest",
+          "rules",
+          "live"
+        ],
+        "note": "One tick: physics step, CAN encode, decode and validate, Tier-1 rules."
+      },
+      {
+        "id": "analytics-stack",
+        "label": "Analytics stack",
+        "focus": [
+          "live",
+          "tiers",
+          "prog",
+          "analytics",
+          "models"
+        ],
+        "note": "Detection tiers and prognostics score the same feature contract."
+      },
+      {
+        "id": "station-services",
+        "label": "Station services",
+        "focus": [
+          "api",
+          "sec",
+          "ops",
+          "sim",
+          "records",
+          "console"
+        ],
+        "note": "The API is the hub: every layer-4 service is reached through it."
+      },
+      {
+        "id": "fleet-tier",
+        "label": "Fleet tier",
+        "focus": [
+          "sync",
+          "fleet",
+          "pg",
+          "downlink"
+        ],
+        "note": "Store-and-forward upward; the station never depends on the server."
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "ops",
+      "type": "backend",
+      "label": "Squadron Operations",
+      "sublabel": "missions, defects, release",
+      "tag": "layer4_core",
+      "pos": [
+        265,
+        30
+      ],
+      "size": [
+        175,
+        74
+      ],
+      "sources": [
+        {
+          "path": "layer4_core/ops.py",
+          "line": 1,
+          "label": "squadron store, lifecycle"
+        },
+        {
+          "path": "configs/fleet.yaml",
+          "line": 1,
+          "label": "airframes and roles"
+        }
+      ]
+    },
+    {
+      "id": "sim",
+      "type": "backend",
+      "label": "Simulation Services",
+      "sublabel": "scenarios, flight, rig",
+      "tag": "layer4_core",
+      "pos": [
+        485,
+        30
+      ],
+      "size": [
+        175,
+        74
+      ],
+      "sources": [
+        {
+          "path": "layer4_core/scenarios.py",
+          "line": 1,
+          "label": "scripted missions"
+        },
+        {
+          "path": "layer4_core/flight_sim.py",
+          "line": 1,
+          "label": "take-off to landing"
+        },
+        {
+          "path": "layer4_core/test_rig.py",
+          "line": 1,
+          "label": "engine on a stand"
+        }
+      ]
+    },
+    {
+      "id": "records",
+      "type": "database",
+      "label": "Flight Records",
+      "sublabel": "SQLite, Parquet, PDF",
+      "tag": "layer4_core",
+      "pos": [
+        705,
+        30
+      ],
+      "size": [
+        175,
+        74
+      ],
+      "sources": [
+        {
+          "path": "layer4_core/recorder.py",
+          "line": 1,
+          "label": "flight data recorder"
+        },
+        {
+          "path": "layer4_core/history.py",
+          "line": 1,
+          "label": "trend across flights"
+        },
+        {
+          "path": "layer4_core/report_pdf.py",
+          "line": 1,
+          "label": "filed report"
+        }
+      ]
+    },
+    {
+      "id": "console",
+      "type": "frontend",
+      "label": "GCS Console",
+      "sublabel": "React, Vite, three.js",
+      "tag": "layer5_viz",
+      "pos": [
+        1145,
+        30
+      ],
+      "size": [
+        175,
+        74
+      ],
+      "sources": [
+        {
+          "path": "layer5_viz/gcs_console/src/App.tsx",
+          "line": 1,
+          "label": "workspaces, status bar"
+        },
+        {
+          "path": "layer5_viz/gcs_console/src/lib/api.ts",
+          "line": 1,
+          "label": "session, snapshot socket"
+        },
+        {
+          "path": "layer5_viz/gcs_console/src/components/EngineModel.tsx",
+          "line": 1,
+          "label": "3D fault layer"
+        }
+      ]
+    },
+    {
+      "id": "sec",
+      "type": "security",
+      "label": "Auth, RBAC & Audit",
+      "sublabel": "JWT RS256, audit chain",
+      "tag": "layer4_core",
+      "pos": [
+        45,
+        200
+      ],
+      "size": [
+        175,
+        84
+      ],
+      "sources": [
+        {
+          "path": "layer4_core/security.py",
+          "line": 1,
+          "label": "tokens, scopes, hash chain"
+        }
+      ]
+    },
+    {
+      "id": "api",
+      "type": "backend",
+      "label": "Twin API",
+      "sublabel": "FastAPI REST + /ws/state",
+      "tag": "layer4_core",
+      "pos": [
+        265,
+        200
+      ],
+      "size": [
+        615,
+        84
+      ],
+      "sources": [
+        {
+          "path": "layer4_core/twin_api.py",
+          "line": 1,
+          "label": "REST + WebSocket surface"
+        },
+        {
+          "path": "layer4_core/twin_api.py",
+          "line": 3235,
+          "label": "/ws/state"
+        }
+      ]
+    },
+    {
+      "id": "sync",
+      "type": "backend",
+      "label": "Fleet Sync",
+      "sublabel": "outbox queue, forward",
+      "tag": "layer4_core",
+      "pos": [
+        925,
+        200
+      ],
+      "size": [
+        175,
+        84
+      ],
+      "sources": [
+        {
+          "path": "layer4_core/fleet_sync.py",
+          "line": 1,
+          "label": "queue, drain, never lose"
+        }
+      ]
+    },
+    {
+      "id": "models",
+      "type": "database",
+      "label": "Model & Config Store",
+      "sublabel": "configs, ONNX, PT",
+      "tag": "configs + data",
+      "pos": [
+        45,
+        370
+      ],
+      "size": [
+        175,
+        74
+      ],
+      "sources": [
+        {
+          "path": "common/config.py",
+          "line": 1,
+          "label": "only sanctioned loader"
+        },
+        {
+          "path": "layer3_ai/features.py",
+          "line": 1,
+          "label": "train/serve contract"
+        },
+        {
+          "path": "layer3_ai/rul_serving.py",
+          "line": 1,
+          "label": "artifact loading"
+        }
+      ]
+    },
+    {
+      "id": "live",
+      "type": "backend",
+      "label": "Live Twin Pipeline",
+      "sublabel": "tick thread, shadow twin",
+      "tag": "layer4_core",
+      "pos": [
+        265,
+        370
+      ],
+      "size": [
+        175,
+        74
+      ],
+      "sources": [
+        {
+          "path": "layer4_core/live.py",
+          "line": 1818,
+          "label": "one tick"
+        },
+        {
+          "path": "layer4_core/shadow_model.py",
+          "line": 1,
+          "label": "as-new reference"
+        },
+        {
+          "path": "layer4_core/twin_state.py",
+          "line": 1,
+          "label": "twin record, residuals"
+        }
+      ]
+    },
+    {
+      "id": "tiers",
+      "type": "backend",
+      "label": "Detection & Fusion",
+      "sublabel": "Tier-2, Tier-3, OOD",
+      "tag": "layer3_ai",
+      "pos": [
+        485,
+        370
+      ],
+      "size": [
+        175,
+        74
+      ],
+      "sources": [
+        {
+          "path": "layer3_ai/tier2_statistical.py",
+          "line": 1,
+          "label": "unsupervised tier"
+        },
+        {
+          "path": "layer3_ai/tier3_deep.py",
+          "line": 1,
+          "label": "fault classifier"
+        },
+        {
+          "path": "layer3_ai/fusion.py",
+          "line": 1,
+          "label": "three-tier fusion"
+        }
+      ]
+    },
+    {
+      "id": "prog",
+      "type": "backend",
+      "label": "Prognostics",
+      "sublabel": "RUL, survival, advisory",
+      "tag": "layer3_ai",
+      "pos": [
+        705,
+        370
+      ],
+      "size": [
+        175,
+        74
+      ],
+      "sources": [
+        {
+          "path": "layer3_ai/rul_physics.py",
+          "line": 1,
+          "label": "interpretable RUL"
+        },
+        {
+          "path": "layer3_ai/rul_survival.py",
+          "line": 1,
+          "label": "calibrated risk"
+        },
+        {
+          "path": "layer3_ai/advisory.py",
+          "line": 1,
+          "label": "what to do, when"
+        }
+      ]
+    },
+    {
+      "id": "fleet",
+      "type": "backend",
+      "label": "Central Fleet Server",
+      "sublabel": "FastAPI /api/v1",
+      "tag": "fleet_server",
+      "pos": [
+        1145,
+        370
+      ],
+      "size": [
+        175,
+        74
+      ],
+      "sources": [
+        {
+          "path": "fleet_server/app.py",
+          "line": 1,
+          "label": "tier above the stations"
+        }
+      ]
+    },
+    {
+      "id": "training",
+      "type": "external",
+      "label": "Offline Training",
+      "sublabel": "train, evaluate, export",
+      "tag": "scripts",
+      "pos": [
+        45,
+        515
+      ],
+      "size": [
+        175,
+        74
+      ],
+      "sources": [
+        {
+          "path": "scripts/retrain_all.py",
+          "line": 1,
+          "label": "ordered stages"
+        },
+        {
+          "path": "layer2_physics/synth_data_gen.py",
+          "line": 1,
+          "label": "run-to-failure fleet"
+        },
+        {
+          "path": "scripts/export_edge.py",
+          "line": 1,
+          "label": "ONNX export"
+        }
+      ]
+    },
+    {
+      "id": "rules",
+      "type": "backend",
+      "label": "Tier-1 Rule Engine",
+      "sublabel": "no network, no model",
+      "tag": "layer1_edge",
+      "pos": [
+        265,
+        515
+      ],
+      "size": [
+        175,
+        74
+      ],
+      "sources": [
+        {
+          "path": "layer1_edge/edge_rules.py",
+          "line": 1,
+          "label": "rule evaluation"
+        },
+        {
+          "path": "configs/thresholds.yaml",
+          "line": 1,
+          "label": "limits, no hard-coding"
+        }
+      ]
+    },
+    {
+      "id": "analytics",
+      "type": "backend",
+      "label": "Onboard Analytics",
+      "sublabel": "ONNX scorer, order FFT",
+      "tag": "layer1_edge",
+      "pos": [
+        485,
+        515
+      ],
+      "size": [
+        175,
+        74
+      ],
+      "sources": [
+        {
+          "path": "layer1_edge/edge_infer.py",
+          "line": 1,
+          "label": "onnxruntime forward pass"
+        },
+        {
+          "path": "layer1_edge/order_analysis.py",
+          "line": 1,
+          "label": "envelope order analysis"
+        }
+      ]
+    },
+    {
+      "id": "pg",
+      "type": "database",
+      "label": "PostgreSQL",
+      "sublabel": "fleet records, directory",
+      "tag": "fleet tier",
+      "pos": [
+        1145,
+        515
+      ],
+      "size": [
+        175,
+        74
+      ],
+      "sources": [
+        {
+          "path": "docker-compose.fleet.yml",
+          "line": 1,
+          "label": "postgres:17-alpine"
+        }
+      ]
+    },
+    {
+      "id": "physics",
+      "type": "backend",
+      "label": "Virtual Engine",
+      "sublabel": "MVEM, turbo, combustion",
+      "tag": "layer2_physics",
+      "pos": [
+        45,
+        640
+      ],
+      "size": [
+        175,
+        74
+      ],
+      "sources": [
+        {
+          "path": "layer2_physics/engine_sim.py",
+          "line": 1,
+          "label": "virtual engine"
+        },
+        {
+          "path": "layer2_physics/mvem.py",
+          "line": 1,
+          "label": "mean-value model"
+        },
+        {
+          "path": "layer2_physics/degradation.py",
+          "line": 1,
+          "label": "wear, fault injection"
+        }
+      ]
+    },
+    {
+      "id": "can",
+      "type": "messagebus",
+      "label": "CAN Bus",
+      "sublabel": "CANaerospace, cantools",
+      "tag": "layer1_edge",
+      "pos": [
+        265,
+        640
+      ],
+      "size": [
+        175,
+        74
+      ],
+      "sources": [
+        {
+          "path": "layer1_edge/can_simulator.py",
+          "line": 1,
+          "label": "encode and transmit"
+        },
+        {
+          "path": "configs/can/engine.dbc",
+          "line": 1,
+          "label": "bus definition"
+        }
+      ]
+    },
+    {
+      "id": "ingest",
+      "type": "backend",
+      "label": "Ingest & Validation",
+      "sublabel": "range, rate, lane vote",
+      "tag": "layer1_edge",
+      "pos": [
+        485,
+        640
+      ],
+      "size": [
+        175,
+        74
+      ],
+      "sources": [
+        {
+          "path": "layer1_edge/can_ingest.py",
+          "line": 1,
+          "label": "decode and validate"
+        },
+        {
+          "path": "layer1_edge/sensor_fusion.py",
+          "line": 1,
+          "label": "Hampel, resample, vote"
+        }
+      ]
+    },
+    {
+      "id": "downlink",
+      "type": "external",
+      "label": "Telemetry Downlink",
+      "sublabel": "MAVLink EFI, MQTT",
+      "tag": "layer1_edge",
+      "pos": [
+        705,
+        640
+      ],
+      "size": [
+        175,
+        74
+      ],
+      "sources": [
+        {
+          "path": "layer1_edge/mavlink_efi.py",
+          "line": 1,
+          "label": "EFI_STATUS bridge"
+        },
+        {
+          "path": "layer1_edge/mqtt_link.py",
+          "line": 1,
+          "label": "aircraft-to-ground link"
+        },
+        {
+          "path": "layer1_edge/edge_buffer.py",
+          "line": 1,
+          "label": "offline buffer"
+        }
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "ground station - compose service twin, port 8000",
+      "wraps": [
+        "ops",
+        "sim",
+        "records",
+        "sec",
+        "api",
+        "sync",
+        "models",
+        "live",
+        "tiers",
+        "prog"
+      ],
+      "pad": 22
+    },
+    {
+      "kind": "security-group",
+      "label": "aircraft / edge node - layer1_edge",
+      "wraps": [
+        "rules",
+        "analytics",
+        "can",
+        "ingest",
+        "downlink"
+      ],
+      "pad": 10
+    },
+    {
+      "kind": "region",
+      "label": "fleet tier (port 8100)",
+      "wraps": [
+        "fleet",
+        "pg"
+      ],
+      "pad": 18
+    }
+  ],
+  "connections": [
+    {
+      "from": "physics",
+      "to": "can",
+      "label": "10 Hz frames",
+      "variant": "emphasis",
+      "labelDy": -31
+    },
+    {
+      "from": "can",
+      "to": "ingest",
+      "label": "DBC decode",
+      "variant": "emphasis",
+      "labelDy": -38,
+      "labelDx": -60
+    },
+    {
+      "from": "ingest",
+      "to": "downlink",
+      "label": "validated",
+      "labelDy": -31
+    },
+    {
+      "from": "ingest",
+      "to": "rules",
+      "label": "validated channels",
+      "variant": "emphasis"
+    },
+    {
+      "from": "rules",
+      "to": "live",
+      "label": "Tier-1 alerts",
+      "variant": "emphasis",
+      "labelAt": [
+        352,
+        452
+      ]
+    },
+    {
+      "from": "analytics",
+      "to": "tiers",
+      "label": "fault probabilities"
+    },
+    {
+      "from": "training",
+      "to": "models",
+      "label": "ONNX, PT"
+    },
+    {
+      "from": "models",
+      "to": "live",
+      "label": "artifacts",
+      "labelDy": -31
+    },
+    {
+      "from": "live",
+      "to": "tiers",
+      "label": "feature row",
+      "variant": "emphasis",
+      "labelDy": -31
+    },
+    {
+      "from": "tiers",
+      "to": "prog",
+      "label": "health index",
+      "variant": "emphasis",
+      "labelDy": -31
+    },
+    {
+      "from": "live",
+      "to": "api",
+      "label": "immutable Snapshot",
+      "variant": "emphasis",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "labelAt": [
+        470,
+        347
+      ]
+    },
+    {
+      "from": "prog",
+      "to": "api",
+      "label": "RUL, survival, advisory",
+      "variant": "emphasis",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "from": "api",
+      "to": "live",
+      "label": "fault injection",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelAt": [
+        455,
+        293
+      ]
+    },
+    {
+      "from": "api",
+      "to": "console",
+      "label": "REST + /ws/state",
+      "variant": "emphasis",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "from": "api",
+      "to": "ops",
+      "label": "mission lifecycle",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "from": "api",
+      "to": "sim",
+      "label": "scenario, rig runs",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "labelAt": [
+        572,
+        116
+      ]
+    },
+    {
+      "from": "api",
+      "to": "records",
+      "label": "record, replay",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "from": "api",
+      "to": "sec",
+      "label": "verify token",
+      "variant": "security",
+      "labelDy": -36
+    },
+    {
+      "from": "api",
+      "to": "sync",
+      "label": "queue records",
+      "labelDy": -36
+    },
+    {
+      "from": "sync",
+      "to": "fleet",
+      "label": "HMAC-signed HTTP",
+      "variant": "security"
+    },
+    {
+      "from": "fleet",
+      "to": "pg",
+      "label": "asyncpg",
+      "labelAt": [
+        1232,
+        472
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Runtime Path",
+      "items": [
+        "One tick: physics, CAN, validate, rules, twin, AI",
+        "Alert path is Tier-1 only, with no model or network"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Wired vs Available",
+      "items": [
+        "MAVLink is live; MQTT and the 72 h buffer are tested only",
+        "The station queues locally; the fleet server is optional"
+      ]
+    },
+    {
+      "dot": "slate",
+      "title": "Evidence",
+      "items": [
+        "File references pinned to commit 06cbaa6",
+        "Relationships traced through imports and call sites"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,263 @@
+# Abnormal and emergency procedures, one per alert -- the electronic checklist.
+#
+# WHY THIS FILE EXISTS
+#   ISA-18.2 and MIL-STD-411F both treat an alert as a request for an action.
+#   Each alert row used to carry one line of advice ("Reduce power
+#   immediately.") and the operator was left to remember the rest under load.
+#   A flight deck does not work like that: Airbus ECAM and the Boeing ECL put
+#   the procedure on the screen the moment the alert fires, one step at a time.
+#   The console does the same, from this file.
+#
+# HOW IT IS READ
+#   Each procedure names the alert legends it answers (`legends`, shell-style
+#   wildcards allowed). `airborne` are the steps in flight; `ground` are the
+#   steps when the engine is running on the ground (warm-up, taxi, a
+#   maintainer's ground run). A step is `do` -- the action, short and
+#   imperative -- and optionally `why`.
+#
+# STATUS
+#   Written for this remotely piloted aircraft from the Rotax 915 iS operator's
+#   manual's abnormal procedures and general UAV practice. They are
+#   DEMONSTRATION procedures: an operational squadron replaces them with the
+#   approved flight manual's, in this same format. Every procedure says so on
+#   screen.
+
+source: "Demonstration procedures derived from the Rotax 915 iS operator's manual. Not an approved flight manual."
+
+procedures:
+
+  - id: engine_failure
+    title: Engine failure
+    legends: ["ENGINE FAILURE"]
+    airborne:
+      - do: Set best-glide airspeed, about 130 km/h
+        why: Every foot of height is range to a landing site.
+      - do: Select the nearest landing site within glide range
+      - do: Select the other fuel pump
+        why: A single pump failure starves the engine; the second can restart it.
+      - do: Check both ignition lanes
+      - do: If height allows, attempt one restart
+      - do: If there is no restart, command the forced landing or the recovery system
+      - do: Report the engine failure to the commander and air traffic control
+    ground:
+      - do: Throttle to idle and switch off both ignition lanes
+      - do: Switch off the fuel pumps
+      - do: Do not restart. Raise a defect.
+
+  - id: oil_pressure_low
+    title: Oil pressure low
+    legends: ["OIL PRESS LOW", "OIL PRESS FALLING"]
+    airborne:
+      - do: Reduce power to the minimum that holds altitude
+        why: Less load on the bearings while oil supply is short.
+      - do: Cross-check oil temperature and CHT
+        why: Low pressure with rising oil temperature is a real loss of oil. Low pressure alone may be the sender.
+      - do: Command RTB or divert to the nearest recovery field
+      - do: Climb, if able, to gain glide margin
+      - do: Brief the recovery team for a possible engine failure
+      - do: If pressure keeps falling with rising temperatures, plan a precautionary landing
+      - do: After landing, ground the aircraft and raise a defect
+        why: Do not fly again until the cause is found. Bearing damage may not show at once.
+    ground:
+      - do: Reduce to idle
+      - do: If pressure does not recover within 10 s, shut down the engine
+      - do: Raise a defect. Do not dispatch the aircraft.
+
+  - id: oil_pressure_high
+    title: Oil pressure high
+    legends: ["OIL PRESS HIGH"]
+    airborne:
+      - do: Check oil temperature
+        why: A cold engine reads high pressure normally.
+      - do: If oil is warm, reduce power and monitor
+      - do: Continue the mission only if pressure returns inside limits
+      - do: "Record for maintenance: suspect the pressure relief valve"
+    ground:
+      - do: Allow the oil to warm at 2,000 to 2,500 rpm
+      - do: If pressure stays high with warm oil, shut down and raise a defect
+
+  - id: oil_temperature_high
+    title: Oil temperature high
+    legends: ["OIL TEMP HIGH"]
+    airborne:
+      - do: Reduce power
+      - do: Increase airspeed if the aircraft allows it
+        why: More cooling air through the oil cooler.
+      - do: Check oil pressure
+        why: High temperature with falling pressure is the oil-pressure-low procedure.
+      - do: If temperature does not fall within 2 minutes, command RTB
+      - do: "Record for maintenance: oil cooler, oil level, oil flap"
+    ground:
+      - do: Face the aircraft into wind and reduce to idle
+      - do: If temperature keeps rising, shut down the engine
+      - do: Raise a defect before the next run
+
+  - id: oil_temperature_low
+    title: Oil below take-off minimum
+    legends: ["OIL TEMP LOW"]
+    airborne:
+      - do: Reduce descent rate and avoid long idle descents
+      - do: Add power in the descent to keep the engine warm
+    ground:
+      - do: Continue the warm-up at 2,000 to 2,500 rpm
+      - do: Do not launch until oil reaches 50 °C
+        why: The launch checks hold take-off until then.
+
+  - id: cht_high
+    title: Cylinder head temperature high
+    legends: ["CHT HIGH", "CHT RISING FAST", "CHT HIGH SUSTAINED", "COOLANT TEMP HIGH"]
+    airborne:
+      - do: Reduce power
+      - do: Increase airspeed and reduce the climb rate
+        why: More cooling air, less heat generated.
+      - do: Check coolant temperature and CHT spread
+        why: One hot cylinder with the others normal points at that cylinder, not at the cooling system.
+      - do: If CHT is at or over the red line, command RTB
+      - do: If CHT keeps rising at reduced power, plan a precautionary landing
+      - do: "Record for maintenance: coolant level, radiator, cooling flap"
+    ground:
+      - do: Face the aircraft into wind and reduce to idle
+      - do: If CHT keeps rising, shut down the engine
+      - do: Let it cool before any restart and raise a defect
+
+  - id: cht_spread
+    title: CHT spread high
+    legends: ["CHT SPREAD HIGH"]
+    airborne:
+      - do: Note which cylinder is hottest
+      - do: Reduce power slightly and watch whether the spread narrows
+      - do: Continue the mission if all cylinders stay inside limits
+      - do: Record the cylinder for maintenance
+        why: A single hot cylinder points to its cooling passage, injector or valve.
+    ground:
+      - do: Note which cylinder is hottest and record it
+      - do: Complete the run only if all cylinders stay inside limits
+
+  - id: egt_high
+    title: Exhaust temperature high
+    legends: ["EGT HIGH", "EGT SPLIT HIGH"]
+    airborne:
+      - do: Reduce power
+      - do: Check the EGT split between cylinders
+        why: A wide split suggests one injector; all high suggests mixture or timing.
+      - do: If EGT is at or over the limit, command RTB
+      - do: "Record for maintenance: injectors, ignition timing"
+    ground:
+      - do: Reduce to idle
+      - do: If EGT stays high, shut down and raise a defect
+
+  - id: misfire
+    title: Misfire suspected
+    legends: ["MISFIRE SUSPECTED"]
+    airborne:
+      - do: Reduce power smoothly
+      - do: Check that both FADEC lanes are healthy
+      - do: Watch vibration and the cold cylinder's EGT
+      - do: If roughness continues, command RTB
+      - do: "Record the cylinder for maintenance: plugs, coils, injector"
+    ground:
+      - do: Reduce to idle and check the cold cylinder
+      - do: Shut down and raise a defect if it persists
+
+  - id: overspeed
+    title: Engine overspeed
+    legends: ["OVERSPEED", "MAX CONT EXCEEDED"]
+    airborne:
+      - do: Reduce power now
+      - do: Check the propeller governor response
+      - do: Hold power at or below maximum continuous for the rest of the flight
+      - do: Record the peak rpm and duration for maintenance
+        why: An overspeed above the limit requires an inspection before the next flight.
+    ground:
+      - do: Reduce to idle
+      - do: Shut down and raise a defect
+
+  - id: overboost
+    title: Manifold pressure over limit
+    legends: ["OVERBOOST", "MAT HIGH"]
+    airborne:
+      - do: Reduce power
+      - do: Check wastegate response
+      - do: Continue at reduced power; record for maintenance
+    ground:
+      - do: Reduce to idle and shut down
+      - do: "Raise a defect: wastegate or turbocharger control"
+
+  - id: fuel
+    title: Fuel pressure or flow low
+    legends: ["FUEL PRESS LOW", "FUEL FLOW LOW"]
+    airborne:
+      - do: Select the other fuel pump
+        why: The 915 iS has two electric pumps; one can carry the engine.
+      - do: Check fuel quantity and the selected tank
+      - do: If pressure recovers, continue and record for maintenance
+      - do: If it does not, command RTB and prepare for an engine failure
+    ground:
+      - do: Select the other fuel pump
+      - do: If pressure does not recover, shut down and raise a defect
+
+  - id: electrical
+    title: Bus voltage abnormal
+    legends: ["BUS VOLTS LOW", "BUS VOLTS HIGH"]
+    airborne:
+      - do: Check alternator current
+        why: Low volts with no charge current means the battery is carrying the load.
+      - do: Shed non-essential payload loads
+      - do: Estimate battery endurance and command RTB inside it
+        why: The FADEC and fuel pumps run on this bus.
+      - do: If volts are high, reduce electrical load and record the regulator for maintenance
+    ground:
+      - do: Check alternator output at 2,500 rpm
+      - do: Shut down and raise a defect if it does not charge
+
+  - id: vibration
+    title: Vibration high
+    legends: ["VIBRATION HIGH", "VIB IMPULSIVE"]
+    airborne:
+      - do: Reduce power until vibration eases
+      - do: Check for a misfire and for a lane fault
+      - do: If vibration is at the structural limit, land as soon as possible
+      - do: Otherwise command RTB at reduced power
+      - do: "Record for maintenance: propeller, mounts, bearings"
+    ground:
+      - do: Shut down the engine
+      - do: Inspect the propeller and mounts before any restart
+
+  - id: fadec_lane
+    title: FADEC lane fault
+    legends: ["ECU LANE * FAULT", "ECU LANE * SENSOR"]
+    airborne:
+      - do: Confirm the other lane is healthy
+        why: The 915 iS runs on either lane alone.
+      - do: Avoid large, rapid power changes
+      - do: Continue the mission if the second lane stays healthy; otherwise command RTB
+      - do: Record the lane and item for maintenance
+    ground:
+      - do: Do not launch with a lane fault
+      - do: Raise a defect
+
+  - id: timing
+    title: Injection or ignition timing deviation
+    legends: ["INJ TIMING DEV", "IGN TIMING DEV", "IGN RETARD HIGH", "INJECTOR DUTY HIGH"]
+    airborne:
+      - do: Reduce power
+      - do: Check EGT spread and CHT
+      - do: Continue at reduced power if temperatures stay inside limits
+      - do: "Record for maintenance: injectors, knock sensor, fuel grade"
+    ground:
+      - do: Complete the run only if temperatures stay inside limits
+      - do: Raise a defect
+
+  - id: sensor
+    title: Sensor or telemetry fault
+    legends: ["SENSOR FAULT", "SENSOR BIAS", "SENSOR REDUNDANCY LOST", "TELEMETRY STALE"]
+    airborne:
+      - do: Do not act on the affected value alone
+        why: The console removes a value that failed validation; it never shows it as good.
+      - do: Cross-check against related parameters
+        why: For example CHT against coolant, oil pressure against oil temperature.
+      - do: If telemetry is stale, check the datalink and lost-link settings
+      - do: Continue if the engine is otherwise normal; record for maintenance
+    ground:
+      - do: Do not launch with a failed engine sensor
+      - do: Raise a defect

@@ -1,0 +1,30 @@
+# One command brings the whole system up:
+#
+#     docker compose up
+#
+# Then open http://127.0.0.1:8000
+
+services:
+  twin:
+    build: .
+    image: dt-uav-engine:1.0
+    container_name: dt-engine-twin
+    ports:
+      - "8000:8000"
+    environment:
+      # Where generated datasets and trained models live. Mounted below so a
+      # 96 MB run-to-failure fleet survives a container rebuild -- regenerating
+      # it takes fifty minutes.
+      DT_DATA_DIR: /app/data
+    volumes:
+      - twin-data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,json,sys; d=json.load(urllib.request.urlopen('http://127.0.0.1:8000/api/healthz')); sys.exit(0 if d.get('ok') else 1)"]
+      interval: 15s
+      timeout: 5s
+      start_period: 25s
+      retries: 3
+
+volumes:
+  twin-data:

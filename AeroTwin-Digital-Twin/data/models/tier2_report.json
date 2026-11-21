@@ -1,0 +1,32 @@
+{
+  "feature_set": "EXTENDED_OPS",
+  "deployed_decision_rule": {
+    "rule": "per-condition limits + 2-of-3",
+    "conditions": 17,
+    "precision": 0.9747136508731301,
+    "recall": 0.6119056974459725,
+    "f1": 0.7518285176334274,
+    "fpr": 0.04797340088663711,
+    "false_alarms_per_engine_hour": 0.19962202298109213,
+    "lead_time": {
+      "engines": 31,
+      "detected": 31,
+      "median_lead_h": 314.8308856196735,
+      "mean_lead_h": 393.5660820437693,
+      "min_lead_h": 62.664477731684855,
+      "max_lead_h": 1077.3979934446686
+    }
+  },
+  "baselined_residuals": true,
+  "threshold": 0.87109375,
+  "fpr_target": 0.05,
+  "roc_auc": 0.9144072669881753,
+  "precision": 0.964216058633928,
+  "recall": 0.6151407989521939,
+  "f1": 0.7511014801013922,
+  "fpr": 0.0689914502849905,
+  "false_alarms_per_engine_hour": 0.2870801865148874,
+  "train_rows": 383700,
+  "train_engines": 120,
+  "fitted_utc": "2026-09-24T12:46:57+00:00"
+}

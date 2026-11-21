@@ -1,0 +1,146 @@
+/* THE `ms-*` VOCABULARY THE MISSION SURFACE IS BUILT ON.
+ *
+ * These rules used to live in the old console's `theme/tokens.css`, beside the
+ * design tokens. This console's `tokens.css` is a different, shorter file and
+ * has no reason to carry them, so they travel with the components that use
+ * them instead: `mission/ui.tsx` (chips, primary buttons, rows, the folding
+ * section, the locked fieldset), `components/MissionMap.tsx` (the tile fade,
+ * the anchored card, the pulses on a selected area) and the mission panels.
+ *
+ * NOTHING HERE IS A TOKEN. Every colour is `var(--...)` out of this console's
+ * own `tokens.css`, which keeps the same custom-property names -- which is why
+ * the port renders in the team's palette, in both ambients, without a single
+ * value being restated here.
+ *
+ * PRD Part 4 s8.1c permits motion that is short, purposeful and bounded:
+ * "(ii) a bar moving to a new value with <=150 ms linear easing" and "(iii) a
+ * panel or overlay entering". Everything below is one of those two. None of it
+ * moves a VALUE, none competes with the 3 Hz annunciator flash s8 reserves for
+ * the unacknowledged state, and s8.1d's reduced-motion block at the foot
+ * disables the lot -- the two looping indications falling back to a static
+ * ring, so the information the motion carried survives without the motion.
+ */
+
+.ms-collapse {
+  display: grid;
+  transition: grid-template-rows 150ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* (iii) an overlay entering: the layer menu, the field actions. */
+@keyframes ms-pop-in {
+  from { opacity: 0; transform: translateY(-4px) scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+.ms-pop { animation: ms-pop-in 140ms cubic-bezier(0.22, 0.61, 0.36, 1); }
+
+/* (iii) a result arriving. Slower than a menu because it carries a verdict
+   and an answer that appears instantly reads as one that was already there. */
+@keyframes ms-rise-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+.ms-rise { animation: ms-rise-in 220ms cubic-bezier(0.22, 0.61, 0.36, 1); }
+
+/* The margin trace draws itself once per sortie, left to right, in the
+   direction time runs. It is normalised to pathLength 1, so this is one
+   property and no geometry. */
+@keyframes ms-draw-in { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+.ms-draw-fast {
+  stroke-dasharray: 1 1;
+  animation: ms-draw-in 620ms cubic-bezier(0.33, 0.8, 0.4, 1) forwards;
+}
+
+/* THE TWO LOOPING INDICATIONS, AND WHY THEY ARE ALLOWED TO LOOP.
+   Both mark something that is genuinely live rather than something that has
+   happened: the halo says which point the builder is editing, and the ping
+   says the aircraft symbol is at a simulated instant that is still moving.
+   Both are well under the 0.8-5 Hz annunciator band s8 reserves, so neither
+   can be read as an alert. */
+@keyframes ms-halo-pulse {
+  0%, 100% { opacity: 0.75; transform: scale(1); }
+  50%      { opacity: 0.25; transform: scale(1.18); }
+}
+.ms-halo { animation: ms-halo-pulse 1.9s ease-in-out infinite;
+           transform-origin: center; transform-box: fill-box; }
+
+@keyframes ms-ping-pulse {
+  0%   { opacity: 0.30; transform: scale(0.6); }
+  70%  { opacity: 0.04; transform: scale(1.5); }
+  100% { opacity: 0;    transform: scale(1.5); }
+}
+.ms-ping { animation: ms-ping-pulse 2.2s ease-out infinite;
+           transform-origin: center; transform-box: fill-box; }
+
+@keyframes ms-area-pulse {
+  0%, 100% { opacity: 0.85; }
+  50%      { opacity: 0.45; }
+}
+.ms-pulse { animation: ms-area-pulse 2.4s ease-in-out infinite; }
+
+/* A selected marker is bigger, not brighter: brightness is spent on alert
+   state everywhere else in this console. */
+.ms-sel { transition: transform 150ms cubic-bezier(0.22, 0.61, 0.36, 1); }
+
+/* Hover and press feedback. 120 ms is below the 150 ms s8.1c(ii) budget and
+   is the difference between a control that answers and one that looks dead. */
+.ms-chip, .ms-primary { transition: background 120ms ease, border-color 120ms ease,
+                                    color 120ms ease, transform 90ms ease; }
+.ms-chip:hover:not(:disabled), .ms-primary:hover:not(:disabled) {
+  border-color: var(--ink-mute);
+}
+.ms-primary:active:not(:disabled) { transform: translateY(1px); }
+.ms-event, .ms-row { transition: background 120ms ease, color 120ms ease; }
+.ms-event:hover { background: var(--bg-raised); color: var(--ink); }
+.ms-row:hover { border-color: var(--ink-mute); }
+
+/* A value that has just changed should not snap between colours; it should
+   arrive. Only the colour moves -- the digits are replaced outright, because
+   a number that eases between two values is a number nobody can read. */
+.ms-num { transition: color 150ms ease; }
+
+/* The wait, said in one glyph. The elapsed second count beside it is the
+   honest part; this only says the work is still running. */
+@keyframes ms-spin-turn { to { transform: rotate(360deg); } }
+.ms-spin {
+  width: 13px; height: 13px; border-radius: 50%;
+  border: 2px solid currentColor; border-top-color: transparent;
+  animation: ms-spin-turn 700ms linear infinite;
+}
+
+/* Tiles arrive out of order and at different times; fading them in is what
+   stops a pan looking like a checkerboard assembling itself. */
+.ms-map img { animation: ms-tile-in 220ms ease-out; }
+@keyframes ms-tile-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* A LOCKED PANEL LOOKS LOCKED. The disabled fieldset already takes every
+   control out of the tab order and stops it responding; this is what the eye
+   needs so an operator does not press a control that will not answer. The
+   labels keep full contrast, because the values are still being READ. */
+fieldset.ms-locked input,
+fieldset.ms-locked select,
+fieldset.ms-locked button,
+fieldset.ms-locked textarea {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* SOMETHING GLUED TO A PLACE ON THE GROUND. The anchor is a zero-size point
+   the map moves with one transform per frame; the card hangs off it, and flips
+   to the other side when the map says the point is near the right edge. */
+.ms-anchor { will-change: transform; }
+.ms-anchor > .ms-anchor-card { position: absolute; left: 22px; top: -40px; }
+.ms-anchor[data-flip="1"] > .ms-anchor-card { left: auto; right: 22px; }
+
+/* s8.1d: prefers-reduced-motion SHALL disable (ii) and (iii) entirely. The
+   two looping indications keep a static ring so the state they carried is
+   still visible without the motion. */
+@media (prefers-reduced-motion: reduce) {
+  .ms-collapse { transition: none; }
+  .ms-pop, .ms-rise, .ms-draw-fast, .ms-map img { animation: none; }
+  .ms-draw-fast { stroke-dasharray: none; }
+  .ms-halo, .ms-pulse { animation: none; opacity: 0.8; }
+  .ms-ping { animation: none; opacity: 0.18; }
+  .ms-chip, .ms-primary, .ms-event, .ms-row, .ms-num, .ms-sel { transition: none; }
+  .ms-primary:active:not(:disabled) { transform: none; }
+  .ms-spin { animation: none; border-top-color: currentColor; opacity: 0.5; }
+}

@@ -1,0 +1,603 @@
+# ==============================================================================
+# REFERENCE ENGINE — ROTAX 915 iS / iSc A (and C24 variant)
+#
+# PROVENANCE. Every value below is tagged:
+#   [TCDS] EASA Type Certificate Data Sheet E.121, Issue 17, 18 December 2023,
+#          "Rotax 912 series" (covers the 915 iSc A / C24 series).
+#   [OM]   BRP-Rotax Operators Manual OM-915 i, Edition 0 Revision 4,
+#          01 September 2022.   (local: engines manuals/OM_915i_Ed0_Rev4.pdf)
+#   [IM]   BRP-Rotax Installation Manual IM-915 i A / C24, Edition 0
+#          Revision 5, 01 February 2024. (engines manuals/IM_915i_A_C24_Ed0_Rev5.pdf)
+#   [MML]  BRP-Rotax Maintenance Manual Line MML-915 i, Edition 0 Revision 3,
+#          01 May 2025.        (engines manuals/MML_915i_Ed0_Rev3.pdf)
+#   [DS]   BRP-Rotax Product Data Sheet "915 iS A | iSc A 141 HP", Vers. 2021/01.
+#   [DER]  Derived arithmetically from a published figure (shown in the comment).
+#   [MOD]  MODELLED value, not published by the manufacturer. Chosen from
+#          standard engineering practice and calibrated against published
+#          anchors. These are the values a VRDE/CVRDE rig calibration would
+#          replace. They must never be presented as manufacturer data.
+#
+# WHY THIS ENGINE. It replaces the Rotax 914 used in PRD Part 1 §1.3 because:
+#   1. It carries a CERTIFIED DUAL-CHANNEL FADEC for both ignition and
+#      injection [TCDS §2] with a Display CAN Bus and Maintenance CAN Bus
+#      A/B [OM §2.1, §3]. The problem statement asks for "CAN bus / SocketCAN
+#      based engine data acquisition" and "ECU/FADEC communication interfaces";
+#      the 914 is carburetted with no FADEC and no CAN bus, so it cannot
+#      honestly support that requirement.
+#   2. It is the current-production turbocharged Rotax, rated to a 15,000 ft
+#      critical altitude and a 23,000 ft ceiling [TCDS §6, OM §2.1] — a MALE
+#      ISR envelope.
+#   3. Its full certified operating-limit set is public, so alert thresholds
+#      are traceable to a regulator's document rather than invented.
+#
+# COOLING ARCHITECTURE — read before touching CHT thresholds.
+# "liquid cooled cylinder heads, ram-air cooled cylinders" [TCDS §2]. The
+# certified, instrumented parameter is COOLANT TEMPERATURE (one sensor, on
+# cylinder head 4 [OM §7.2]), limit 120 degC [TCDS §1, OM §2.1]. Per-cylinder
+# cylinder-head-metal temperature is NOT standard instrumentation on this
+# engine, and it publishes no CHT limit at all (see thermal.cht_limit_C)
+# [TCDS §1, 912 S series]. Our HUMS twin models and monitors BOTH: coolant
+# temperature against the certified 120 degC limit, and per-cylinder CHT
+# against 135 degC as ADDED HUMS INSTRUMENTATION. See docs/PRD_DEVIATIONS.md
+# DEV-13 — the PRD's CHT band (140-200 normal, 230 critical) is an air-cooled
+# Lycoming/Continental band and is wrong for a liquid-cooled Rotax.
+# ==============================================================================
+schema_version: 1
+
+identity:
+  engine_type: ROTAX_915IS
+  display_name: "Rotax 915 iS / iSc A"
+  ignition: SPARK                    # selects the combustion sub-model
+  fuel: AVGAS_100LL_OR_MOGAS
+  control_system: DUAL_CHANNEL_FADEC # [TCDS] Lane A / Lane B, ignition + injection
+  data_bus: CAN                      # [OM] Display CAN Bus + Maintenance CAN Bus A/B
+  certified: true
+  certification: "EASA TCDS E.121 Issue 17 (18 Dec 2023)"
+  platforms:
+    - "Light aircraft, gyroplanes and rotorcraft (type certified 2017)"
+    - "Increasingly adopted for UAV / OPV propulsion"
+  note: >-
+    Platform list is deliberately generic. Do not claim a specific DRDO or
+    foreign MALE UAV uses this engine without a citation.
+
+geometry:
+  cylinders: 4                       # [TCDS]
+  layout: HORIZONTALLY_OPPOSED       # [TCDS]
+  strokes: 4                         # [TCDS]
+  bore_mm: 84.0                      # [TCDS]
+  stroke_mm: 61.0                    # [TCDS]
+  displacement_total_L: 1.352        # [TCDS] 1352 cm3
+  compression_ratio: 8.2             # [TCDS] 8,2:1
+  gear_ratio_crank_to_prop: 2.5454   # [TCDS] 2,5454 : 1
+
+ratings:
+  # [TCDS §6] Take-off 104 kW @ 5800 rpm (max 5 min); max continuous 99 kW @
+  # 5500 rpm, available up to the 15,000 ft critical altitude.
+  max_power_kW: 104.0                # [TCDS]
+  max_power_rpm: 5800                # [TCDS]
+  max_power_time_limit_min: 5        # [TCDS/OM]
+  continuous_power_kW: 99.0          # [TCDS]
+  continuous_power_rpm: 5500         # [TCDS]
+  idle_rpm_min: 1800                 # [OM §2.1]
+  # Rotax publishes NO peak-torque figure for the 915 iS. Both certified
+  # ratings imply essentially the same torque, so the curve is flat across the
+  # top of the range and peak torque is taken as the max-continuous value:
+  #   99.0 kW at 5500 rpm -> 171.9 Nm   [DER]
+  #   104.0 kW at 5800 rpm -> 171.2 Nm  [DER]
+  max_torque_Nm: 171.9               # [DER]
+  max_torque_rpm: 5500               # [DER]
+  dry_mass_kg: 82.2                  # [DS] with gearbox, turbo, intercooler, exhaust
+  tbo_hours: 1200.0                  # [MML] "1200 h or 15 years, whichever comes first"
+  tbo_calendar_years: 15.0           # [MML] calendar limit runs in parallel with hours
+  max_operating_altitude_ft: 23000   # [TCDS/OM]
+  storage_limit_months: 24           # [MML] beyond this an MMH inspection is required
+
+fuel_properties:
+  # [DS] min MON 85 / RON 95 / AKI 91; unleaded, leaded, AVGAS 100LL, E10.
+  lhv_MJ_per_kg: 43.5                # [MOD] AVGAS 100LL nominal
+  density_kg_per_L: 0.72             # [MOD] AVGAS 100LL at 15 degC
+  surrogate: "C7H16"                 # [MOD] n-heptane surrogate for Cantera
+  research_octane: 95                # [DS]
+  # [OM Rev.4 §2.1] rail pressure 2.9-3.2 bar. NOTE: OM Rev.1 (2019) gave an
+  # upper limit of 3.1 bar; Rev.4 raised it to 3.2. Transient 2.5-3.5 bar is
+  # tolerated for at most 3 s after a power-setting change.
+  rail_pressure_bar: [2.9, 3.2]
+  rail_pressure_transient_bar: [2.5, 3.5]
+  rail_pressure_transient_max_s: 3.0
+
+ignition_system:
+  type: FADEC_DUAL_CHANNEL_EFI       # [TCDS] dual channel FADEC, ignition + injection
+  injectors: 8                       # [OM abbreviations: INJ1-8] two per cylinder
+  ignition_coils: 4                  # [OM abbreviations: Coil1-4]
+  knock_sensor: true                 # [OM abbreviations: KNOCK]
+  lanes: ["A", "B"]                  # [OM] Lane A / Lane B redundancy
+  nominal_timing_deg_btdc: 24.0      # [MOD] ECU-scheduled; not published
+
+thermodynamics:
+  gamma_mixture: 1.35                # [MOD]
+  gamma_exhaust: 1.30                # [MOD]
+  R_air_J_per_kgK: 287.0
+  cp_exhaust_J_per_kgK: 1150.0       # [MOD]
+  peak_cylinder_pressure_bar: 55.0   # [MOD] consistent with 8.2:1 and 1.73 bar boost
+
+  wiebe:                             # [MOD] PRD Part 1 §4.3.2 shape parameters
+    duration_deg_ca: 55.0
+    shape_factor_m: 2.0
+    efficiency_factor_a: 5.0
+
+  combustion:
+    efficiency_new: 0.98             # [MOD]
+    efficiency_min: 0.92             # [MOD] decarbonisation threshold
+    # A turbocharged spark engine enriches at high power for knock and thermal
+    # protection. Chosen for a BSFC band of 280-310 g/kWh at 5500 rpm quoted
+    # from a data sheet that is NOT in this repository. The Operator's Manual
+    # performance table, which is, prints 316-325 g/kWh at full throttle; fuel
+    # flow is checked against that table (DEV-229), not against this band.
+    equivalence_ratio_cruise: 0.98   # [MOD]
+    equivalence_ratio_climb: 1.14    # [MOD]
+
+intake:
+  manifold_volume_m3: 0.0030         # [MOD] airbox + plenum
+  # [OM §2.1] the target manifold pressures below are quoted "at a temperature
+  # from 25 degC to 35 degC", so the intercooler outlet target band is known.
+  manifold_temperature_K: 303.0      # [OM-derived] 30 degC, mid-band
+  # MANIFOLD AIR TEMPERATURE -- OM Rev.4 introduces an EXTENDED range that
+  # Rev.1 did not have. Below 50 degC the engine delivers rated power; between
+  # 50 and 80 degC it keeps running at a published, quantified power penalty.
+  # That is a real degraded-but-airworthy mode the twin must represent, not a
+  # simple limit exceedance.
+  manifold_air_temp_max_C: 50.0          # [OM §2.1] rated-power limit
+  manifold_air_temp_extended_max_C: 80.0 # [OM §2.1] reduced-power limit
+  extended_mat_power_loss_continuous_kW: 1.0   # [OM §2.1]
+  extended_mat_power_loss_takeoff_kW: 2.7      # [OM §2.1]
+  manifold_pressure_min_hPa: 60      # [OM §2.1]
+  manifold_pressure_max_hPa: 1730    # [OM §2.1] "not to exceed" value only
+  intercooler_fitted: true           # [TCDS]
+  throttle_discharge_coeff: 0.86     # [MOD]
+  throttle_area_max_m2: 0.00210      # [MOD] calibrated to the airflow anchor
+  # DERIVED, not guessed. The published airflow relation below plus the
+  # published target manifold pressure and temperature pin this value:
+  #   104 kW  ->  6528 g/min = 0.1088 kg/s of air
+  #   rho_man = 152000 / (287 * 303) = 1.748 kg/m3
+  #   swept   = 1.352e-3 * 5800/120 = 0.06534 m3/s
+  #   eta_vol = 0.1088 / (0.06534 * 1.748) = 0.952
+  volumetric_efficiency_sea_level: 0.955  # [DER] from the OM airflow relation
+  # AIRFLOW ANCHOR [OM §2.1] -- a rare published closure relation:
+  #     Observed power [kW] ~ -6.3264 + 0.0169 * Airflow [g/min]
+  # At 104 kW that is 6528 g/min = 0.1088 kg/s; at 99 kW, 6232 g/min =
+  # 0.1039 kg/s. layer2_physics/perf_maps.py checks the air path against this.
+  airflow_power_intercept_kW: -6.3264   # [OM]
+  airflow_power_slope_kW_per_g_min: 0.0169  # [OM]
+
+turbocharger:
+  fitted: true                       # [TCDS]
+  intercooled: true                  # [TCDS]
+  # Air-to-air intercooler between compressor outlet and airbox. Without
+  # it the modelled compressor discharge (57-89 degC) sits above the
+  # 50 degC manifold-air-temperature limit at every altitude, which is
+  # physically impossible on a certified engine. Effectiveness chosen so
+  # that MAT lands in the 25-35 degC band the OM quotes its target
+  # manifold pressures at.
+  intercooler_effectiveness: 0.65   # [DER] from the OM MAT target band
+  # Since DEV-228 the as-new charge-air temperature comes from the performance
+  # table and this effectiveness sets only the departure from as-new.
+  charge_air_time_constant_s: 20.0   # [MOD] intercooler core + plenum thermal mass
+  critical_altitude_ft: 15000        # [TCDS §6, OM §2.1]
+  # BOOST CONTROL -- corrected against OM Rev.4 §2.1, which states:
+  #   "Target pressure at a temperature from 25 degC to 35 degC:
+  #      5800 rpm  1520 mbar
+  #      5500 rpm  1450 mbar
+  #    1730 mbar is the 'not to exceed' value which is needed by the boost
+  #    pressure control in special situations."
+  # The regulated target is therefore 1.45-1.52 bar, NOT 1.73 bar. Treating
+  # 1.73 as the control target -- as this model previously did -- over-boosts
+  # the engine by 14% and inflates every downstream airflow, fuel and thermal
+  # figure. 1.73 bar is retained only as the never-exceed limit.
+  target_map_at_5500rpm_bar: 1.45    # [OM §2.1]
+  target_map_at_5800rpm_bar: 1.52    # [OM §2.1]
+  map_never_exceed_bar: 1.73         # [OM §2.1]
+  max_boost_abs_bar: 1.52            # control target at take-off rpm
+  design_speed_rpm: 140000           # [MOD]
+  efficiency_new: 0.74               # [MOD]
+  wastegate:
+    closed_above_ft: 13000           # [MOD]
+    open_fraction_sea_level: 0.60    # [MOD]
+
+thermal:
+  # Liquid-cooled heads, ram-air cooled cylinders [TCDS §2].
+  # Thermally ACTIVE metal per cylinder, not just the head casting: the
+  # valve seats, ports and upper barrel all participate in the thermal
+  # transient, and using the bare casting mass made modelled CHT respond
+  # unrealistically fast to a power change.
+  head_mass_kg: 4.5                  # [MOD] per cylinder
+  head_cp_J_per_kgK: 900.0           # aluminium
+  cooling_jacket_area_m2: 0.085      # [MOD] per head
+  # OVERALL head-metal-to-coolant conductance (UA basis = h * A), not the
+  # coolant-side film coefficient. Calibrated so that steady-state CHT sits in
+  # the 90-120 degC band with coolant below the certified 120 degC limit.
+  # Raised from 8900: at take-off power with low ram airspeed the previous
+  # value put CHT at 132 degC, within 3 degC of the certified 135 degC
+  # limit and with no margin for a hot day. A real installation is sized
+  # for margin at the worst case, not the cruise case.
+  h_coolant_new_W_per_m2K: 11000.0    # [MOD]
+  coolant_inlet_C: 85.0              # [MOD]
+  coolant_temp_limit_C: 120.0        # [TCDS/OM] CERTIFIED LIMIT
+  # The coolant loop is single-phase in the model. Past the boiling point of a
+  # 50/50 glycol mix under a typical 1.2 bar cap it cannot represent the engine,
+  # and the prediction is flagged as a constraint violation [MOD] (review PHY-03;
+  # IM-915 i: the circuit must not reach boiling point under any conditions).
+  coolant_boiling_C: 125.0
+  # [MOD] NOT a Rotax limit for this engine. The 915 i publishes no cylinder
+  # head temperature limit at all -- its heads are liquid-cooled and the
+  # manufacturer monitors COOLANT temperature (120 degC, above). 135 degC was
+  # taken from the air-cooled 912 S family, a different engine, and labelled
+  # [TCDS 912 S] as though it applied here (found 17 Sep while reading the
+  # manuals). It is kept as the alert level for this project's added head
+  # probes because it sits sensibly above the 113-124 degC a healthy engine
+  # reaches across the envelope and below the head metal temperatures that
+  # accompany a coolant exceedance, but it is an engineering choice and is
+  # labelled as one.
+  cht_limit_C: 135.0                 # [MOD] see above
+  # The manufacturer's own metal-temperature limit, for the AIR-COOLED barrel:
+  # "Max. permitted cylinder wall temperature on hottest cylinder is 200 degC"
+  # [IM 75-00-00 p7]. A different location from the head probes above, and one
+  # this model does not resolve -- the barrel is not a node in the thermal
+  # model -- so it is recorded here and NOT monitored. Modelling it would need
+  # a third thermal node and a measurement to calibrate it against.
+  cylinder_wall_limit_C: 200.0       # [IM 75-00-00] recorded, not monitored
+  # Coolant loop, modelled as a second thermal node so that head-to-coolant
+  # conductance loss (scale build-up) raises CHT while coolant temperature
+  # responds differently -- which is exactly the signature the cooling
+  # degradation detector of PRD Part 2 s10.3 keys on.
+  coolant_capacity_L: 3.0
+  coolant_cp_J_per_kgK: 3400.0      # 50/50 glycol mix
+  coolant_density_kg_per_L: 1.06
+  # THERE IS NO THERMOSTAT ON THIS ENGINE. The model carried one, opening at
+  # 85 degC, because a fixed-conductance radiator could not hold the coolant
+  # band from -25 degC at 20,000 ft to +15 degC at sea level. Checked against
+  # the manufacturer's own documents (17 Sep): the word "thermostat" appears in
+  # none of the thirteen manuals; the IM cooling-system interfaces are the
+  # hose, pump housing, expansion tank, pressure cap, overflow connection,
+  # inlet elbow, outlet, coolant temperature sensor and cooling air baffle
+  # [IM 75-00-00]; and the IPC lists a water pump, radiator, radiator cap and
+  # oil radiator with no thermostat part. The invented thermostat also absorbed
+  # a blocked radiator, so the engine could not be found overheating.
+  #
+  # What regulates this engine is the AIRFRAME's cooling air, which the IM
+  # makes the installer's responsibility ("the cooling system must be designed
+  # so that operating temperatures will not exceed the maximum values"). This
+  # installation declares a modulating cooling-air flap, as a MALE UAV carries,
+  # sized so the radiator holds the OM's 120 degC limit at the worst case. Its
+  # position is an AIRFRAME actuator, not an engine part, and like the
+  # wastegate it runs out of authority: a blocked radiator consumes the flap's
+  # travel long before coolant temperature moves, which is the earlier signal.
+  cooling_flap_min_fraction: 0.15    # [MOD] airframe: a closed duct still leaks
+  cooling_flap_target_C: 95.0        # [MOD] airframe control target
+  cooling_flap_gain_per_K: 0.10      # [MOD] proportional, saturating at both ends
+  # [MOD] installation value. Sized to the IM-915 i requirement that the cooling
+  # system keep operating temperatures within limits, at the OM 50 degC ambient
+  # limit: 1400 W/K let coolant reach 134 degC in a five-minute take-off there
+  # (limit 120). The thermostat keeps a standard-day cruise where it was. DEV-236.
+  radiator_UA_W_per_K: 2100.0
+  comb_heat_to_head_fraction: 0.27   # [MOD]
+  exhaust_port_area_m2: 0.0042       # [MOD]
+  h_exhaust_W_per_m2K: 260.0         # [MOD]
+  ram_air_cooling_coeff: 0.0042      # [MOD] per (km/h)^0.8 uplift on conductance
+
+exhaust:
+  manifold_pressure_bar: 1.15        # [MOD] turbine inlet side
+  cylinder_pressure_at_evo_bar: 5.5  # [MOD]
+  pipe_length_m: 0.90                # [MOD]
+  pipe_area_m2: 0.033                # [MOD]
+  h_pipe_W_per_m2K: 95.0             # [MOD]
+  egt_limit_C: 950.0                 # [OM §2.1] CERTIFIED LIMIT
+  egt_split_limit_C: 200.0           # [OM §2.1] above 3 L/hr fuel flow
+  egt_split_limit_low_flow_C: 500.0  # [OM §2.1] below 3 L/hr fuel flow
+
+oil_system:
+  type: DRY_SUMP_SEPARATE_TANK       # [TCDS/DS]
+  capacity_L: 3.5                    # [MOD]
+  cp_J_per_kgK: 2000.0
+  density_kg_per_L: 0.86
+  pump_displacement_cm3_per_rev: 13.0  # [MOD]
+  pump_drive_ratio: 0.5              # [MOD] camshaft speed
+  pump_efficiency: 0.80              # [MOD]
+  leakage_coeff_new: 1.00            # [MOD]
+  gallery_dp_psi: 4.0                # [MOD]
+  filter_dp_psi: 2.5                 # [MOD]
+  viscosity_ref_cSt: 13.5            # [MOD] at 100 degC
+  beta_thermal_per_C_hr: 0.001       # [MOD] PRD Part 1 §4.3.5 degradation rate
+  cooler_effectiveness: 0.55         # [MOD]
+  max_oil_consumption_L_per_h: 0.06  # [OM §2.4] a genuine wear indicator
+  # [MOD] installation value. Sized to the IM-915 i requirement at the OM 50 degC
+  # ambient limit: 132 W/K let oil reach 170 degC in a five-minute take-off there
+  # (limit 130). The vernatherm keeps a standard-day cruise at 95 degC, inside
+  # the recommended 90-110 degC band. DEV-236.
+  # [DER] The IM requires the oil radiator to dissipate approx. 30 kW
+  # (28.43 BTU/s) [IM 79-00-00 "Specifications of the oil radiator"]. At the
+  # OM's 50 degC ambient limit with oil at its 130 degC limit that duty needs
+  # 30,000 / (130 - 50) = 375 W/K, and a real cooler is sized with margin:
+  # 430 W/K holds 30 kW at a 70 K difference. It was 211 W/K with a vernatherm
+  # in front of it, and this engine has no vernatherm -- the IPC lists an oil
+  # tank, an oil pump assembly and an oil radiator, and nothing else.
+  cooler_UA_W_per_K: 430.0
+  # The oil radiator has its own duct and its own flap, for the same reason the
+  # coolant radiator does: nothing on the engine regulates oil temperature, so
+  # the airframe must. Target is the middle of the OM's recommended band --
+  # "operating the engine below 90 to 110 degC may lead to formation of
+  # condensation water in the lubrication system" [OM s2.1] -- and it saturates,
+  # so a blocked oil cooler shows first as lost flap travel.
+  # Fully closable: a cold oil cooler at low power ran the sump to 9 degC at
+  # altitude, and an airframe duct that cannot be shut is a design nobody
+  # would fly. Closed, the oil warms until the flap starts to open.
+  cooler_flap_min_fraction: 0.0      # [MOD]
+  cooler_flap_target_C: 100.0        # [OM] middle of the recommended band
+  cooler_flap_gain_per_K: 0.10       # [MOD]
+  pump_pressure_psi_per_cm3_s: 0.150 # [MOD] calibrated to 29-72.5 psi band
+  # [OM §2.1] 5 bar is the OPERATING maximum oil pressure, not a published
+  # relief-valve setting; it is used here as the modelled relief setting [MOD].
+  relief_valve_psi: 72.5
+  relief_valve_cold_psi: 101.5       # [OM §2.1] 7 bar, short period at cold start
+  # Share of the oil circuit's conductance through the main bearings when new
+  # [MOD]. Leakage there grows with clearance cubed; galleries, jets and the
+  # turbo feed do not wear open. Chosen so twice the design clearance -- the
+  # maintenance multiple -- costs 30-40 % of pressure at cruise, not the 97 %
+  # the whole-circuit law gave (review PHY-11).
+  bearing_leak_share_new: 0.065
+  # Beyond this the oil model (viscosity law, no thermal breakdown) is not
+  # valid, and a prediction past it is flagged as a constraint violation [MOD].
+  model_valid_max_C: 160.0
+
+performance_table:
+  # [OM] The manufacturer's performance table, Operator's Manual 915 i Ed.0
+  # Rev.4, PDF pp.111-130: 941 points at 4500-5800 rpm, sea level to
+  # 22,999 ft, ISA-15 to ISA+30, extracted verbatim. It sets how power, plenum
+  # pressure, plenum temperature and fuel consumption change with altitude and
+  # hot or cold days; the certified sea-level ratings are untouched.
+  # Provenance: rotax_915is_om_performance.md. Lookup: layer2_physics/om_table.py.
+  file: rotax_915is_om_performance.csv
+
+propeller:
+  # The propeller is an INSTALLATION choice, and this definition covers both
+  # certification designations [OM "Designation"]:
+  #   iSc  "Propeller shaft with flange for fixed pitch propeller."
+  #   iS   "Propeller shaft with flange for constant speed propeller and drive
+  #         for hydraulic governor for constant speed propeller."
+  # The twin models the iS installation with a governor [MOD]. Two reasons,
+  # both measured: the manufacturer's table is tabulated at FIXED engine speeds
+  # up to 22,999 ft, which a fixed-pitch propeller cannot hold; and the previous
+  # fixed-pitch law, with no air-density term, let full-throttle speed fall to
+  # 4711 rpm at 23,000 ft (review PHY-06). Set type: fixed_pitch for an iSc
+  # installation; that law now includes air density.
+  type: constant_speed               # [MOD] installation: iS with governor
+  # Governor: the blade pitch that holds the scheduled speed, approached through
+  # a first-order lag for the hydraulic pitch-change mechanism. Pure integral
+  # action wound the blades to the fine stop from rest and overspeeded the
+  # engine on the first throttle advance (layer2_physics/mvem.py _govern).
+  # Pitch limits are relative to the sea-level full-throttle blade angle.
+  governor_time_constant_s: 0.5      # [MOD] hydraulic constant-speed unit
+  # Held speeds sit this far below the certified limits they are set to (max
+  # continuous below full lever, take-off at full lever): the governor's
+  # regulation band. Held exactly at a limit, sensor noise reads as an
+  # exceedance -- measured as OVERSPEED on a healthy take-off.
+  governed_speed_margin_rpm: 20.0    # [MOD]
+  pitch_fine_ratio: 0.25             # [MOD]
+  pitch_coarse_ratio: 3.0            # [MOD]
+  # Engine, reduction gear and propeller, referred to the crankshaft. The IM
+  # limits the propeller to 1500-7500 kg cm2 at the propeller shaft [IM 915 i
+  # Ed.0 Rev.5 s4 "System limitations"], i.e. 0.023-0.116 kg m2 at the crank
+  # through 2.5454:1. 0.16 is the heaviest permitted propeller plus 0.044 kg m2
+  # for the engine's own rotating parts, which Rotax does not publish. The
+  # engine-speed plausibility limit in thresholds.yaml is derived from it, so a
+  # lighter propeller changes both.
+  rotating_inertia_at_crank_kg_m2: 0.16   # [MOD]
+
+vibration:
+  # Not published by the manufacturer. Modelled from standard four-cylinder
+  # boxer signatures; the reduction-gear and bearing geometry drive the
+  # diagnostic frequencies of PRD Part 2 §10.4 and §10.8.
+  baseline_rms_m_per_s2: 2.2         # [MOD]
+  reduction_gear_teeth: 36           # [MOD] gear mesh = teeth * RPM / 60
+  gear_ratio: 2.5454                 # [TCDS] crankshaft : propeller shaft
+  bearing:                           # [MOD]
+    n_balls: 9
+    ball_diameter_mm: 8.10
+    pitch_diameter_mm: 40.0
+  propeller_blades: 3                # [MOD] installation dependent
+
+electrical:
+  # [DS] "24V power supply delivering up to 800W". The iSc C24 variant carries
+  # a 28 V system interface for power exchange with a 28 V aircraft system
+  # [TCDS §2], which is the standard UAV bus voltage.
+  nominal_bus_V: 28.0                # [TCDS] C24 variant
+  alternator_rated_W: 800.0          # [DS]
+  alternator_rated_A: 28.0           # [DER] 800 W / 28 V
+  internal_generators: 2             # [OM §4.1.1] Gen 1 feeds the EMS, Gen 2 the airframe
+  battery_capacity_Ah: 20.0          # [MOD] installation dependent
+  # [MOD] PER CELL, not per pack. The physics model multiplied this by a bare
+  # literal 8 with no explanation; that 8 is the series-cell count of a 28 V
+  # pack, so the pack resistance is 8 x 12 = 96 mohm. Naming the cell count
+  # makes the arithmetic inspectable -- an unexplained multiplier in a voltage
+  # calculation reads as a fudge factor, and a battery SOH estimator fitting
+  # against the terminal voltage recovered a resistance exactly 8x the
+  # configured value with no way to tell which number was wrong.
+  battery_cells_series: 8            # [MOD] 8 x 3.5 V nominal = 28 V
+  battery_internal_resistance_new_ohm: 0.012  # [MOD] per cell
+
+sensors:
+  # The real 915 iS EMS sensor set [OM §1 abbreviations], which the CAN DBC
+  # mirrors. Anything marked hums_added is EXTRA instrumentation this project
+  # specifies for health monitoring; it is not fitted to a standard engine.
+  native:
+    - { id: CPS1,  name: "Crankshaft Position Sensor 1", lane: A }
+    - { id: CPS2,  name: "Crankshaft Position Sensor 2", lane: B }
+    - { id: CCS,   name: "Camshaft Position Sensor" }
+    - { id: CTS,   name: "Cooling Temperature Sensor", location: "cylinder head 4" }
+    - { id: MAPS1, name: "Manifold Air Pressure Sensor 1" }
+    - { id: MAPS2, name: "Manifold Air Pressure Sensor 2" }
+    - { id: MATS1, name: "Manifold Air Temperature Sensor 1" }
+    - { id: MATS2, name: "Manifold Air Temperature Sensor 2" }
+    - { id: OPS,   name: "Oil Pressure Sensor" }
+    - { id: OTS,   name: "Oil Temperature Sensor" }
+    - { id: TPS,   name: "Throttle Position Sensor" }
+    - { id: AAPTS, name: "Ambient Air Pressure Temperature Sensor" }
+    - { id: KNOCK, name: "Knock Sensor" }
+    - { id: EGT,   name: "Exhaust Gas Temperature", per_cylinder: true }
+  hums_added:
+    - { id: CHT,   name: "Cylinder Head Temperature", per_cylinder: true,
+        rationale: "Problem statement section B requires CHT. Not standard on a
+                    liquid-cooled 915 iS; specified here as HUMS instrumentation." }
+    - { id: VIB,   name: "Tri-axial MEMS accelerometer",
+        rationale: "Problem statement section B requires vibration signatures." }
+    - { id: FUELFLOW, name: "Turbine fuel flow meter",
+        rationale: "EMS reports injector duty; a direct flow meter gives an
+                    independent measurement for cross-checking (PRD Part 1 §8.3)." }
+
+degradation:                         # [MOD] all six pathways, PRD Part 1 §5.2
+  cooling:
+    # CHT above which scale deposition accelerates. Engine-specific: a
+    # liquid-cooled head never reaches an air-cooled engine's numbers, so a
+    # hard-coded threshold silently disables the acceleration term.
+    reference_cht_C: 105.0
+    rate_per_flight_hour: 0.0002
+    maintenance_threshold: 0.70
+  oil_thermal:
+    beta_thermal_per_C_hr: 0.001
+    viscosity_increase_limit: 0.25
+    # [MML 05-20-00] Oil and filter change every 100 h or 12 months. Halves to
+    # 50 h if AVGAS 100LL is used for more than 30 % of operation (lead
+    # deposits). Modelled at the 100 h interval.
+    #
+    # This interval was MISSING and its absence was not cosmetic: at
+    # beta = 0.001/h the viscosity increase crosses the 25 % condemnation limit
+    # at 223 h, so oil_quality reached 0.0 and STAYED there for the rest of the
+    # engine's life. Every virtual engine was being condemned by oil that a real
+    # operator would have changed twelve times before TBO.
+    change_interval_hours: 100.0
+  combustion_deposits:
+    rate_per_flight_hour: 0.00005
+    maintenance_threshold: 0.92
+  injector_fouling:
+    # [MOD] Recalibrated from 0.0012. At that rate the flow coefficient of
+    # variation reached the 10 % maintenance threshold at 833 h nominal, and
+    # sooner once the per-engine manufacturing spread is applied -- so injectors
+    # were the life-limiting item on every engine, at roughly two thirds of TBO,
+    # with no service interval that short in the maintenance manual. Solved for
+    # a 2 % flow scatter at the 1200 h TBO (injector_condition 0.78), i.e. a
+    # fifth of the way to the maintenance threshold over a full overhaul life.
+    variance_rate_per_hour: 0.00004  # direct injection: nozzle coking
+    cv_maintenance_threshold: 0.10
+  bearing_wear:
+    clearance_rate_mm_per_hour: 0.00001
+    design_clearance_mm: 0.045
+    maintenance_multiple: 2.0
+  battery:
+    # [MOD] A pack ages on two clocks and both matter: each start draws the
+    # largest single current it ever sees, and calendar time degrades it even
+    # unused -- which is why a battery left on a shelf still dies. Internal
+    # resistance is the quantity that rises and the one an aircraft can
+    # actually measure. Calibrated so a 20 Ah pack reaches its 2x end-of-life
+    # resistance at roughly 600 starts plus 1200 flight hours, which is one
+    # TBO of typical MALE utilisation.
+    resistance_rise_per_cycle: 1.5e-5      # ohm per start-stop
+    resistance_rise_per_hour: 3.0e-6       # ohm per flight hour
+    end_of_life_resistance_multiple: 2.0   # 2x new resistance = SOH 0
+  turbocharger:
+    rate_per_flight_hour: 0.00008
+    boost_loss_threshold: 0.15
+
+limits:
+  # Certified operating limits, reproduced here so the rule engine can cite
+  # them directly in an alert. [OM §2.1] and [TCDS §1, §3.2] unless noted.
+  ambient_temp_C: [-40.0, 50.0]
+  oil_temperature_C: [50.0, 130.0]
+  oil_temperature_recommended_C: [90.0, 110.0]
+  oil_temperature_start_min_C: -20.0
+  oil_pressure_above_3500rpm_bar: [2.0, 5.0]
+  oil_pressure_below_3500rpm_bar: [0.8, 5.0]
+  oil_pressure_cold_start_max_bar: 7.0
+  coolant_temperature_max_C: 120.0
+  # NOTE: OM Rev.1 (2019) gave a 90 degC coolant maximum during ground idle,
+  # start and warm-up. OM Rev.4 (2022) REMOVED that maximum, leaving only the
+  # -20 degC minimum. Only the 120 degC normal-operation limit now applies.
+  egt_max_C: 950.0
+  egt_split_max_C: 200.0
+  acceleration_min_g: -0.5           # max 5 seconds
+  static_roll_angle_max_deg: 40.0
+
+can:
+  dbc: "configs/can/engine.dbc"
+  bitrate: 1000000                   # 1 Mbps, ISO 11898-2
+  buses:                             # [OM §2.1, §3]
+    - { name: "Display CAN Bus", role: "flight telemetry to cockpit/GCS" }
+    - { name: "Maintenance CAN Bus A", role: "Lane A service data (ground only)" }
+    - { name: "Maintenance CAN Bus B", role: "Lane B service data (ground only)" }
+  sampling_hz:
+    rpm: 100
+    cht: 10
+    egt: 10
+    coolant_temperature: 10
+    oil_pressure: 10
+    oil_temperature: 1
+    fuel_flow: 10
+    vibration_rms: 10
+    electrical: 10
+    injection_timing: 100
+    manifold: 10
+
+# ==============================================================================
+# SENSOR / ACTUATOR FAILURE MATRIX  [IM Rev.5, Appendix]
+#
+# BRP-Rotax publishes a full FMEA for the dual-lane EMS: which lane each item
+# belongs to, what the two warning lamps do, the resulting system mode, and the
+# effect on the engine. This is manufacturer ground truth for the sensor-fault
+# detection of PRD Part 2 §10.5 and for the annunciation logic of PRD Part 4 §4.
+#
+# lamp states: "ON" | "OFF" | "FLASHING"  (quoted: YAML 1.1 would otherwise
+#              parse bare ON/OFF as booleans)   (a real flashing annunciator exists, which
+#              is why PRD Part 4 §8.2 permits exactly one flash case)
+# modes:       Auto_A | Auto_B | Auto_AB | Only_A | Only_B
+# ==============================================================================
+failure_matrix:
+  warning_lamp:
+    nominal_voltage_V: 12            # [IM] per lane, HIC A pin 2 / HIC B pin 2
+    nominal_current_mA: 120          # [IM]
+  items:
+    - { item: CPS,   kind: sensor,       lane: A, lamp_a: "ON",       lamp_b: "OFF",      mode: Auto_B,  effect: "single ignition and single injection" }
+    - { item: CPS,   kind: sensor,       lane: B, lamp_a: "OFF",      lamp_b: "ON",       mode: Auto_A,  effect: "single ignition and single injection" }
+    - { item: MAPS,  kind: sensor,       lane: A, lamp_a: "ON",       lamp_b: "OFF",      mode: Auto_B,  effect: "single ignition and single injection" }
+    - { item: MAPS,  kind: sensor,       lane: B, lamp_a: "OFF",      lamp_b: "ON",       mode: Auto_A,  effect: "double ignition and single injection" }
+    - { item: MATS,  kind: sensor,       lane: A, lamp_a: "ON",       lamp_b: "OFF",      mode: Auto_B,  effect: "single ignition and single injection" }
+    - { item: MATS,  kind: sensor,       lane: B, lamp_a: "OFF",      lamp_b: "ON",       mode: Auto_A,  effect: "double ignition and single injection" }
+    - { item: TPS,   kind: sensor,       lane: A, lamp_a: "FLASHING", lamp_b: "OFF",      mode: Auto_AB, effect: "double ignition and single injection" }
+    - { item: TPS_IN_RANGE, kind: sensor, lane: A, lamp_a: "ON",      lamp_b: "OFF",      mode: Auto_B,  effect: "single ignition and single injection" }
+    - { item: AAPTS, kind: sensor,       lane: A, lamp_a: "ON",       lamp_b: "OFF",      mode: Auto_B,  effect: "single ignition and single injection" }
+    - { item: AAT,   kind: sensor,       lane: A, lamp_a: "FLASHING", lamp_b: "OFF",      mode: Auto_AB, effect: "double ignition and single injection" }
+    - { item: CTS,   kind: sensor,       lane: A, lamp_a: "FLASHING", lamp_b: "OFF",      mode: Auto_AB, effect: "double ignition and single injection" }
+    - { item: EGT,   kind: sensor,       lane: A, lamp_a: "FLASHING", lamp_b: "OFF",      mode: Auto_AB, effect: "double ignition and single injection" }
+    - { item: KNOCK, kind: sensor,       lane: A, lamp_a: "FLASHING", lamp_b: "OFF",      mode: Auto_AB, effect: "double ignition and single injection" }
+    - { item: OTS,   kind: sensor,       lane: B, lamp_a: "OFF",      lamp_b: "FLASHING", mode: Auto_AB, effect: "double ignition and single injection" }
+    - { item: OPS,   kind: sensor,       lane: B, lamp_a: "OFF",      lamp_b: "FLASHING", mode: Auto_AB, effect: "double ignition and single injection" }
+    - { item: DISPLAY_CAN, kind: annunciation, lane: A, lamp_a: "OFF", lamp_b: "OFF",     mode: Auto_AB, effect: "double ignition and single injection" }
+    - { item: DISPLAY_CAN, kind: annunciation, lane: B, lamp_a: "OFF", lamp_b: "OFF",     mode: Auto_AB, effect: "double ignition and single injection" }
+    - { item: MAINTENANCE_CAN, kind: data_bus, lane: A, lamp_a: "OFF", lamp_b: "OFF",     mode: Auto_AB, effect: "double ignition and single injection" }
+    - { item: MAINTENANCE_CAN, kind: data_bus, lane: B, lamp_a: "OFF", lamp_b: "OFF",     mode: Auto_AB, effect: "double ignition and single injection" }
+    - { item: COIL_1_3, kind: actuator,  lane: A, lamp_a: "ON",       lamp_b: "OFF",      mode: Auto_B,  effect: "single ignition and single injection" }
+    - { item: COIL_2_4, kind: actuator,  lane: B, lamp_a: "OFF",      lamp_b: "ON",       mode: Auto_A,  effect: "single ignition in effect despite double-ignition intent" }
+    - { item: INJ_1_4, kind: actuator,   lane: A, lamp_a: "ON",       lamp_b: "OFF",      mode: Auto_B,  effect: "single ignition and single injection" }
+    - { item: INJ_5_8, kind: actuator,   lane: B, lamp_a: "OFF",      lamp_b: "ON",       mode: Auto_A,  effect: "double ignition and single injection" }
+    - { item: WARNING_LAMP, kind: annunciation, lane: A, lamp_a: "OFF", lamp_b: "OFF",    mode: Auto_AB, effect: "check with display or at next engine start" }
+    - { item: WARNING_LAMP, kind: annunciation, lane: B, lamp_a: "OFF", lamp_b: "OFF",    mode: Auto_AB, effect: "check with display or at next engine start" }
+    - { item: EMS_GROUND_PORT, kind: power, lane: A, lamp_a: "ON",    lamp_b: "OFF",      mode: Only_B,  effect: "single ignition and single injection" }
+    - { item: EMS_GROUND_PORT, kind: power, lane: B, lamp_a: "OFF",   lamp_b: "ON",       mode: Only_A,  effect: "single ignition and single injection" }
+    - { item: ECU_POWER, kind: power,    lane: A, lamp_a: "ON",       lamp_b: "OFF",      mode: Only_B,  effect: "single ignition and single injection" }
+    - { item: ECU_POWER, kind: power,    lane: B, lamp_a: "OFF",      lamp_b: "ON",       mode: Only_A,  effect: "single ignition and single injection" }
+
+environmental:
+  # [IM Rev.5] component surface temperature limits and qualification.
+  component_surface_temp_C:
+    ecu: [-40.0, 80.0]
+    egt_sensor_electronics: [-40.0, 80.0]
+    fusebox: [-40.0, 80.0]
+    ac_dc_converter: [-40.0, 80.0]
+  qualification: "RTCA DO-160G Section 25 (Electrostatic Discharge) Cat. A"

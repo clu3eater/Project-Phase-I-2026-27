@@ -1,0 +1,8 @@
+﻿.build/
+_authorkit27/
+*.zip
+*.aux
+*.log
+*.bbl
+*.blg
+*.out

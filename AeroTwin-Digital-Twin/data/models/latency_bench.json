@@ -1,0 +1,17 @@
+{
+  "ticks": 1900,
+  "clients": 3,
+  "client_reads": 5755,
+  "throttled_to_one_core": false,
+  "p50_ms": 51.325,
+  "p95_ms": 82.683,
+  "p99_ms": 104.381,
+  "max_ms": 136.873,
+  "mean_ms": 53.641,
+  "budget_p95_ms": 200.0,
+  "within_budget": true,
+  "platform": "AMD64 Windows",
+  "python": "3.12.6",
+  "measures": "LiveTwin._tick compute only -- NOT sensor-to-screen",
+  "caveat": "x86-64, not the ARM class of a deployed edge computer; bounds algorithmic cost, does not predict on-target"
+}

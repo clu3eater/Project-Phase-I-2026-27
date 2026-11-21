@@ -1,0 +1,9 @@
+.health-visual-summary { container-type: inline-size; }
+.health-visual-headline { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+.health-visual-verdict { display: flex; flex: 1 1 260px; flex-direction: column; gap: 12px; min-width: 0; }
+.health-visual-verdict p { margin: 0; font-size: 18px; line-height: 1.5; }
+.health-system-cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 16px; }
+.health-system-track { height: 12px; border: 1px solid var(--line); background: var(--bg-raised); overflow: hidden; }
+.health-system-track > span { display: block; height: 100%; }
+@container (max-width: 1000px) { .health-system-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@container (max-width: 480px) { .health-system-cards { grid-template-columns: minmax(0, 1fr); } }

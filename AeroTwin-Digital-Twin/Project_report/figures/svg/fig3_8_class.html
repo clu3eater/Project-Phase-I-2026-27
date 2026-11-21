@@ -1,0 +1,143 @@
+<!doctype html><html><body style='margin:0;background:#fff'><svg xmlns="http://www.w3.org/2000/svg" width="760" height="760" viewBox="0 0 760 760">
+<rect width="100%" height="100%" fill="#fff"/>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#111111"/></marker>
+<marker id="open" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10" fill="none" stroke="#111111" stroke-width="1.4"/></marker>
+<marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M0,0 L12,6 L0,12 z" fill="#fff" stroke="#111111" stroke-width="1.3"/></marker>
+<marker id="diamond" viewBox="0 0 16 10" refX="1" refY="5" markerWidth="14" markerHeight="9" orient="auto-start-reverse"><path d="M1,5 L8,0.5 L15,5 L8,9.5 z" fill="#111111"/></marker>
+<marker id="one" viewBox="0 0 14 14" refX="13" refY="7" markerWidth="14" markerHeight="14" orient="auto-start-reverse"><path d="M13,7 L0,7 M6,1 L6,13 M10,1 L10,13" fill="none" stroke="#111111" stroke-width="1.4"/></marker>
+<marker id="many" viewBox="0 0 16 14" refX="15" refY="7" markerWidth="16" markerHeight="14" orient="auto-start-reverse"><path d="M15,1 L3,7 L15,13 M15,7 L0,7 M3,1 L3,13" fill="none" stroke="#111111" stroke-width="1.4"/><circle cx="-2" cy="7" r="0" fill="none"/></marker>
+<marker id="zmany" viewBox="0 0 22 14" refX="21" refY="7" markerWidth="22" markerHeight="14" orient="auto-start-reverse"><path d="M21,1 L11,7 L21,13 M21,7 L0,7" fill="none" stroke="#111111" stroke-width="1.4"/><circle cx="6" cy="7" r="3.6" fill="#fff" stroke="#111111" stroke-width="1.4"/></marker>
+<marker id="zone" viewBox="0 0 22 14" refX="21" refY="7" markerWidth="22" markerHeight="14" orient="auto-start-reverse"><path d="M21,7 L0,7 M15,1 L15,13" fill="none" stroke="#111111" stroke-width="1.4"/><circle cx="6" cy="7" r="3.6" fill="#fff" stroke="#111111" stroke-width="1.4"/></marker>
+</defs>
+<rect x="275" y="12" width="230" height="174.0" rx="0" fill="#fff" stroke="#111111" stroke-width="1.6"/>
+<rect x="275" y="12" width="230" height="26" rx="0" fill="#e7eef9" stroke="#111111" stroke-width="1.6"/>
+<text x="390.0" y="30" font-family="Arial, Helvetica, sans-serif" font-size="14.0" font-weight="bold" text-anchor="middle" fill="#111111">LiveTwin</text>
+<path d="M275,38 L505,38" fill="none" stroke="#111111" stroke-width="1.2"/>
+<text x="282" y="55.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">- engine_key : str</text>
+<text x="282" y="72.0" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">- tick_s : float = 0.5</text>
+<text x="282" y="88.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">- shadow : ShadowModel</text>
+<path d="M275,95.5 L505,95.5" fill="none" stroke="#111111" stroke-width="1.2"/>
+<text x="282" y="113.0" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ start() / stop()</text>
+<text x="282" y="129.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ snapshot() : Snapshot</text>
+<text x="282" y="146.0" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ inject(mode, severity)</text>
+<text x="282" y="162.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ launch() : bool</text>
+<text x="282" y="179.0" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ rtb() : bool</text>
+<rect x="10" y="12" width="225" height="124.5" rx="0" fill="#fff" stroke="#111111" stroke-width="1.6"/>
+<rect x="10" y="12" width="225" height="26" rx="0" fill="#e7eef9" stroke="#111111" stroke-width="1.6"/>
+<text x="122.5" y="30" font-family="Arial, Helvetica, sans-serif" font-size="14.0" font-weight="bold" text-anchor="middle" fill="#111111">CanIngest</text>
+<path d="M10,38 L235,38" fill="none" stroke="#111111" stroke-width="1.2"/>
+<text x="17" y="55.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">- channels : dict</text>
+<text x="17" y="72.0" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">- lanes : (A, B)</text>
+<path d="M10,79.0 L235,79.0" fill="none" stroke="#111111" stroke-width="1.2"/>
+<text x="17" y="96.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ poll() : Telemetry</text>
+<text x="17" y="113.0" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ condemn(name, reason)</text>
+<text x="17" y="129.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ raw(name) : float</text>
+<rect x="10" y="200" width="225" height="108.0" rx="0" fill="#fff" stroke="#111111" stroke-width="1.6"/>
+<rect x="10" y="200" width="225" height="26" rx="0" fill="#e7eef9" stroke="#111111" stroke-width="1.6"/>
+<text x="122.5" y="218" font-family="Arial, Helvetica, sans-serif" font-size="14.0" font-weight="bold" text-anchor="middle" fill="#111111">Telemetry</text>
+<path d="M10,226 L235,226" fill="none" stroke="#111111" stroke-width="1.2"/>
+<text x="17" y="243.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ t_s : float</text>
+<text x="17" y="260.0" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ channels : dict</text>
+<text x="17" y="276.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ state : ValueState</text>
+<path d="M10,283.5 L235,283.5" fill="none" stroke="#111111" stroke-width="1.2"/>
+<text x="17" y="301.0" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ value(name) : float</text>
+<rect x="545" y="12" width="205" height="91.5" rx="0" fill="#fff" stroke="#111111" stroke-width="1.6"/>
+<rect x="545" y="12" width="205" height="26" rx="0" fill="#e7eef9" stroke="#111111" stroke-width="1.6"/>
+<text x="647.5" y="30" font-family="Arial, Helvetica, sans-serif" font-size="14.0" font-weight="bold" text-anchor="middle" fill="#111111">ShadowModel</text>
+<path d="M545,38 L750,38" fill="none" stroke="#111111" stroke-width="1.2"/>
+<text x="552" y="55.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">- engine_key : str</text>
+<path d="M545,62.5 L750,62.5" fill="none" stroke="#111111" stroke-width="1.2"/>
+<text x="552" y="80.0" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ update(tel, dt) : Outputs</text>
+<text x="552" y="96.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ reset()</text>
+<rect x="275" y="300" width="230" height="108.0" rx="0" fill="#fff" stroke="#111111" stroke-width="1.6"/>
+<rect x="275" y="300" width="230" height="26" rx="0" fill="#e7eef9" stroke="#111111" stroke-width="1.6"/>
+<text x="390.0" y="318" font-family="Arial, Helvetica, sans-serif" font-size="14.0" font-weight="bold" text-anchor="middle" fill="#111111">Tier2Ensemble</text>
+<path d="M275,326 L505,326" fill="none" stroke="#111111" stroke-width="1.2"/>
+<text x="282" y="343.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">- cblof : CBLOF</text>
+<text x="282" y="360.0" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">- profile : MatrixProfile</text>
+<path d="M275,367.0 L505,367.0" fill="none" stroke="#111111" stroke-width="1.2"/>
+<text x="282" y="384.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ fit(x_healthy)</text>
+<text x="282" y="401.0" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ score(x) : Tier2Result</text>
+<rect x="545" y="170" width="205" height="108.0" rx="0" fill="#fff" stroke="#111111" stroke-width="1.6"/>
+<rect x="545" y="170" width="205" height="26" rx="0" fill="#e7eef9" stroke="#111111" stroke-width="1.6"/>
+<text x="647.5" y="188" font-family="Arial, Helvetica, sans-serif" font-size="14.0" font-weight="bold" text-anchor="middle" fill="#111111">Tier3Detector</text>
+<path d="M545,196 L750,196" fill="none" stroke="#111111" stroke-width="1.2"/>
+<text x="552" y="213.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">- autoencoder : LstmAutoencoder</text>
+<text x="552" y="230.0" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">- head : MultiTaskNet</text>
+<path d="M545,237.0 L750,237.0" fill="none" stroke="#111111" stroke-width="1.2"/>
+<text x="552" y="254.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ anomaly_score(x)</text>
+<text x="552" y="271.0" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ predict(x) : dict</text>
+<rect x="545" y="345" width="205" height="75.0" rx="0" fill="#fff" stroke="#111111" stroke-width="1.6"/>
+<rect x="545" y="345" width="205" height="26" rx="0" fill="#e7eef9" stroke="#111111" stroke-width="1.6"/>
+<text x="647.5" y="363" font-family="Arial, Helvetica, sans-serif" font-size="14.0" font-weight="bold" text-anchor="middle" fill="#111111">ScoreFusion</text>
+<path d="M545,371 L750,371" fill="none" stroke="#111111" stroke-width="1.2"/>
+<path d="M545,395.5 L750,395.5" fill="none" stroke="#111111" stroke-width="1.2"/>
+<text x="552" y="413.0" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ fuse(t2, t3) : FusionResult</text>
+<rect x="545" y="470" width="205" height="91.5" rx="0" fill="#fff" stroke="#111111" stroke-width="1.6"/>
+<rect x="545" y="470" width="205" height="26" rx="0" fill="#e7eef9" stroke="#111111" stroke-width="1.6"/>
+<text x="647.5" y="488" font-family="Arial, Helvetica, sans-serif" font-size="14.0" font-weight="bold" text-anchor="middle" fill="#111111">LstmRulServer</text>
+<path d="M545,496 L750,496" fill="none" stroke="#111111" stroke-width="1.2"/>
+<text x="552" y="513.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">- baseline : ResidualBaseline</text>
+<path d="M545,520.5 L750,520.5" fill="none" stroke="#111111" stroke-width="1.2"/>
+<text x="552" y="538.0" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ observe(values, hours)</text>
+<text x="552" y="554.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ available() : bool</text>
+<rect x="10" y="345" width="225" height="124.5" rx="0" fill="#fff" stroke="#111111" stroke-width="1.6"/>
+<rect x="10" y="345" width="225" height="42.5" rx="0" fill="#e7eef9" stroke="#111111" stroke-width="1.6"/>
+<text x="122.5" y="363" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-style="italic" text-anchor="middle" fill="#333">«Pydantic model»</text>
+<text x="122.5" y="379.5" font-family="Arial, Helvetica, sans-serif" font-size="14.0" font-weight="bold" text-anchor="middle" fill="#111111">TwinState</text>
+<path d="M10,387.5 L235,387.5" fill="none" stroke="#111111" stroke-width="1.2"/>
+<text x="17" y="405.0" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ reported, simulated</text>
+<text x="17" y="421.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ residuals, health</text>
+<text x="17" y="438.0" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ alerts : AlertSummary</text>
+<path d="M10,445.0 L235,445.0" fill="none" stroke="#111111" stroke-width="1.2"/>
+<text x="17" y="462.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ model_dump() : dict</text>
+<rect x="10" y="500" width="240" height="157.5" rx="0" fill="#fff" stroke="#111111" stroke-width="1.6"/>
+<rect x="10" y="500" width="240" height="26" rx="0" fill="#e7eef9" stroke="#111111" stroke-width="1.6"/>
+<text x="130.0" y="518" font-family="Arial, Helvetica, sans-serif" font-size="14.0" font-weight="bold" text-anchor="middle" fill="#111111">OpsStore</text>
+<path d="M10,526 L250,526" fill="none" stroke="#111111" stroke-width="1.2"/>
+<text x="17" y="543.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">- db : squadron.db</text>
+<path d="M10,550.5 L250,550.5" fill="none" stroke="#111111" stroke-width="1.2"/>
+<text x="17" y="568.0" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ create_mission(...)</text>
+<text x="17" y="584.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ approve(mid, tail, operator)</text>
+<text x="17" y="601.0" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ prepare() / start()</text>
+<text x="17" y="617.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ launch() / rtb() / abort()</text>
+<text x="17" y="634.0" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ debrief(mid, outcome)</text>
+<text x="17" y="650.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ raise_defect(tail, ...)</text>
+<rect x="275" y="470" width="230" height="108.0" rx="0" fill="#fff" stroke="#111111" stroke-width="1.6"/>
+<rect x="275" y="470" width="230" height="26" rx="0" fill="#e7eef9" stroke="#111111" stroke-width="1.6"/>
+<text x="390.0" y="488" font-family="Arial, Helvetica, sans-serif" font-size="14.0" font-weight="bold" text-anchor="middle" fill="#111111">MissionReliability</text>
+<path d="M275,496 L505,496" fill="none" stroke="#111111" stroke-width="1.2"/>
+<path d="M275,520.5 L505,520.5" fill="none" stroke="#111111" stroke-width="1.2"/>
+<text x="282" y="538.0" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ assess(profile, health)</text>
+<text x="282" y="554.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">  : MissionAssessment</text>
+<text x="282" y="571.0" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ assess_all() : list</text>
+<rect x="275" y="640" width="230" height="91.5" rx="0" fill="#fff" stroke="#111111" stroke-width="1.6"/>
+<rect x="275" y="640" width="230" height="26" rx="0" fill="#e7eef9" stroke="#111111" stroke-width="1.6"/>
+<text x="390.0" y="658" font-family="Arial, Helvetica, sans-serif" font-size="14.0" font-weight="bold" text-anchor="middle" fill="#111111">AuditLog</text>
+<path d="M275,666 L505,666" fill="none" stroke="#111111" stroke-width="1.2"/>
+<text x="282" y="683.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">- key : HMAC key</text>
+<path d="M275,690.5 L505,690.5" fill="none" stroke="#111111" stroke-width="1.2"/>
+<text x="282" y="708.0" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ record(event, subject)</text>
+<text x="282" y="724.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" text-anchor="start" fill="#111111">+ verify() : dict</text>
+<path d="M505,120 L525,120" fill="none" stroke="#111111" stroke-width="1.6" marker-start="url(#diamond)"/>
+<path d="M525,60 L525,510" fill="none" stroke="#111111" stroke-width="1.6"/>
+<path d="M525,60 L545,60" fill="none" stroke="#111111" stroke-width="1.6"/>
+<path d="M525,230 L545,230" fill="none" stroke="#111111" stroke-width="1.6"/>
+<path d="M525,380 L545,380" fill="none" stroke="#111111" stroke-width="1.6"/>
+<path d="M525,510 L545,510" fill="none" stroke="#111111" stroke-width="1.6"/>
+<text x="531" y="113" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-style="italic" text-anchor="start" fill="#111111">parts</text>
+<path d="M390,186.0 L390,300" fill="none" stroke="#111111" stroke-width="1.6" marker-start="url(#diamond)"/>
+<path d="M275,60 L235,60" fill="none" stroke="#111111" stroke-width="1.6" stroke-dasharray="6,4" marker-end="url(#open)"/>
+<rect x="239.04" y="41.5" width="31.92" height="16.5" rx="0" fill="#fff" stroke="none" stroke-width="0"/>
+<text x="255" y="53" font-family="Arial, Helvetica, sans-serif" font-size="11.5" text-anchor="middle" fill="#111111">uses</text>
+<path d="M122,136.5 L122,200" fill="none" stroke="#111111" stroke-width="1.6" stroke-dasharray="6,4" marker-end="url(#open)"/>
+<rect x="94.08" y="146.0" width="55.84" height="16.5" rx="0" fill="#fff" stroke="none" stroke-width="0"/>
+<text x="122" y="157.5" font-family="Arial, Helvetica, sans-serif" font-size="11.5" text-anchor="middle" fill="#111111">«create»</text>
+<path d="M275,160 L255,160 L255,390 L235,390" fill="none" stroke="#111111" stroke-width="1.6" stroke-dasharray="6,4" marker-end="url(#open)"/>
+<text x="251" y="336" font-family="Arial, Helvetica, sans-serif" font-size="11.5" text-anchor="end" fill="#111111">«produce»</text>
+<path d="M250,520 L275,520" fill="none" stroke="#111111" stroke-width="1.6" stroke-dasharray="6,4" marker-end="url(#open)"/>
+<path d="M130,657.5 L130,690 L275,690" fill="none" stroke="#111111" stroke-width="1.6" stroke-dasharray="6,4" marker-end="url(#open)"/>
+<rect x="166.1" y="672.5" width="67.80000000000001" height="16.5" rx="0" fill="#fff" stroke="none" stroke-width="0"/>
+<text x="200" y="684" font-family="Arial, Helvetica, sans-serif" font-size="11.5" text-anchor="middle" fill="#111111">records to</text>
+</svg></body></html>

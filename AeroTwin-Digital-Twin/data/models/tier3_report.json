@@ -1,0 +1,93 @@
+{
+  "autoencoder": {
+    "auc": 0.9180413286908259,
+    "precision": 0.945980985306828,
+    "recall": 0.2867059593975115,
+    "f1": 0.44004422555030664,
+    "fpr": 0.04950495049504951,
+    "tp": 2189,
+    "fp": 125,
+    "fn": 5446,
+    "tn": 2400
+  },
+  "anomaly_head": {
+    "auc": 0.954121755594027,
+    "precision": 0.9702185792349727,
+    "recall": 0.9301899148657499,
+    "f1": 0.9497826813774657,
+    "fpr": 0.08633663366336633,
+    "tp": 7102,
+    "fp": 218,
+    "fn": 533,
+    "tn": 2307
+  },
+  "fault": {
+    "macro_precision": 0.6298302430901985,
+    "macro_recall": 0.6257359225665738,
+    "macro_f1": 0.6099091457386978,
+    "macro_f1_all_eight": 0.6099091457386978,
+    "excluded": [],
+    "exact_match": 0.46091245376078915,
+    "per_class": {
+      "misfire": {
+        "precision": 0.9112903225806451,
+        "recall": 0.875968992248062,
+        "f1": 0.893280632411067,
+        "support": 645,
+        "threshold": 0.28
+      },
+      "injector_abnormal": {
+        "precision": 0.6923076923076923,
+        "recall": 0.8017467248908297,
+        "f1": 0.7430190206394172,
+        "support": 1145,
+        "threshold": 0.78
+      },
+      "cooling_degradation": {
+        "precision": 0.5176767676767676,
+        "recall": 0.5093167701863354,
+        "f1": 0.5134627426424545,
+        "support": 805,
+        "threshold": 0.9600000000000001
+      },
+      "lubrication_issue": {
+        "precision": 0.8272656855151046,
+        "recall": 0.7155778894472362,
+        "f1": 0.7673791988503683,
+        "support": 2985,
+        "threshold": 0.62
+      },
+      "sensor_drift": {
+        "precision": 0.3890784982935154,
+        "recall": 0.6320792079207921,
+        "f1": 0.4816659121774558,
+        "support": 2525,
+        "threshold": 0.16
+      },
+      "combustion_instability": {
+        "precision": 0.5308370044052864,
+        "recall": 0.285207100591716,
+        "f1": 0.37105465742879135,
+        "support": 845,
+        "threshold": 0.98
+      },
+      "overheating_trend": {
+        "precision": 0.2862453531598513,
+        "recall": 0.5651376146788991,
+        "f1": 0.38001233806292417,
+        "support": 545,
+        "threshold": 0.04
+      },
+      "abnormal_vibration": {
+        "precision": 0.8839406207827261,
+        "recall": 0.6208530805687204,
+        "f1": 0.7293986636971046,
+        "support": 1055,
+        "threshold": 0.4
+      }
+    }
+  },
+  "severity_mae": 0.13878198242593198,
+  "epochs_ae": 40,
+  "epochs_mt": 30
+}

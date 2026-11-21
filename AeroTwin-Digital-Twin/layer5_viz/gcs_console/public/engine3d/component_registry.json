@@ -1,0 +1,3511 @@
+{
+  "schema": "rotax915is.component_registry",
+  "version": "1.0.0",
+  "generated": "2026-09-16",
+  "model": {
+    "file": "ROTAX_915IS_DIGITAL_TWIN_FAULT_READY.glb",
+    "baseModel": "ROTAX_915IS_DIGITAL_TWIN_WEB_OPTIMIZED.glb",
+    "units": "metres",
+    "upAxis": "+Y (glTF)",
+    "triangles": 612787,
+    "meshNodes": 72,
+    "primitives": 240
+  },
+  "hierarchy": {
+    "root": "ROTAX_915IS_DIGITAL_TWIN",
+    "subsystems": [
+      "01_ENGINE_CORE",
+      "02_INTAKE_TURBO",
+      "03_EXHAUST",
+      "04_FUEL",
+      "05_IGNITION",
+      "06_COOLING",
+      "07_LUBRICATION",
+      "08_ELECTRICAL",
+      "09_GEARBOX",
+      "10_EXTERNAL",
+      "11_INTERNAL_ENGINE"
+    ],
+    "note": "All group nodes have identity transforms. componentId == GLB node name."
+  },
+  "counts": {
+    "entries": 73,
+    "meshComponents": 72,
+    "groupComponents": 1,
+    "cylinderSpecific": 20,
+    "bankShared": 12,
+    "multiPart": 27,
+    "faultRelevant": 43,
+    "unidentified": 3
+  },
+  "unmodelledInstruments": {
+    "cht": "No CHT sensor geometry in the model (cht_1..cht_4 are on the bus).",
+    "fuel_flow": "No fuel flow meter geometry in the model.",
+    "rpm": "No engine-speed pickup geometry in the model.",
+    "vibration": "No accelerometer geometry in the model (vibration_rms_x/y/z, vibration_kurtosis).",
+    "fuel_pressure": "No fuel pressure sensor geometry in the model."
+  },
+  "components": [
+    {
+      "componentId": "ROTAX_915IS_CRANKCASE_HALF_CYL_1_3",
+      "objectName": "ROTAX_915IS_CRANKCASE_HALF_CYL_1_3",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/01_ENGINE_CORE/ROTAX_915IS_CRANKCASE/ROTAX_915IS_CRANKCASE_HALF_CYL_1_3",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_CRANKCASE",
+      "displayName": "Crankcase half (cylinders 1/3 side)",
+      "subsystem": "01_ENGINE_CORE",
+      "parent": "ROTAX_915IS_CRANKCASE",
+      "componentType": "CRANKCASE_HALF",
+      "cylinderAssociation": {
+        "scope": "BANK",
+        "cylinders": [
+          1,
+          3
+        ],
+        "bank": "CYL_1_3",
+        "basis": "GLB extras cylinders_served / bank; one mesh serves both cylinders of the bank"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_CRANKCASE",
+      "primitives": 5,
+      "materials": [
+        "RTX_WEB_Plastic_Black_Satin",
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Rubber_Black",
+        "RTX_WEB_Paint_Black"
+      ],
+      "triangles": 20684,
+      "containsMultiplePhysicalParts": true,
+      "physicalContents": "crankcase half on the cylinder 1/3 side, carrying pushrod tubes and through-bolts",
+      "identificationBasis": "two split crankcase halves (largest islands) carrying cylinders, pushrod tubes and through-bolts",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "ABNORMAL_VIBRATION": [
+          "context"
+        ],
+        "LUBRICATION_ISSUE": [
+          "context"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_CRANKCASE_HALF_CYL_2_4",
+      "objectName": "ROTAX_915IS_CRANKCASE_HALF_CYL_2_4",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/01_ENGINE_CORE/ROTAX_915IS_CRANKCASE/ROTAX_915IS_CRANKCASE_HALF_CYL_2_4",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_CRANKCASE",
+      "displayName": "Crankcase half (cylinders 2/4 side)",
+      "subsystem": "01_ENGINE_CORE",
+      "parent": "ROTAX_915IS_CRANKCASE",
+      "componentType": "CRANKCASE_HALF",
+      "cylinderAssociation": {
+        "scope": "BANK",
+        "cylinders": [
+          2,
+          4
+        ],
+        "bank": "CYL_2_4",
+        "basis": "GLB extras cylinders_served / bank; one mesh serves both cylinders of the bank"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_CRANKCASE",
+      "primitives": 3,
+      "materials": [
+        "RTX_WEB_Plastic_Black_Satin",
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Paint_Black"
+      ],
+      "triangles": 17086,
+      "containsMultiplePhysicalParts": true,
+      "physicalContents": "crankcase half on the cylinder 2/4 side, carrying pushrod tubes and through-bolts",
+      "identificationBasis": "two split crankcase halves (largest islands) carrying cylinders, pushrod tubes and through-bolts",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "ABNORMAL_VIBRATION": [
+          "context"
+        ],
+        "LUBRICATION_ISSUE": [
+          "context"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_CRANKCASE",
+      "objectName": "ROTAX_915IS_CRANKCASE",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/01_ENGINE_CORE/ROTAX_915IS_CRANKCASE",
+      "nodeType": "GROUP",
+      "twinComponentId": "ROTAX_915IS_CRANKCASE",
+      "displayName": "Crankcase (reference, stays fixed)",
+      "subsystem": "01_ENGINE_CORE",
+      "parent": "01_ENGINE_CORE",
+      "componentType": "CRANKCASE",
+      "cylinderAssociation": {
+        "scope": "ENGINE",
+        "cylinders": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "basis": "group of both crankcase halves"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": false,
+      "selectionResolvesTo": "ROTAX_915IS_CRANKCASE",
+      "highlightTargets": [
+        "ROTAX_915IS_CRANKCASE_HALF_CYL_1_3",
+        "ROTAX_915IS_CRANKCASE_HALF_CYL_2_4"
+      ],
+      "note": "Group node: the crankcase is two animated halves. Highlighting the group applies the state to both halves.",
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "two split crankcase halves (largest islands) carrying cylinders, pushrod tubes and through-bolts",
+      "identificationBasis": "two split crankcase halves (largest islands) carrying cylinders, pushrod tubes and through-bolts",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "ABNORMAL_VIBRATION": [
+          "context"
+        ],
+        "LUBRICATION_ISSUE": [
+          "context"
+        ]
+      },
+      "animatedIn": []
+    },
+    {
+      "componentId": "ROTAX_915IS_CYLINDER_01",
+      "objectName": "ROTAX_915IS_CYLINDER_01",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/01_ENGINE_CORE/ROTAX_915IS_CYLINDER_01",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_CYLINDER_01",
+      "displayName": "Cylinder 1",
+      "subsystem": "01_ENGINE_CORE",
+      "parent": "01_ENGINE_CORE",
+      "componentType": "CYLINDER_BARREL",
+      "cylinderAssociation": {
+        "scope": "SINGLE",
+        "cylinders": [
+          1
+        ],
+        "bank": "CYL_1_3",
+        "basis": "GLB extras cylinder_number (numbering per BRP-Rotax OM 915 i A §7.1.4 Fig.2; verified geometrically)"
+      },
+      "cylinderSpecific": true,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_CYLINDER_01",
+      "primitives": 3,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Plastic_Black_Satin"
+      ],
+      "triangles": 14486,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "4 identical finned barrels; cylinder numbering per BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.1.4 Fig.2 (Cyl 1/3 on MAG-airbox-intake-hose side bank, 1&2 at PTO end); cross-checked by coolant temp sensor on head 4 (§7.2)",
+      "identificationBasis": "4 identical finned barrels; cylinder numbering per BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.1.4 Fig.2 (Cyl 1/3 on MAG-airbox-intake-hose side bank, 1&2 at PTO end); cross-checked by coolant temp sensor on head 4 (§7.2)",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "COMBUSTION_INSTABILITY": [
+          "direct"
+        ],
+        "MISFIRE": [
+          "context"
+        ],
+        "OVERHEATING_TREND": [
+          "direct"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_CYLINDER_02",
+      "objectName": "ROTAX_915IS_CYLINDER_02",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/01_ENGINE_CORE/ROTAX_915IS_CYLINDER_02",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_CYLINDER_02",
+      "displayName": "Cylinder 2",
+      "subsystem": "01_ENGINE_CORE",
+      "parent": "01_ENGINE_CORE",
+      "componentType": "CYLINDER_BARREL",
+      "cylinderAssociation": {
+        "scope": "SINGLE",
+        "cylinders": [
+          2
+        ],
+        "bank": "CYL_2_4",
+        "basis": "GLB extras cylinder_number (numbering per BRP-Rotax OM 915 i A §7.1.4 Fig.2; verified geometrically)"
+      },
+      "cylinderSpecific": true,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_CYLINDER_02",
+      "primitives": 3,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Plastic_Black_Satin"
+      ],
+      "triangles": 14486,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "4 identical finned barrels; cylinder numbering per BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.1.4 Fig.2 (Cyl 1/3 on MAG-airbox-intake-hose side bank, 1&2 at PTO end); cross-checked by coolant temp sensor on head 4 (§7.2)",
+      "identificationBasis": "4 identical finned barrels; cylinder numbering per BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.1.4 Fig.2 (Cyl 1/3 on MAG-airbox-intake-hose side bank, 1&2 at PTO end); cross-checked by coolant temp sensor on head 4 (§7.2)",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "COMBUSTION_INSTABILITY": [
+          "direct"
+        ],
+        "MISFIRE": [
+          "context"
+        ],
+        "OVERHEATING_TREND": [
+          "direct"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_CYLINDER_03",
+      "objectName": "ROTAX_915IS_CYLINDER_03",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/01_ENGINE_CORE/ROTAX_915IS_CYLINDER_03",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_CYLINDER_03",
+      "displayName": "Cylinder 3",
+      "subsystem": "01_ENGINE_CORE",
+      "parent": "01_ENGINE_CORE",
+      "componentType": "CYLINDER_BARREL",
+      "cylinderAssociation": {
+        "scope": "SINGLE",
+        "cylinders": [
+          3
+        ],
+        "bank": "CYL_1_3",
+        "basis": "GLB extras cylinder_number (numbering per BRP-Rotax OM 915 i A §7.1.4 Fig.2; verified geometrically)"
+      },
+      "cylinderSpecific": true,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_CYLINDER_03",
+      "primitives": 3,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Plastic_Black_Satin"
+      ],
+      "triangles": 14486,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "4 identical finned barrels; cylinder numbering per BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.1.4 Fig.2 (Cyl 1/3 on MAG-airbox-intake-hose side bank, 1&2 at PTO end); cross-checked by coolant temp sensor on head 4 (§7.2)",
+      "identificationBasis": "4 identical finned barrels; cylinder numbering per BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.1.4 Fig.2 (Cyl 1/3 on MAG-airbox-intake-hose side bank, 1&2 at PTO end); cross-checked by coolant temp sensor on head 4 (§7.2)",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "COMBUSTION_INSTABILITY": [
+          "direct"
+        ],
+        "MISFIRE": [
+          "context"
+        ],
+        "OVERHEATING_TREND": [
+          "direct"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_CYLINDER_04",
+      "objectName": "ROTAX_915IS_CYLINDER_04",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/01_ENGINE_CORE/ROTAX_915IS_CYLINDER_04",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_CYLINDER_04",
+      "displayName": "Cylinder 4",
+      "subsystem": "01_ENGINE_CORE",
+      "parent": "01_ENGINE_CORE",
+      "componentType": "CYLINDER_BARREL",
+      "cylinderAssociation": {
+        "scope": "SINGLE",
+        "cylinders": [
+          4
+        ],
+        "bank": "CYL_2_4",
+        "basis": "GLB extras cylinder_number (numbering per BRP-Rotax OM 915 i A §7.1.4 Fig.2; verified geometrically)"
+      },
+      "cylinderSpecific": true,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_CYLINDER_04",
+      "primitives": 3,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Plastic_Black_Satin"
+      ],
+      "triangles": 14486,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "4 identical finned barrels; cylinder numbering per BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.1.4 Fig.2 (Cyl 1/3 on MAG-airbox-intake-hose side bank, 1&2 at PTO end); cross-checked by coolant temp sensor on head 4 (§7.2)",
+      "identificationBasis": "4 identical finned barrels; cylinder numbering per BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.1.4 Fig.2 (Cyl 1/3 on MAG-airbox-intake-hose side bank, 1&2 at PTO end); cross-checked by coolant temp sensor on head 4 (§7.2)",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "COMBUSTION_INSTABILITY": [
+          "direct"
+        ],
+        "MISFIRE": [
+          "context"
+        ],
+        "OVERHEATING_TREND": [
+          "direct"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_CYLINDER_HEAD_01",
+      "objectName": "ROTAX_915IS_CYLINDER_HEAD_01",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/01_ENGINE_CORE/ROTAX_915IS_CYLINDER_HEAD_01",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_CYLINDER_HEAD_01",
+      "displayName": "Cylinder head 1",
+      "subsystem": "01_ENGINE_CORE",
+      "parent": "01_ENGINE_CORE",
+      "componentType": "CYLINDER_HEAD",
+      "cylinderAssociation": {
+        "scope": "SINGLE",
+        "cylinders": [
+          1
+        ],
+        "bank": "CYL_1_3",
+        "basis": "GLB extras cylinder_number (numbering per BRP-Rotax OM 915 i A §7.1.4 Fig.2; verified geometrically)"
+      },
+      "cylinderSpecific": true,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_CYLINDER_HEAD_01",
+      "primitives": 3,
+      "materials": [
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Plastic_Black_Satin",
+        "RTX_WEB_Metal_Polished"
+      ],
+      "triangles": 14862,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "liquid-cooled head casting with coolant/intake/exhaust ports; cylinder numbering per BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.1.4 Fig.2 (Cyl 1/3 on MAG-airbox-intake-hose side bank, 1&2 at PTO end); cross-checked by coolant temp sensor on head 4 (§7.2)",
+      "identificationBasis": "liquid-cooled head casting with coolant/intake/exhaust ports; cylinder numbering per BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.1.4 Fig.2 (Cyl 1/3 on MAG-airbox-intake-hose side bank, 1&2 at PTO end); cross-checked by coolant temp sensor on head 4 (§7.2)",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "COMBUSTION_INSTABILITY": [
+          "direct"
+        ],
+        "COOLING_DEGRADATION": [
+          "direct"
+        ],
+        "INJECTOR_ABNORMAL": [
+          "context"
+        ],
+        "MISFIRE": [
+          "context"
+        ],
+        "OVERHEATING_TREND": [
+          "context"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_CYLINDER_HEAD_02",
+      "objectName": "ROTAX_915IS_CYLINDER_HEAD_02",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/01_ENGINE_CORE/ROTAX_915IS_CYLINDER_HEAD_02",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_CYLINDER_HEAD_02",
+      "displayName": "Cylinder head 2",
+      "subsystem": "01_ENGINE_CORE",
+      "parent": "01_ENGINE_CORE",
+      "componentType": "CYLINDER_HEAD",
+      "cylinderAssociation": {
+        "scope": "SINGLE",
+        "cylinders": [
+          2
+        ],
+        "bank": "CYL_2_4",
+        "basis": "GLB extras cylinder_number (numbering per BRP-Rotax OM 915 i A §7.1.4 Fig.2; verified geometrically)"
+      },
+      "cylinderSpecific": true,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_CYLINDER_HEAD_02",
+      "primitives": 5,
+      "materials": [
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Plastic_Black_Satin",
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Label_Cyan",
+        "RTX_WEB_Plastic_Black_Gloss"
+      ],
+      "triangles": 16108,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "liquid-cooled head casting with coolant/intake/exhaust ports; cylinder numbering per BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.1.4 Fig.2 (Cyl 1/3 on MAG-airbox-intake-hose side bank, 1&2 at PTO end); cross-checked by coolant temp sensor on head 4 (§7.2)",
+      "identificationBasis": "liquid-cooled head casting with coolant/intake/exhaust ports; cylinder numbering per BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.1.4 Fig.2 (Cyl 1/3 on MAG-airbox-intake-hose side bank, 1&2 at PTO end); cross-checked by coolant temp sensor on head 4 (§7.2)",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "COMBUSTION_INSTABILITY": [
+          "direct"
+        ],
+        "COOLING_DEGRADATION": [
+          "direct"
+        ],
+        "INJECTOR_ABNORMAL": [
+          "context"
+        ],
+        "MISFIRE": [
+          "context"
+        ],
+        "OVERHEATING_TREND": [
+          "context"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_CYLINDER_HEAD_03",
+      "objectName": "ROTAX_915IS_CYLINDER_HEAD_03",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/01_ENGINE_CORE/ROTAX_915IS_CYLINDER_HEAD_03",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_CYLINDER_HEAD_03",
+      "displayName": "Cylinder head 3",
+      "subsystem": "01_ENGINE_CORE",
+      "parent": "01_ENGINE_CORE",
+      "componentType": "CYLINDER_HEAD",
+      "cylinderAssociation": {
+        "scope": "SINGLE",
+        "cylinders": [
+          3
+        ],
+        "bank": "CYL_1_3",
+        "basis": "GLB extras cylinder_number (numbering per BRP-Rotax OM 915 i A §7.1.4 Fig.2; verified geometrically)"
+      },
+      "cylinderSpecific": true,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_CYLINDER_HEAD_03",
+      "primitives": 6,
+      "materials": [
+        "RTX_WEB_Plastic_Black_Satin",
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Label_Cyan",
+        "RTX_WEB_Plastic_Black_Gloss",
+        "RTX_WEB_Rubber_Black"
+      ],
+      "triangles": 15318,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "liquid-cooled head casting with coolant/intake/exhaust ports; cylinder numbering per BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.1.4 Fig.2 (Cyl 1/3 on MAG-airbox-intake-hose side bank, 1&2 at PTO end); cross-checked by coolant temp sensor on head 4 (§7.2)",
+      "identificationBasis": "liquid-cooled head casting with coolant/intake/exhaust ports; cylinder numbering per BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.1.4 Fig.2 (Cyl 1/3 on MAG-airbox-intake-hose side bank, 1&2 at PTO end); cross-checked by coolant temp sensor on head 4 (§7.2)",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "COMBUSTION_INSTABILITY": [
+          "direct"
+        ],
+        "COOLING_DEGRADATION": [
+          "direct"
+        ],
+        "INJECTOR_ABNORMAL": [
+          "context"
+        ],
+        "MISFIRE": [
+          "context"
+        ],
+        "OVERHEATING_TREND": [
+          "context"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_CYLINDER_HEAD_04",
+      "objectName": "ROTAX_915IS_CYLINDER_HEAD_04",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/01_ENGINE_CORE/ROTAX_915IS_CYLINDER_HEAD_04",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_CYLINDER_HEAD_04",
+      "displayName": "Cylinder head 4",
+      "subsystem": "01_ENGINE_CORE",
+      "parent": "01_ENGINE_CORE",
+      "componentType": "CYLINDER_HEAD",
+      "cylinderAssociation": {
+        "scope": "SINGLE",
+        "cylinders": [
+          4
+        ],
+        "bank": "CYL_2_4",
+        "basis": "GLB extras cylinder_number (numbering per BRP-Rotax OM 915 i A §7.1.4 Fig.2; verified geometrically)"
+      },
+      "cylinderSpecific": true,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_CYLINDER_HEAD_04",
+      "primitives": 4,
+      "materials": [
+        "RTX_WEB_Plastic_Black_Satin",
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Paint_Black"
+      ],
+      "triangles": 14214,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "liquid-cooled head casting with coolant/intake/exhaust ports; cylinder numbering per BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.1.4 Fig.2 (Cyl 1/3 on MAG-airbox-intake-hose side bank, 1&2 at PTO end); cross-checked by coolant temp sensor on head 4 (§7.2)",
+      "identificationBasis": "liquid-cooled head casting with coolant/intake/exhaust ports; cylinder numbering per BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.1.4 Fig.2 (Cyl 1/3 on MAG-airbox-intake-hose side bank, 1&2 at PTO end); cross-checked by coolant temp sensor on head 4 (§7.2)",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "COMBUSTION_INSTABILITY": [
+          "direct"
+        ],
+        "COOLING_DEGRADATION": [
+          "direct"
+        ],
+        "INJECTOR_ABNORMAL": [
+          "context"
+        ],
+        "MISFIRE": [
+          "context"
+        ],
+        "OVERHEATING_TREND": [
+          "context"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_VALVE_COVER_01",
+      "objectName": "ROTAX_915IS_VALVE_COVER_01",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/01_ENGINE_CORE/ROTAX_915IS_VALVE_COVER_01",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_VALVE_COVER_01",
+      "displayName": "Valve cover 1",
+      "subsystem": "01_ENGINE_CORE",
+      "parent": "01_ENGINE_CORE",
+      "componentType": "VALVE_COVER",
+      "cylinderAssociation": {
+        "scope": "SINGLE",
+        "cylinders": [
+          1
+        ],
+        "bank": "CYL_1_3",
+        "basis": "GLB extras cylinder_number (numbering per BRP-Rotax OM 915 i A §7.1.4 Fig.2; verified geometrically)"
+      },
+      "cylinderSpecific": true,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_VALVE_COVER_01",
+      "primitives": 3,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Enamel_Blue"
+      ],
+      "triangles": 2244,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "blue ROTAX valve cover on head; cylinder numbering per BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.1.4 Fig.2 (Cyl 1/3 on MAG-airbox-intake-hose side bank, 1&2 at PTO end); cross-checked by coolant temp sensor on head 4 (§7.2)",
+      "identificationBasis": "blue ROTAX valve cover on head; cylinder numbering per BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.1.4 Fig.2 (Cyl 1/3 on MAG-airbox-intake-hose side bank, 1&2 at PTO end); cross-checked by coolant temp sensor on head 4 (§7.2)",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "COMBUSTION_INSTABILITY": [
+          "context"
+        ],
+        "INJECTOR_ABNORMAL": [
+          "context"
+        ],
+        "MISFIRE": [
+          "context"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_VALVE_COVER_02",
+      "objectName": "ROTAX_915IS_VALVE_COVER_02",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/01_ENGINE_CORE/ROTAX_915IS_VALVE_COVER_02",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_VALVE_COVER_02",
+      "displayName": "Valve cover 2",
+      "subsystem": "01_ENGINE_CORE",
+      "parent": "01_ENGINE_CORE",
+      "componentType": "VALVE_COVER",
+      "cylinderAssociation": {
+        "scope": "SINGLE",
+        "cylinders": [
+          2
+        ],
+        "bank": "CYL_2_4",
+        "basis": "GLB extras cylinder_number (numbering per BRP-Rotax OM 915 i A §7.1.4 Fig.2; verified geometrically)"
+      },
+      "cylinderSpecific": true,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_VALVE_COVER_02",
+      "primitives": 3,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Enamel_Blue"
+      ],
+      "triangles": 2244,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "blue ROTAX valve cover on head; cylinder numbering per BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.1.4 Fig.2 (Cyl 1/3 on MAG-airbox-intake-hose side bank, 1&2 at PTO end); cross-checked by coolant temp sensor on head 4 (§7.2)",
+      "identificationBasis": "blue ROTAX valve cover on head; cylinder numbering per BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.1.4 Fig.2 (Cyl 1/3 on MAG-airbox-intake-hose side bank, 1&2 at PTO end); cross-checked by coolant temp sensor on head 4 (§7.2)",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "COMBUSTION_INSTABILITY": [
+          "context"
+        ],
+        "INJECTOR_ABNORMAL": [
+          "context"
+        ],
+        "MISFIRE": [
+          "context"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_VALVE_COVER_03",
+      "objectName": "ROTAX_915IS_VALVE_COVER_03",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/01_ENGINE_CORE/ROTAX_915IS_VALVE_COVER_03",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_VALVE_COVER_03",
+      "displayName": "Valve cover 3",
+      "subsystem": "01_ENGINE_CORE",
+      "parent": "01_ENGINE_CORE",
+      "componentType": "VALVE_COVER",
+      "cylinderAssociation": {
+        "scope": "SINGLE",
+        "cylinders": [
+          3
+        ],
+        "bank": "CYL_1_3",
+        "basis": "GLB extras cylinder_number (numbering per BRP-Rotax OM 915 i A §7.1.4 Fig.2; verified geometrically)"
+      },
+      "cylinderSpecific": true,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_VALVE_COVER_03",
+      "primitives": 3,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Enamel_Blue"
+      ],
+      "triangles": 2244,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "blue ROTAX valve cover on head; cylinder numbering per BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.1.4 Fig.2 (Cyl 1/3 on MAG-airbox-intake-hose side bank, 1&2 at PTO end); cross-checked by coolant temp sensor on head 4 (§7.2)",
+      "identificationBasis": "blue ROTAX valve cover on head; cylinder numbering per BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.1.4 Fig.2 (Cyl 1/3 on MAG-airbox-intake-hose side bank, 1&2 at PTO end); cross-checked by coolant temp sensor on head 4 (§7.2)",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "COMBUSTION_INSTABILITY": [
+          "context"
+        ],
+        "INJECTOR_ABNORMAL": [
+          "context"
+        ],
+        "MISFIRE": [
+          "context"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_VALVE_COVER_04",
+      "objectName": "ROTAX_915IS_VALVE_COVER_04",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/01_ENGINE_CORE/ROTAX_915IS_VALVE_COVER_04",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_VALVE_COVER_04",
+      "displayName": "Valve cover 4",
+      "subsystem": "01_ENGINE_CORE",
+      "parent": "01_ENGINE_CORE",
+      "componentType": "VALVE_COVER",
+      "cylinderAssociation": {
+        "scope": "SINGLE",
+        "cylinders": [
+          4
+        ],
+        "bank": "CYL_2_4",
+        "basis": "GLB extras cylinder_number (numbering per BRP-Rotax OM 915 i A §7.1.4 Fig.2; verified geometrically)"
+      },
+      "cylinderSpecific": true,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_VALVE_COVER_04",
+      "primitives": 3,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Enamel_Blue"
+      ],
+      "triangles": 2244,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "blue ROTAX valve cover on head; cylinder numbering per BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.1.4 Fig.2 (Cyl 1/3 on MAG-airbox-intake-hose side bank, 1&2 at PTO end); cross-checked by coolant temp sensor on head 4 (§7.2)",
+      "identificationBasis": "blue ROTAX valve cover on head; cylinder numbering per BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.1.4 Fig.2 (Cyl 1/3 on MAG-airbox-intake-hose side bank, 1&2 at PTO end); cross-checked by coolant temp sensor on head 4 (§7.2)",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "COMBUSTION_INSTABILITY": [
+          "context"
+        ],
+        "INJECTOR_ABNORMAL": [
+          "context"
+        ],
+        "MISFIRE": [
+          "context"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_AIR_INTAKE_HOSE",
+      "objectName": "ROTAX_915IS_AIR_INTAKE_HOSE",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/02_INTAKE_TURBO/ROTAX_915IS_AIR_INTAKE_HOSE",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_AIR_INTAKE_HOSE",
+      "displayName": "Air intake hose",
+      "subsystem": "02_INTAKE_TURBO",
+      "parent": "02_INTAKE_TURBO",
+      "componentType": "AIR_INTAKE_HOSE",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_AIR_INTAKE_HOSE",
+      "primitives": 2,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Plastic_Black_Satin"
+      ],
+      "triangles": 2756,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.6 Fig.10 item 2 'Air intake hose'",
+      "identificationBasis": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.6 Fig.10 item 2 'Air intake hose'",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_AIRBOX",
+      "objectName": "ROTAX_915IS_AIRBOX",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/02_INTAKE_TURBO/ROTAX_915IS_AIRBOX",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_AIRBOX",
+      "displayName": "Airbox / plenum",
+      "subsystem": "02_INTAKE_TURBO",
+      "parent": "02_INTAKE_TURBO",
+      "componentType": "AIRBOX_PLENUM",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_AIRBOX",
+      "primitives": 3,
+      "materials": [
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Plastic_Black_Matte"
+      ],
+      "triangles": 14194,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "airbox / plenum casting",
+      "identificationBasis": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.1.3 Fig.1 item 5 'Airbox' (ROTAX embossed plenum)",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_BOOST_CONTROL_SOLENOID_VALVE",
+      "objectName": "ROTAX_915IS_BOOST_CONTROL_SOLENOID_VALVE",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/02_INTAKE_TURBO/ROTAX_915IS_BOOST_CONTROL_SOLENOID_VALVE",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_BOOST_CONTROL_SOLENOID_VALVE",
+      "displayName": "Boost control solenoid valve",
+      "subsystem": "02_INTAKE_TURBO",
+      "parent": "02_INTAKE_TURBO",
+      "componentType": "BOOST_CONTROL_VALVE",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_BOOST_CONTROL_SOLENOID_VALVE",
+      "primitives": 4,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Plastic_Black_Satin",
+        "RTX_WEB_Plastic_Black_Gloss"
+      ],
+      "triangles": 8762,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "source object 'Magnetovalve' (solenoid valve); BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.10 item 7 'Solenoid valve' (pressure control valve)",
+      "identificationBasis": "source object 'Magnetovalve' (solenoid valve); BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.10 item 7 'Solenoid valve' (pressure control valve)",
+      "identificationConfidence": "medium",
+      "installedPosition": false,
+      "positionNote": "Separate object in the source model, displayed beside the engine rather than in its installed position.",
+      "internal": false,
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_INTAKE_MANIFOLD_CYL_1_3",
+      "objectName": "ROTAX_915IS_INTAKE_MANIFOLD_CYL_1_3",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/02_INTAKE_TURBO/ROTAX_915IS_INTAKE_MANIFOLD_CYL_1_3",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_INTAKE_MANIFOLD_CYL_1_3",
+      "displayName": "Intake manifold cyl 1/3",
+      "subsystem": "02_INTAKE_TURBO",
+      "parent": "02_INTAKE_TURBO",
+      "componentType": "INTAKE_MANIFOLD",
+      "cylinderAssociation": {
+        "scope": "BANK",
+        "cylinders": [
+          1,
+          3
+        ],
+        "bank": "CYL_1_3",
+        "basis": "GLB extras cylinders_served / bank; one mesh serves both cylinders of the bank"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_INTAKE_MANIFOLD_CYL_1_3",
+      "primitives": 5,
+      "materials": [
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Plastic_Black_Satin",
+        "RTX_WEB_Rubber_Black",
+        "RTX_WEB_Plastic_Black_Matte"
+      ],
+      "triangles": 12664,
+      "containsMultiplePhysicalParts": true,
+      "physicalContents": "runner casting to the heads of cylinders 1 and 3",
+      "identificationBasis": "runner casting from airbox to heads of cylinders 1 & 3 (§7.6 air flow text)",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_INTAKE_MANIFOLD_CYL_2_4",
+      "objectName": "ROTAX_915IS_INTAKE_MANIFOLD_CYL_2_4",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/02_INTAKE_TURBO/ROTAX_915IS_INTAKE_MANIFOLD_CYL_2_4",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_INTAKE_MANIFOLD_CYL_2_4",
+      "displayName": "Intake manifold cyl 2/4",
+      "subsystem": "02_INTAKE_TURBO",
+      "parent": "02_INTAKE_TURBO",
+      "componentType": "INTAKE_MANIFOLD",
+      "cylinderAssociation": {
+        "scope": "BANK",
+        "cylinders": [
+          2,
+          4
+        ],
+        "bank": "CYL_2_4",
+        "basis": "GLB extras cylinders_served / bank; one mesh serves both cylinders of the bank"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_INTAKE_MANIFOLD_CYL_2_4",
+      "primitives": 4,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Rubber_Black",
+        "RTX_WEB_Plastic_Black_Matte"
+      ],
+      "triangles": 12096,
+      "containsMultiplePhysicalParts": true,
+      "physicalContents": "runner casting to the heads of cylinders 2 and 4",
+      "identificationBasis": "runner casting from airbox to heads of cylinders 2 & 4 (§7.6 air flow text)",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_INTERCOOLER",
+      "objectName": "ROTAX_915IS_INTERCOOLER",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/02_INTAKE_TURBO/ROTAX_915IS_INTERCOOLER",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_INTERCOOLER",
+      "displayName": "Intercooler",
+      "subsystem": "02_INTAKE_TURBO",
+      "parent": "02_INTAKE_TURBO",
+      "componentType": "INTERCOOLER",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_INTERCOOLER",
+      "primitives": 1,
+      "materials": [
+        "RTX_WEB_Metal_Satin"
+      ],
+      "triangles": 3324,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "source object 'Intercooler'; BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.1 item 4",
+      "identificationBasis": "source object 'Intercooler'; BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.1 item 4",
+      "identificationConfidence": "high",
+      "installedPosition": false,
+      "positionNote": "Separate object in the source model, displayed beside the engine rather than in its installed position.",
+      "internal": false,
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_OVERBOOST_VALVE",
+      "objectName": "ROTAX_915IS_OVERBOOST_VALVE",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/02_INTAKE_TURBO/ROTAX_915IS_OVERBOOST_VALVE",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_OVERBOOST_VALVE",
+      "displayName": "Overboost (pop-off) valve",
+      "subsystem": "02_INTAKE_TURBO",
+      "parent": "02_INTAKE_TURBO",
+      "componentType": "OVERBOOST_VALVE",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_OVERBOOST_VALVE",
+      "primitives": 3,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Plastic_Black_Satin"
+      ],
+      "triangles": 2898,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "source object 'Overboost valve'; BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.10 item 5 'Pop OFF valve' / Fig.11 'Overboost Valve'",
+      "identificationBasis": "source object 'Overboost valve'; BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.10 item 5 'Pop OFF valve' / Fig.11 'Overboost Valve'",
+      "identificationConfidence": "high",
+      "installedPosition": false,
+      "positionNote": "Separate object in the source model, displayed beside the engine rather than in its installed position.",
+      "internal": false,
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_THROTTLE_BODY",
+      "objectName": "ROTAX_915IS_THROTTLE_BODY",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/02_INTAKE_TURBO/ROTAX_915IS_THROTTLE_BODY",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_THROTTLE_BODY",
+      "displayName": "Throttle body",
+      "subsystem": "02_INTAKE_TURBO",
+      "parent": "02_INTAKE_TURBO",
+      "componentType": "THROTTLE_BODY",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_THROTTLE_BODY",
+      "primitives": 5,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Plastic_Black_Gloss",
+        "RTX_WEB_Rubber_Black",
+        "RTX_WEB_Plastic_Black_Matte"
+      ],
+      "triangles": 15640,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.6 Fig.10 item 6 'Throttle' at airbox inlet",
+      "identificationBasis": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.6 Fig.10 item 6 'Throttle' at airbox inlet",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_TURBOCHARGER",
+      "objectName": "ROTAX_915IS_TURBOCHARGER",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/02_INTAKE_TURBO/ROTAX_915IS_TURBOCHARGER",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_TURBOCHARGER",
+      "displayName": "Turbocharger",
+      "subsystem": "02_INTAKE_TURBO",
+      "parent": "02_INTAKE_TURBO",
+      "componentType": "TURBOCHARGER",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_TURBOCHARGER",
+      "primitives": 4,
+      "materials": [
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Plastic_Black_Gloss",
+        "RTX_WEB_Label_PaleLavender"
+      ],
+      "triangles": 32875,
+      "containsMultiplePhysicalParts": true,
+      "physicalContents": "compressor and turbine housings, centre housing and support bracket in one mesh",
+      "identificationBasis": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.10 item 3 / Fig.12 item 4: compressor + turbine housings, centre housing, support bracket",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_WASTEGATE_ACTUATOR",
+      "objectName": "ROTAX_915IS_WASTEGATE_ACTUATOR",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/02_INTAKE_TURBO/ROTAX_915IS_WASTEGATE_ACTUATOR",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_WASTEGATE_ACTUATOR",
+      "displayName": "Wastegate actuator",
+      "subsystem": "02_INTAKE_TURBO",
+      "parent": "02_INTAKE_TURBO",
+      "componentType": "WASTEGATE_ACTUATOR",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_WASTEGATE_ACTUATOR",
+      "primitives": 3,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Label_OffWhite"
+      ],
+      "triangles": 4446,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.10 item 8 'Waste gate' actuator canister with rod linkage",
+      "identificationBasis": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.10 item 8 'Waste gate' actuator canister with rod linkage",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_EXHAUST_MANIFOLD",
+      "objectName": "ROTAX_915IS_EXHAUST_MANIFOLD",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/03_EXHAUST/ROTAX_915IS_EXHAUST_MANIFOLD",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_EXHAUST_MANIFOLD",
+      "displayName": "Exhaust manifold",
+      "subsystem": "03_EXHAUST",
+      "parent": "03_EXHAUST",
+      "componentType": "EXHAUST_MANIFOLD",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_EXHAUST_MANIFOLD",
+      "primitives": 2,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Metal_Exhaust"
+      ],
+      "triangles": 16368,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.12 item 1 'Exhaust manifold' collector with slip joints/clamps",
+      "identificationBasis": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.12 item 1 'Exhaust manifold' collector with slip joints/clamps",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_EXHAUST_PIPES_CYL_1_3",
+      "objectName": "ROTAX_915IS_EXHAUST_PIPES_CYL_1_3",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/03_EXHAUST/ROTAX_915IS_EXHAUST_PIPES_CYL_1_3",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_EXHAUST_PIPES_CYL_1_3",
+      "displayName": "Exhaust pipes cyl 1/3",
+      "subsystem": "03_EXHAUST",
+      "parent": "03_EXHAUST",
+      "componentType": "EXHAUST_PIPE_SET",
+      "cylinderAssociation": {
+        "scope": "BANK",
+        "cylinders": [
+          1,
+          3
+        ],
+        "bank": "CYL_1_3",
+        "basis": "GLB extras cylinders_served / bank; one mesh serves both cylinders of the bank"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_EXHAUST_PIPES_CYL_1_3",
+      "primitives": 2,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Metal_Exhaust"
+      ],
+      "triangles": 3794,
+      "containsMultiplePhysicalParts": true,
+      "physicalContents": "exhaust pipes from heads 1 and 3",
+      "identificationBasis": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.12 item 2 'Exhaust pipes' from heads 1 & 3 (traced by contact)",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_EXHAUST_PIPES_CYL_2_4",
+      "objectName": "ROTAX_915IS_EXHAUST_PIPES_CYL_2_4",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/03_EXHAUST/ROTAX_915IS_EXHAUST_PIPES_CYL_2_4",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_EXHAUST_PIPES_CYL_2_4",
+      "displayName": "Exhaust pipes cyl 2/4",
+      "subsystem": "03_EXHAUST",
+      "parent": "03_EXHAUST",
+      "componentType": "EXHAUST_PIPE_SET",
+      "cylinderAssociation": {
+        "scope": "BANK",
+        "cylinders": [
+          2,
+          4
+        ],
+        "bank": "CYL_2_4",
+        "basis": "GLB extras cylinders_served / bank; one mesh serves both cylinders of the bank"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_EXHAUST_PIPES_CYL_2_4",
+      "primitives": 2,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Metal_Exhaust"
+      ],
+      "triangles": 4214,
+      "containsMultiplePhysicalParts": true,
+      "physicalContents": "exhaust pipes from heads 2 and 4",
+      "identificationBasis": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.12 item 2 'Exhaust pipes' from heads 2 & 4 (traced by contact)",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_MUFFLER",
+      "objectName": "ROTAX_915IS_MUFFLER",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/03_EXHAUST/ROTAX_915IS_MUFFLER",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_MUFFLER",
+      "displayName": "Muffler + tailpipe",
+      "subsystem": "03_EXHAUST",
+      "parent": "03_EXHAUST",
+      "componentType": "MUFFLER",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_MUFFLER",
+      "primitives": 4,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Plastic_Black_Satin",
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Metal_Exhaust"
+      ],
+      "triangles": 6264,
+      "containsMultiplePhysicalParts": true,
+      "physicalContents": "muffler with clamp band, brackets, turbine outlet flange and tailpipe",
+      "identificationBasis": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.12 item 3 'Muffler' incl. clamp band, brackets, turbine outlet flange and tailpipe",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_FUEL_INJECTORS_CYL_1_3",
+      "objectName": "ROTAX_915IS_FUEL_INJECTORS_CYL_1_3",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/04_FUEL/ROTAX_915IS_FUEL_INJECTORS_CYL_1_3",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_FUEL_INJECTORS_CYL_1_3",
+      "displayName": "Fuel injectors cyl 1/3",
+      "subsystem": "04_FUEL",
+      "parent": "04_FUEL",
+      "componentType": "FUEL_INJECTOR_SET",
+      "cylinderAssociation": {
+        "scope": "BANK",
+        "cylinders": [
+          1,
+          3
+        ],
+        "bank": "CYL_1_3",
+        "basis": "GLB extras cylinders_served / bank; one mesh serves both cylinders of the bank"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_FUEL_INJECTORS_CYL_1_3",
+      "primitives": 4,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Rubber_Black",
+        "RTX_WEB_Plastic_Black_Gloss"
+      ],
+      "triangles": 5114,
+      "containsMultiplePhysicalParts": true,
+      "physicalContents": "injector bodies/connectors of cylinders 1 and 3 (2 per cylinder in this model) in one mesh",
+      "identificationBasis": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.5 item 5 'Injection valves': 4 injector bodies/connectors between rail and manifold (2 per cylinder in this model)",
+      "identificationConfidence": "medium",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "COMBUSTION_INSTABILITY": [
+          "context"
+        ],
+        "INJECTOR_ABNORMAL": [
+          "direct"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_FUEL_INJECTORS_CYL_2_4",
+      "objectName": "ROTAX_915IS_FUEL_INJECTORS_CYL_2_4",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/04_FUEL/ROTAX_915IS_FUEL_INJECTORS_CYL_2_4",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_FUEL_INJECTORS_CYL_2_4",
+      "displayName": "Fuel injectors cyl 2/4",
+      "subsystem": "04_FUEL",
+      "parent": "04_FUEL",
+      "componentType": "FUEL_INJECTOR_SET",
+      "cylinderAssociation": {
+        "scope": "BANK",
+        "cylinders": [
+          2,
+          4
+        ],
+        "bank": "CYL_2_4",
+        "basis": "GLB extras cylinders_served / bank; one mesh serves both cylinders of the bank"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_FUEL_INJECTORS_CYL_2_4",
+      "primitives": 4,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Rubber_Black",
+        "RTX_WEB_Plastic_Black_Gloss"
+      ],
+      "triangles": 6878,
+      "containsMultiplePhysicalParts": true,
+      "physicalContents": "injector bodies/connectors of cylinders 2 and 4 (2 per cylinder in this model) in one mesh",
+      "identificationBasis": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.5 item 5 'Injection valves': 4 injector bodies/connectors between rail and manifold (2 per cylinder in this model)",
+      "identificationConfidence": "medium",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "COMBUSTION_INSTABILITY": [
+          "context"
+        ],
+        "INJECTOR_ABNORMAL": [
+          "direct"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_FUEL_LINES",
+      "objectName": "ROTAX_915IS_FUEL_LINES",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/04_FUEL/ROTAX_915IS_FUEL_LINES",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_FUEL_LINES",
+      "displayName": "Fuel lines",
+      "subsystem": "04_FUEL",
+      "parent": "04_FUEL",
+      "componentType": "FUEL_LINE_SET",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_FUEL_LINES",
+      "primitives": 3,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Enamel_White",
+        "RTX_WEB_Plastic_Black_Gloss"
+      ],
+      "triangles": 3250,
+      "containsMultiplePhysicalParts": true,
+      "physicalContents": "rail-to-rail crossover and rail 2/4 outlet line",
+      "identificationBasis": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.5 item 4 'Fuel line' rail-to-rail crossover + rail 2/4 outlet line",
+      "identificationConfidence": "medium",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_FUEL_PRESSURE_REGULATOR",
+      "objectName": "ROTAX_915IS_FUEL_PRESSURE_REGULATOR",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/04_FUEL/ROTAX_915IS_FUEL_PRESSURE_REGULATOR",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_FUEL_PRESSURE_REGULATOR",
+      "displayName": "Fuel pressure regulator",
+      "subsystem": "04_FUEL",
+      "parent": "04_FUEL",
+      "componentType": "FUEL_PRESSURE_REGULATOR",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_FUEL_PRESSURE_REGULATOR",
+      "primitives": 4,
+      "materials": [
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Plastic_Black_Satin",
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Plastic_Black_Gloss"
+      ],
+      "triangles": 3814,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.5 item 6 'Fuel pressure regulator' at end of rail 2/4",
+      "identificationBasis": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.5 item 6 'Fuel pressure regulator' at end of rail 2/4",
+      "identificationConfidence": "medium",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_FUEL_RAIL_CYL_1_3",
+      "objectName": "ROTAX_915IS_FUEL_RAIL_CYL_1_3",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/04_FUEL/ROTAX_915IS_FUEL_RAIL_CYL_1_3",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_FUEL_RAIL_CYL_1_3",
+      "displayName": "Fuel rail cyl 1/3",
+      "subsystem": "04_FUEL",
+      "parent": "04_FUEL",
+      "componentType": "FUEL_RAIL",
+      "cylinderAssociation": {
+        "scope": "BANK",
+        "cylinders": [
+          1,
+          3
+        ],
+        "bank": "CYL_1_3",
+        "basis": "GLB extras cylinders_served / bank; one mesh serves both cylinders of the bank"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_FUEL_RAIL_CYL_1_3",
+      "primitives": 3,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Enamel_White",
+        "RTX_WEB_Enamel_Blue"
+      ],
+      "triangles": 4112,
+      "containsMultiplePhysicalParts": true,
+      "physicalContents": "fuel rail serving cylinders 1 and 3",
+      "identificationBasis": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.5 item 3 'Fuel rail' under blue '915 iS' cover, cylinders 1 & 3",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "INJECTOR_ABNORMAL": [
+          "context"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_FUEL_RAIL_CYL_2_4",
+      "objectName": "ROTAX_915IS_FUEL_RAIL_CYL_2_4",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/04_FUEL/ROTAX_915IS_FUEL_RAIL_CYL_2_4",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_FUEL_RAIL_CYL_2_4",
+      "displayName": "Fuel rail cyl 2/4",
+      "subsystem": "04_FUEL",
+      "parent": "04_FUEL",
+      "componentType": "FUEL_RAIL",
+      "cylinderAssociation": {
+        "scope": "BANK",
+        "cylinders": [
+          2,
+          4
+        ],
+        "bank": "CYL_2_4",
+        "basis": "GLB extras cylinders_served / bank; one mesh serves both cylinders of the bank"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_FUEL_RAIL_CYL_2_4",
+      "primitives": 4,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Enamel_White",
+        "RTX_WEB_Label_Yellow",
+        "RTX_WEB_Enamel_Blue"
+      ],
+      "triangles": 4718,
+      "containsMultiplePhysicalParts": true,
+      "physicalContents": "fuel rail serving cylinders 2 and 4",
+      "identificationBasis": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.5 item 3 'Fuel rail' under blue '915 iS' cover, cylinders 2 & 4",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "INJECTOR_ABNORMAL": [
+          "context"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_IGNITION_COILS",
+      "objectName": "ROTAX_915IS_IGNITION_COILS",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/05_IGNITION/ROTAX_915IS_IGNITION_COILS",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_IGNITION_COILS",
+      "displayName": "Ignition coils (4 double coils)",
+      "subsystem": "05_IGNITION",
+      "parent": "05_IGNITION",
+      "componentType": "IGNITION_COIL_SET",
+      "cylinderAssociation": {
+        "scope": "ENGINE",
+        "cylinders": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "basis": "one mesh serving all four cylinders"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_IGNITION_COILS",
+      "primitives": 3,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Enamel_White",
+        "RTX_WEB_Plastic_Black_Gloss"
+      ],
+      "triangles": 8378,
+      "containsMultiplePhysicalParts": true,
+      "physicalContents": "4 double ignition coils (serving all cylinders) in one mesh",
+      "identificationBasis": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.5.2 '4 double ignition coils': 4 identical coil bodies, each feeding 2 HT leads",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "MISFIRE": [
+          "context"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_IGNITION_LEADS",
+      "objectName": "ROTAX_915IS_IGNITION_LEADS",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/05_IGNITION/ROTAX_915IS_IGNITION_LEADS",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_IGNITION_LEADS",
+      "displayName": "Ignition (HT) leads",
+      "subsystem": "05_IGNITION",
+      "parent": "05_IGNITION",
+      "componentType": "IGNITION_LEAD_SET",
+      "cylinderAssociation": {
+        "scope": "ENGINE",
+        "cylinders": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "basis": "one mesh serving all four cylinders"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_IGNITION_LEADS",
+      "primitives": 4,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Enamel_White",
+        "RTX_WEB_Rubber_Black",
+        "RTX_WEB_Plastic_Black_Gloss"
+      ],
+      "triangles": 20434,
+      "containsMultiplePhysicalParts": true,
+      "physicalContents": "8 HT leads (all cylinders) in one mesh",
+      "identificationBasis": "8 HT leads (cable + sheath) traced from coils to plug caps; cross-bank pairs match simultaneous 1&2 / 3&4 firing",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "MISFIRE": [
+          "context"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_SPARK_PLUGS_CYL_1_3",
+      "objectName": "ROTAX_915IS_SPARK_PLUGS_CYL_1_3",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/05_IGNITION/ROTAX_915IS_SPARK_PLUGS_CYL_1_3",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_SPARK_PLUGS_CYL_1_3",
+      "displayName": "Spark plugs cyl 1/3",
+      "subsystem": "05_IGNITION",
+      "parent": "05_IGNITION",
+      "componentType": "SPARK_PLUG_SET",
+      "cylinderAssociation": {
+        "scope": "BANK",
+        "cylinders": [
+          1,
+          3
+        ],
+        "bank": "CYL_1_3",
+        "basis": "GLB extras cylinders_served / bank; one mesh serves both cylinders of the bank"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_SPARK_PLUGS_CYL_1_3",
+      "primitives": 5,
+      "materials": [
+        "RTX_WEB_Plastic_Black_Gloss",
+        "RTX_WEB_Plastic_Black_Matte",
+        "RTX_WEB_Plastic_Black_Satin",
+        "RTX_WEB_Label_Amber",
+        "RTX_WEB_Plastic_Grey"
+      ],
+      "triangles": 7355,
+      "containsMultiplePhysicalParts": true,
+      "physicalContents": "4 spark plugs + caps (upper and lower plug of cylinders 1 and 3) in one mesh",
+      "identificationBasis": "4 spark plugs + caps (upper & lower plug per cylinder) on heads 1 & 3",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "COMBUSTION_INSTABILITY": [
+          "context"
+        ],
+        "MISFIRE": [
+          "direct"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_SPARK_PLUGS_CYL_2_4",
+      "objectName": "ROTAX_915IS_SPARK_PLUGS_CYL_2_4",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/05_IGNITION/ROTAX_915IS_SPARK_PLUGS_CYL_2_4",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_SPARK_PLUGS_CYL_2_4",
+      "displayName": "Spark plugs cyl 2/4",
+      "subsystem": "05_IGNITION",
+      "parent": "05_IGNITION",
+      "componentType": "SPARK_PLUG_SET",
+      "cylinderAssociation": {
+        "scope": "BANK",
+        "cylinders": [
+          2,
+          4
+        ],
+        "bank": "CYL_2_4",
+        "basis": "GLB extras cylinders_served / bank; one mesh serves both cylinders of the bank"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_SPARK_PLUGS_CYL_2_4",
+      "primitives": 5,
+      "materials": [
+        "RTX_WEB_Plastic_Black_Gloss",
+        "RTX_WEB_Plastic_Black_Matte",
+        "RTX_WEB_Plastic_Black_Satin",
+        "RTX_WEB_Label_Amber",
+        "RTX_WEB_Plastic_Grey"
+      ],
+      "triangles": 7354,
+      "containsMultiplePhysicalParts": true,
+      "physicalContents": "4 spark plugs + caps (upper and lower plug of cylinders 2 and 4) in one mesh",
+      "identificationBasis": "4 spark plugs + caps (upper & lower plug per cylinder) on heads 2 & 4",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "COMBUSTION_INSTABILITY": [
+          "context"
+        ],
+        "MISFIRE": [
+          "direct"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_COOLANT_EXPANSION_TANK",
+      "objectName": "ROTAX_915IS_COOLANT_EXPANSION_TANK",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/06_COOLING/ROTAX_915IS_COOLANT_EXPANSION_TANK",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_COOLANT_EXPANSION_TANK",
+      "displayName": "Coolant expansion tank",
+      "subsystem": "06_COOLING",
+      "parent": "06_COOLING",
+      "componentType": "COOLANT_EXPANSION_TANK",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_COOLANT_EXPANSION_TANK",
+      "primitives": 5,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Enamel_White",
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Plastic_Black_Gloss",
+        "RTX_WEB_Plastic_Grey"
+      ],
+      "triangles": 6208,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.2 Fig.4 item 1 'Expansion tank' on top of engine with pressure cap",
+      "identificationBasis": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.2 Fig.4 item 1 'Expansion tank' on top of engine with pressure cap",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "COOLING_DEGRADATION": [
+          "context"
+        ],
+        "OVERHEATING_TREND": [
+          "context"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_COOLANT_HOSES",
+      "objectName": "ROTAX_915IS_COOLANT_HOSES",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/06_COOLING/ROTAX_915IS_COOLANT_HOSES",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_COOLANT_HOSES",
+      "displayName": "Coolant hoses",
+      "subsystem": "06_COOLING",
+      "parent": "06_COOLING",
+      "componentType": "COOLANT_HOSE_SET",
+      "cylinderAssociation": {
+        "scope": "ENGINE",
+        "cylinders": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "basis": "one mesh serving all four cylinders"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_COOLANT_HOSES",
+      "primitives": 5,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Rubber_Black",
+        "RTX_WEB_Plastic_Black_Gloss",
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Plastic_Black_Matte"
+      ],
+      "triangles": 15512,
+      "containsMultiplePhysicalParts": true,
+      "physicalContents": "all coolant hoses (pump -> head inlets, head outlets -> expansion tank -> pump) in one mesh",
+      "identificationBasis": "hoses traced by contact: water pump -> lower head inlets, upper head outlets -> expansion tank -> pump",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "COOLING_DEGRADATION": [
+          "context"
+        ],
+        "OVERHEATING_TREND": [
+          "context"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_WATER_PUMP",
+      "objectName": "ROTAX_915IS_WATER_PUMP",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/06_COOLING/ROTAX_915IS_WATER_PUMP",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_WATER_PUMP",
+      "displayName": "Water (coolant) pump",
+      "subsystem": "06_COOLING",
+      "parent": "06_COOLING",
+      "componentType": "COOLANT_PUMP",
+      "cylinderAssociation": {
+        "scope": "ENGINE",
+        "cylinders": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "basis": "one mesh serving all four cylinders"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_WATER_PUMP",
+      "primitives": 3,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Plastic_Black_Satin",
+        "RTX_WEB_Rubber_Black"
+      ],
+      "triangles": 5344,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "pump housing at MAG side feeding all 4 head inlets (BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.2 'water pump driven from the camshaft')",
+      "identificationBasis": "pump housing at MAG side feeding all 4 head inlets (BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.2 'water pump driven from the camshaft')",
+      "identificationConfidence": "medium",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "COOLING_DEGRADATION": [
+          "direct"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_OIL_FILTER",
+      "objectName": "ROTAX_915IS_OIL_FILTER",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/07_LUBRICATION/ROTAX_915IS_OIL_FILTER",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_OIL_FILTER",
+      "displayName": "Oil filter",
+      "subsystem": "07_LUBRICATION",
+      "parent": "07_LUBRICATION",
+      "componentType": "OIL_FILTER",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_OIL_FILTER",
+      "primitives": 1,
+      "materials": [
+        "RTX_WEB_Plastic_Black_Gloss"
+      ],
+      "triangles": 768,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.1 item 11 / Fig.7 item 3 'Oil filter' canister on oil pump module",
+      "identificationBasis": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.1 item 11 / Fig.7 item 3 'Oil filter' canister on oil pump module",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "LUBRICATION_ISSUE": [
+          "direct"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_OIL_LINES_TURBO",
+      "objectName": "ROTAX_915IS_OIL_LINES_TURBO",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/07_LUBRICATION/ROTAX_915IS_OIL_LINES_TURBO",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_OIL_LINES_TURBO",
+      "displayName": "Turbo oil feed/return lines",
+      "subsystem": "07_LUBRICATION",
+      "parent": "07_LUBRICATION",
+      "componentType": "OIL_LINE_SET",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_OIL_LINES_TURBO",
+      "primitives": 2,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Plastic_Black_Matte"
+      ],
+      "triangles": 4244,
+      "containsMultiplePhysicalParts": true,
+      "physicalContents": "turbocharger oil feed and return lines",
+      "identificationBasis": "lines from oil pump module to turbocharger (BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.4 'turbocharger lubricated via a separate oil line')",
+      "identificationConfidence": "medium",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "LUBRICATION_ISSUE": [
+          "direct"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_OIL_PUMP",
+      "objectName": "ROTAX_915IS_OIL_PUMP",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/07_LUBRICATION/ROTAX_915IS_OIL_PUMP",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_OIL_PUMP",
+      "displayName": "Oil pump module",
+      "subsystem": "07_LUBRICATION",
+      "parent": "07_LUBRICATION",
+      "componentType": "OIL_PUMP_MODULE",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_OIL_PUMP",
+      "primitives": 5,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Plastic_Black_Satin",
+        "RTX_WEB_Metal_Exhaust",
+        "RTX_WEB_Rubber_Black"
+      ],
+      "triangles": 8144,
+      "containsMultiplePhysicalParts": true,
+      "physicalContents": "oil pump module including the pressure regulator",
+      "identificationBasis": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.7 item 2 'Oil pump' module (with pressure regulator) carrying the oil filter",
+      "identificationConfidence": "medium",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "LUBRICATION_ISSUE": [
+          "direct"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_OIL_TANK",
+      "objectName": "ROTAX_915IS_OIL_TANK",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/07_LUBRICATION/ROTAX_915IS_OIL_TANK",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_OIL_TANK",
+      "displayName": "Oil tank",
+      "subsystem": "07_LUBRICATION",
+      "parent": "07_LUBRICATION",
+      "componentType": "OIL_TANK",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_OIL_TANK",
+      "primitives": 1,
+      "materials": [
+        "RTX_WEB_Metal_Polished"
+      ],
+      "triangles": 11138,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "source object 'Oil tank'; BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.1 item 10",
+      "identificationBasis": "source object 'Oil tank'; BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.1 item 10",
+      "identificationConfidence": "high",
+      "installedPosition": false,
+      "positionNote": "Separate object in the source model, displayed beside the engine rather than in its installed position.",
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "LUBRICATION_ISSUE": [
+          "direct"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_TURBO_OIL_SUMP",
+      "objectName": "ROTAX_915IS_TURBO_OIL_SUMP",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/07_LUBRICATION/ROTAX_915IS_TURBO_OIL_SUMP",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_TURBO_OIL_SUMP",
+      "displayName": "Turbocharger oil sump",
+      "subsystem": "07_LUBRICATION",
+      "parent": "07_LUBRICATION",
+      "componentType": "OIL_SUMP",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_TURBO_OIL_SUMP",
+      "primitives": 1,
+      "materials": [
+        "RTX_WEB_Metal_Polished"
+      ],
+      "triangles": 508,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.7 item 8 'Turbocharger oil sump (with oil screen)'",
+      "identificationBasis": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.7 item 8 'Turbocharger oil sump (with oil screen)'",
+      "identificationConfidence": "medium",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "LUBRICATION_ISSUE": [
+          "direct"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "UNKNOWN_COMPONENT_003",
+      "objectName": "UNKNOWN_COMPONENT_003",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/07_LUBRICATION/UNKNOWN_COMPONENT_003",
+      "nodeType": "MESH",
+      "twinComponentId": "UNKNOWN_COMPONENT_003",
+      "displayName": "Unknown: remote sensor block + sensing lines",
+      "subsystem": "07_LUBRICATION",
+      "parent": "07_LUBRICATION",
+      "componentType": "UNIDENTIFIED",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "UNKNOWN_COMPONENT_003",
+      "primitives": 4,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Plastic_Black_Gloss",
+        "RTX_WEB_Rubber_Black"
+      ],
+      "triangles": 17430,
+      "containsMultiplePhysicalParts": true,
+      "physicalContents": "3 remote-mounted sensor bodies on a bracket with metal sensing lines",
+      "identificationBasis": "3 remote-mounted sensor bodies on a bracket with metal sensing lines to crankcase top and ignition housing; exact function not confirmed (possibly oil pressure/temperature sensing)",
+      "identificationConfidence": "low",
+      "installedPosition": true,
+      "internal": false,
+      "identityNote": "Identity not confirmed; excluded from all fault mappings.",
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_AMBIENT_AIR_SENSOR",
+      "objectName": "ROTAX_915IS_AMBIENT_AIR_SENSOR",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/08_ELECTRICAL/ROTAX_915IS_AMBIENT_AIR_SENSOR",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_AMBIENT_AIR_SENSOR",
+      "displayName": "Ambient air pressure/temperature sensor",
+      "subsystem": "08_ELECTRICAL",
+      "parent": "08_ELECTRICAL",
+      "componentType": "SENSOR",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_AMBIENT_AIR_SENSOR",
+      "primitives": 2,
+      "materials": [
+        "RTX_WEB_Paint_Black",
+        "RTX_WEB_Metal_Polished"
+      ],
+      "triangles": 1644,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "source object 'Ambient sensor'; BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.6 AAPTS",
+      "identificationBasis": "source object 'Ambient sensor'; BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.6 AAPTS",
+      "identificationConfidence": "high",
+      "installedPosition": false,
+      "positionNote": "Separate object in the source model, displayed beside the engine rather than in its installed position.",
+      "internal": false,
+      "instrument": {
+        "channels": [],
+        "note": "Ambient air pressure/temperature sensor (AAPTS). No ingest channel is mapped to it: altitude_ft/oat arrive in the AIR_DATA message, whose source is not this sensor in the code."
+      },
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_ECU",
+      "objectName": "ROTAX_915IS_ECU",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/08_ELECTRICAL/ROTAX_915IS_ECU",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_ECU",
+      "displayName": "ECU",
+      "subsystem": "08_ELECTRICAL",
+      "parent": "08_ELECTRICAL",
+      "componentType": "ECU",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_ECU",
+      "primitives": 4,
+      "materials": [
+        "RTX_WEB_Paint_Black",
+        "RTX_WEB_Label_Yellow",
+        "RTX_WEB_Plastic_Grey_Dark",
+        "RTX_WEB_Label_Orange"
+      ],
+      "triangles": 8346,
+      "containsMultiplePhysicalParts": true,
+      "physicalContents": "ECU plus 5 small fittings inside its bounding box",
+      "identificationBasis": "source object 'ECU' + 5 small fittings inside its bounding box; BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.1 item 2",
+      "identificationConfidence": "high",
+      "installedPosition": false,
+      "positionNote": "Separate object in the source model, displayed beside the engine rather than in its installed position.",
+      "internal": false,
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_EGT_SENSORS",
+      "objectName": "ROTAX_915IS_EGT_SENSORS",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/08_ELECTRICAL/ROTAX_915IS_EGT_SENSORS",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_EGT_SENSORS",
+      "displayName": "EGT sensors (4)",
+      "subsystem": "08_ELECTRICAL",
+      "parent": "08_ELECTRICAL",
+      "componentType": "SENSOR_SET",
+      "cylinderAssociation": {
+        "scope": "ENGINE",
+        "cylinders": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "basis": "one mesh serving all four cylinders"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_EGT_SENSORS",
+      "primitives": 3,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Rubber_Black"
+      ],
+      "triangles": 3056,
+      "containsMultiplePhysicalParts": true,
+      "physicalContents": "4 EGT probes (one per cylinder) with sheathed cables in one mesh",
+      "identificationBasis": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.7 'EGT sensors on the exhaust pipes near the cylinder outlet': 4 probes with sheathed cables",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "instrument": {
+        "channels": [
+          "egt_1",
+          "egt_2",
+          "egt_3",
+          "egt_4",
+          "egt_max"
+        ],
+        "driftableInstrument": "egt",
+        "note": "One mesh for all four probes; the simulator applies an egt drift to all four readings."
+      },
+      "faultRelevant": true,
+      "faultRoles": {
+        "SENSOR_DRIFT": [
+          "direct"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_FUSEBOX",
+      "objectName": "ROTAX_915IS_FUSEBOX",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/08_ELECTRICAL/ROTAX_915IS_FUSEBOX",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_FUSEBOX",
+      "displayName": "Fuse boxes",
+      "subsystem": "08_ELECTRICAL",
+      "parent": "08_ELECTRICAL",
+      "componentType": "FUSE_BOX",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_FUSEBOX",
+      "primitives": 4,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Plastic_Black_Satin",
+        "RTX_WEB_Plastic_Black_Gloss"
+      ],
+      "triangles": 28704,
+      "containsMultiplePhysicalParts": true,
+      "physicalContents": "both fuse boxes in one mesh",
+      "identificationBasis": "source object 'Fusebox' (contains both fuse boxes); BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.1 item 3",
+      "identificationConfidence": "high",
+      "installedPosition": false,
+      "positionNote": "Separate object in the source model, displayed beside the engine rather than in its installed position.",
+      "internal": false,
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_GENERATOR_IGNITION_HOUSING",
+      "objectName": "ROTAX_915IS_GENERATOR_IGNITION_HOUSING",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/08_ELECTRICAL/ROTAX_915IS_GENERATOR_IGNITION_HOUSING",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_GENERATOR_IGNITION_HOUSING",
+      "displayName": "Ignition housing / internal generator",
+      "subsystem": "08_ELECTRICAL",
+      "parent": "08_ELECTRICAL",
+      "componentType": "IGNITION_HOUSING_GENERATOR",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_GENERATOR_IGNITION_HOUSING",
+      "primitives": 6,
+      "materials": [
+        "RTX_WEB_Plastic_Black_Satin",
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Plastic_Black_Gloss",
+        "RTX_WEB_Rubber_Black",
+        "RTX_WEB_Metal_Exhaust"
+      ],
+      "triangles": 12827,
+      "containsMultiplePhysicalParts": true,
+      "physicalContents": "ignition housing enclosing the internal generator stator; the stator is not modelled separately",
+      "identificationBasis": "MAG-side ignition housing enclosing the internal generator stator (BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.5 Fig.8 item 1 'Stator'); internal stator not modelled separately",
+      "identificationConfidence": "medium",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_SENSOR_COOLANT_TEMP",
+      "objectName": "ROTAX_915IS_SENSOR_COOLANT_TEMP",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/08_ELECTRICAL/ROTAX_915IS_SENSOR_COOLANT_TEMP",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_SENSOR_COOLANT_TEMP",
+      "displayName": "Coolant temperature sensor (head 4)",
+      "subsystem": "08_ELECTRICAL",
+      "parent": "08_ELECTRICAL",
+      "componentType": "SENSOR",
+      "cylinderAssociation": {
+        "scope": "LOCATION_ONLY",
+        "cylinders": [
+          4
+        ],
+        "basis": "Mounted on cylinder head 4 (OM §7.2) but measures the engine coolant, not cylinder 4."
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_SENSOR_COOLANT_TEMP",
+      "primitives": 2,
+      "materials": [
+        "RTX_WEB_Plastic_Black_Gloss",
+        "RTX_WEB_Rubber_Black"
+      ],
+      "triangles": 1966,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.2 'coolant temperature sensor is located on cylinder head 4'",
+      "identificationBasis": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.2 'coolant temperature sensor is located on cylinder head 4'",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "instrument": {
+        "channels": [
+          "coolant_temperature"
+        ],
+        "driftableInstrument": "coolant_temperature"
+      },
+      "faultRelevant": true,
+      "faultRoles": {
+        "COOLING_DEGRADATION": [
+          "context"
+        ],
+        "OVERHEATING_TREND": [
+          "context"
+        ],
+        "SENSOR_DRIFT": [
+          "direct"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_SENSOR_OIL_PRESSURE",
+      "objectName": "ROTAX_915IS_SENSOR_OIL_PRESSURE",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/08_ELECTRICAL/ROTAX_915IS_SENSOR_OIL_PRESSURE",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_SENSOR_OIL_PRESSURE",
+      "displayName": "Oil pressure sensor",
+      "subsystem": "08_ELECTRICAL",
+      "parent": "08_ELECTRICAL",
+      "componentType": "SENSOR",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_SENSOR_OIL_PRESSURE",
+      "primitives": 3,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Rubber_Black",
+        "RTX_WEB_Plastic_Black_Gloss"
+      ],
+      "triangles": 2222,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.4 'oil pressure sensor located on the ignition housing'",
+      "identificationBasis": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.4 'oil pressure sensor located on the ignition housing'",
+      "identificationConfidence": "medium",
+      "installedPosition": true,
+      "internal": false,
+      "instrument": {
+        "channels": [
+          "oil_pressure"
+        ],
+        "driftableInstrument": "oil_pressure"
+      },
+      "faultRelevant": true,
+      "faultRoles": {
+        "LUBRICATION_ISSUE": [
+          "context"
+        ],
+        "SENSOR_DRIFT": [
+          "direct"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_SENSOR_OIL_TEMP",
+      "objectName": "ROTAX_915IS_SENSOR_OIL_TEMP",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/08_ELECTRICAL/ROTAX_915IS_SENSOR_OIL_TEMP",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_SENSOR_OIL_TEMP",
+      "displayName": "Oil temperature sensor",
+      "subsystem": "08_ELECTRICAL",
+      "parent": "08_ELECTRICAL",
+      "componentType": "SENSOR",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_SENSOR_OIL_TEMP",
+      "primitives": 2,
+      "materials": [
+        "RTX_WEB_Plastic_Black_Gloss",
+        "RTX_WEB_Rubber_Black"
+      ],
+      "triangles": 1970,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.4 'oil temperature sensor on the crankcase, mag side'",
+      "identificationBasis": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.4 'oil temperature sensor on the crankcase, mag side'",
+      "identificationConfidence": "medium",
+      "installedPosition": true,
+      "internal": false,
+      "instrument": {
+        "channels": [
+          "oil_temperature"
+        ],
+        "driftableInstrument": "oil_temperature"
+      },
+      "faultRelevant": true,
+      "faultRoles": {
+        "LUBRICATION_ISSUE": [
+          "context"
+        ],
+        "SENSOR_DRIFT": [
+          "direct"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_SENSORS_MAP_MAT",
+      "objectName": "ROTAX_915IS_SENSORS_MAP_MAT",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/08_ELECTRICAL/ROTAX_915IS_SENSORS_MAP_MAT",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_SENSORS_MAP_MAT",
+      "displayName": "MAP / MAT sensors",
+      "subsystem": "08_ELECTRICAL",
+      "parent": "08_ELECTRICAL",
+      "componentType": "SENSOR_SET",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_SENSORS_MAP_MAT",
+      "primitives": 8,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Plastic_Black_Satin",
+        "RTX_WEB_Plastic_Black_Gloss",
+        "RTX_WEB_Rubber_Black",
+        "RTX_WEB_Label_Tan",
+        "RTX_WEB_Plastic_Black_Matte",
+        "RTX_WEB_Label_Blue"
+      ],
+      "triangles": 12602,
+      "containsMultiplePhysicalParts": true,
+      "physicalContents": "4 MAP and MAT sensor bodies on the airbox rear rail in one mesh; MAP cannot be separated from MAT",
+      "identificationBasis": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 §7.6 'MAP and MAT sensors are located on the airbox': 4 sensors on airbox rear rail",
+      "identificationConfidence": "medium",
+      "installedPosition": true,
+      "internal": false,
+      "instrument": {
+        "channels": [
+          "manifold_pressure",
+          "manifold_air_temperature"
+        ],
+        "driftableInstrument": "manifold_pressure",
+        "note": "One mesh for the MAP and MAT sensors; a manifold_pressure drift highlights the whole sensor set."
+      },
+      "faultRelevant": true,
+      "faultRoles": {
+        "SENSOR_DRIFT": [
+          "direct"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_STARTER",
+      "objectName": "ROTAX_915IS_STARTER",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/08_ELECTRICAL/ROTAX_915IS_STARTER",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_STARTER",
+      "displayName": "Electric starter",
+      "subsystem": "08_ELECTRICAL",
+      "parent": "08_ELECTRICAL",
+      "componentType": "STARTER",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_STARTER",
+      "primitives": 3,
+      "materials": [
+        "RTX_WEB_Metal_Satin",
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Plastic_Black_Gloss"
+      ],
+      "triangles": 2584,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.1 item 9 'Electric starter': cylindrical motor bolted to ignition housing, MAG side",
+      "identificationBasis": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.1 item 9 'Electric starter': cylindrical motor bolted to ignition housing, MAG side",
+      "identificationConfidence": "medium",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_WIRING_HARNESS",
+      "objectName": "ROTAX_915IS_WIRING_HARNESS",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/08_ELECTRICAL/ROTAX_915IS_WIRING_HARNESS",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_WIRING_HARNESS",
+      "displayName": "Wiring harness",
+      "subsystem": "08_ELECTRICAL",
+      "parent": "08_ELECTRICAL",
+      "componentType": "WIRING_HARNESS",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_WIRING_HARNESS",
+      "primitives": 5,
+      "materials": [
+        "RTX_WEB_Plastic_Black_Satin",
+        "RTX_WEB_Rubber_Black",
+        "RTX_WEB_Plastic_Black_Gloss",
+        "RTX_WEB_Plastic_Black_Matte",
+        "RTX_WEB_Label_PaleCyan"
+      ],
+      "triangles": 18174,
+      "containsMultiplePhysicalParts": true,
+      "physicalContents": "wiring harness including injector connector leads",
+      "identificationBasis": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.1 item 6 'Wiring harness' incl. injector connector leads",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "UNKNOWN_COMPONENT_001",
+      "objectName": "UNKNOWN_COMPONENT_001",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/08_ELECTRICAL/UNKNOWN_COMPONENT_001",
+      "nodeType": "MESH",
+      "twinComponentId": "UNKNOWN_COMPONENT_001",
+      "displayName": "Unknown electrical module (cyl 1/3 side)",
+      "subsystem": "08_ELECTRICAL",
+      "parent": "08_ELECTRICAL",
+      "componentType": "UNIDENTIFIED",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "UNKNOWN_COMPONENT_001",
+      "primitives": 2,
+      "materials": [
+        "RTX_WEB_Rubber_Black",
+        "RTX_WEB_Plastic_Black_Gloss"
+      ],
+      "triangles": 2408,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "black electrical module with harness connector on top-front of cylinder 1/3 side; not an ignition coil (no HT leads); function not confirmed",
+      "identificationBasis": "black electrical module with harness connector on top-front of cylinder 1/3 side; not an ignition coil (no HT leads); function not confirmed",
+      "identificationConfidence": "low",
+      "installedPosition": true,
+      "internal": false,
+      "identityNote": "Identity not confirmed; excluded from all fault mappings.",
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "UNKNOWN_COMPONENT_002",
+      "objectName": "UNKNOWN_COMPONENT_002",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/08_ELECTRICAL/UNKNOWN_COMPONENT_002",
+      "nodeType": "MESH",
+      "twinComponentId": "UNKNOWN_COMPONENT_002",
+      "displayName": "Unknown electrical module (cyl 2/4 side)",
+      "subsystem": "08_ELECTRICAL",
+      "parent": "08_ELECTRICAL",
+      "componentType": "UNIDENTIFIED",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "UNKNOWN_COMPONENT_002",
+      "primitives": 3,
+      "materials": [
+        "RTX_WEB_Rubber_Black",
+        "RTX_WEB_Plastic_Black_Gloss",
+        "RTX_WEB_Paint_Black"
+      ],
+      "triangles": 2418,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "black electrical module with harness connector on top-front of cylinder 2/4 side; not an ignition coil (no HT leads); function not confirmed",
+      "identificationBasis": "black electrical module with harness connector on top-front of cylinder 2/4 side; not an ignition coil (no HT leads); function not confirmed",
+      "identificationConfidence": "low",
+      "installedPosition": true,
+      "internal": false,
+      "identityNote": "Identity not confirmed; excluded from all fault mappings.",
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_GEARBOX",
+      "objectName": "ROTAX_915IS_GEARBOX",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/09_GEARBOX/ROTAX_915IS_GEARBOX",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_GEARBOX",
+      "displayName": "Propeller reduction gearbox",
+      "subsystem": "09_GEARBOX",
+      "parent": "09_GEARBOX",
+      "componentType": "REDUCTION_GEARBOX",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_GEARBOX",
+      "primitives": 4,
+      "materials": [
+        "RTX_WEB_Paint_Black",
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Plastic_Black_Matte",
+        "RTX_WEB_Label_Lavender"
+      ],
+      "triangles": 27558,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "source object 'Tranny'; BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.1 item 1 'Propeller gearbox' (placed beside the engine in source file)",
+      "identificationBasis": "source object 'Tranny'; BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.1 item 1 'Propeller gearbox' (placed beside the engine in source file)",
+      "identificationConfidence": "high",
+      "installedPosition": false,
+      "positionNote": "Separate object in the source model, displayed beside the engine rather than in its installed position.",
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "ABNORMAL_VIBRATION": [
+          "context"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_AIR_BAFFLES",
+      "objectName": "ROTAX_915IS_AIR_BAFFLES",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/10_EXTERNAL/ROTAX_915IS_AIR_BAFFLES",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_AIR_BAFFLES",
+      "displayName": "Air baffles (cylinder cooling air ducting)",
+      "subsystem": "10_EXTERNAL",
+      "parent": "10_EXTERNAL",
+      "componentType": "COOLING_AIR_BAFFLE",
+      "cylinderAssociation": {
+        "scope": "ENGINE",
+        "cylinders": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "basis": "one mesh serving all four cylinders"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_AIR_BAFFLES",
+      "primitives": 1,
+      "materials": [
+        "RTX_WEB_Plastic_Black_Matte"
+      ],
+      "triangles": 4372,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "source object 'Air baffles'; BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.1 item 8 'Air baffle'",
+      "identificationBasis": "source object 'Air baffles'; BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.1 item 8 'Air baffle'",
+      "identificationConfidence": "high",
+      "installedPosition": false,
+      "positionNote": "Separate object in the source model, displayed beside the engine rather than in its installed position.",
+      "internal": false,
+      "faultRelevant": true,
+      "faultRoles": {
+        "OVERHEATING_TREND": [
+          "direct"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_ENGINE_MOUNT_FRAME",
+      "objectName": "ROTAX_915IS_ENGINE_MOUNT_FRAME",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/10_EXTERNAL/ROTAX_915IS_ENGINE_MOUNT_FRAME",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_ENGINE_MOUNT_FRAME",
+      "displayName": "Engine suspension / mount frame",
+      "subsystem": "10_EXTERNAL",
+      "parent": "10_EXTERNAL",
+      "componentType": "MOUNT_FRAME",
+      "cylinderAssociation": {
+        "scope": "NONE",
+        "cylinders": [],
+        "basis": "not associated with a cylinder"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_ENGINE_MOUNT_FRAME",
+      "primitives": 2,
+      "materials": [
+        "RTX_WEB_Metal_Polished",
+        "RTX_WEB_Enamel_White"
+      ],
+      "triangles": 2856,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "tubular suspension frame",
+      "identificationBasis": "BRP-Rotax OM 915 i A Series Ed.0 Rev.1 Fig.1 item 12 'Suspension frame' (white tubular frame)",
+      "identificationConfidence": "high",
+      "installedPosition": true,
+      "internal": false,
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_CONNECTING_ROD_01",
+      "objectName": "ROTAX_915IS_CONNECTING_ROD_01",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/11_INTERNAL_ENGINE/ROTAX_915IS_CONNECTING_ROD_01",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_CONNECTING_ROD_01",
+      "displayName": "Connecting rod 1",
+      "subsystem": "11_INTERNAL_ENGINE",
+      "parent": "11_INTERNAL_ENGINE",
+      "componentType": "CONNECTING_ROD",
+      "cylinderAssociation": {
+        "scope": "SINGLE",
+        "cylinders": [
+          1
+        ],
+        "bank": "CYL_1_3",
+        "basis": "GLB extras cylinder_number (numbering per BRP-Rotax OM 915 i A §7.1.4 Fig.2; verified geometrically)"
+      },
+      "cylinderSpecific": true,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_CONNECTING_ROD_01",
+      "primitives": 3,
+      "materials": [
+        "RTX_INT_Steel_Rod",
+        "RTX_INT_Steel_Forged",
+        "RTX_INT_Bearing_Bronze"
+      ],
+      "triangles": 2158,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "created to fill components missing from the source model (crankcase and barrels are solid, no internals)",
+      "identificationBasis": "created to fill components missing from the source model (crankcase and barrels are solid, no internals)",
+      "identificationConfidence": "n/a - new procedural geometry",
+      "installedPosition": false,
+      "internal": true,
+      "visibilityNote": "Enclosed by the crankcase/cylinders when assembled; visible in the exploded view or with GHOSTED/XRAY.",
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_CONNECTING_ROD_02",
+      "objectName": "ROTAX_915IS_CONNECTING_ROD_02",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/11_INTERNAL_ENGINE/ROTAX_915IS_CONNECTING_ROD_02",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_CONNECTING_ROD_02",
+      "displayName": "Connecting rod 2",
+      "subsystem": "11_INTERNAL_ENGINE",
+      "parent": "11_INTERNAL_ENGINE",
+      "componentType": "CONNECTING_ROD",
+      "cylinderAssociation": {
+        "scope": "SINGLE",
+        "cylinders": [
+          2
+        ],
+        "bank": "CYL_2_4",
+        "basis": "GLB extras cylinder_number (numbering per BRP-Rotax OM 915 i A §7.1.4 Fig.2; verified geometrically)"
+      },
+      "cylinderSpecific": true,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_CONNECTING_ROD_02",
+      "primitives": 3,
+      "materials": [
+        "RTX_INT_Steel_Rod",
+        "RTX_INT_Steel_Forged",
+        "RTX_INT_Bearing_Bronze"
+      ],
+      "triangles": 2240,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "created to fill components missing from the source model (crankcase and barrels are solid, no internals)",
+      "identificationBasis": "created to fill components missing from the source model (crankcase and barrels are solid, no internals)",
+      "identificationConfidence": "n/a - new procedural geometry",
+      "installedPosition": false,
+      "internal": true,
+      "visibilityNote": "Enclosed by the crankcase/cylinders when assembled; visible in the exploded view or with GHOSTED/XRAY.",
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_CONNECTING_ROD_03",
+      "objectName": "ROTAX_915IS_CONNECTING_ROD_03",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/11_INTERNAL_ENGINE/ROTAX_915IS_CONNECTING_ROD_03",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_CONNECTING_ROD_03",
+      "displayName": "Connecting rod 3",
+      "subsystem": "11_INTERNAL_ENGINE",
+      "parent": "11_INTERNAL_ENGINE",
+      "componentType": "CONNECTING_ROD",
+      "cylinderAssociation": {
+        "scope": "SINGLE",
+        "cylinders": [
+          3
+        ],
+        "bank": "CYL_1_3",
+        "basis": "GLB extras cylinder_number (numbering per BRP-Rotax OM 915 i A §7.1.4 Fig.2; verified geometrically)"
+      },
+      "cylinderSpecific": true,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_CONNECTING_ROD_03",
+      "primitives": 3,
+      "materials": [
+        "RTX_INT_Steel_Rod",
+        "RTX_INT_Steel_Forged",
+        "RTX_INT_Bearing_Bronze"
+      ],
+      "triangles": 2240,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "created to fill components missing from the source model (crankcase and barrels are solid, no internals)",
+      "identificationBasis": "created to fill components missing from the source model (crankcase and barrels are solid, no internals)",
+      "identificationConfidence": "n/a - new procedural geometry",
+      "installedPosition": false,
+      "internal": true,
+      "visibilityNote": "Enclosed by the crankcase/cylinders when assembled; visible in the exploded view or with GHOSTED/XRAY.",
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_CONNECTING_ROD_04",
+      "objectName": "ROTAX_915IS_CONNECTING_ROD_04",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/11_INTERNAL_ENGINE/ROTAX_915IS_CONNECTING_ROD_04",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_CONNECTING_ROD_04",
+      "displayName": "Connecting rod 4",
+      "subsystem": "11_INTERNAL_ENGINE",
+      "parent": "11_INTERNAL_ENGINE",
+      "componentType": "CONNECTING_ROD",
+      "cylinderAssociation": {
+        "scope": "SINGLE",
+        "cylinders": [
+          4
+        ],
+        "bank": "CYL_2_4",
+        "basis": "GLB extras cylinder_number (numbering per BRP-Rotax OM 915 i A §7.1.4 Fig.2; verified geometrically)"
+      },
+      "cylinderSpecific": true,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_CONNECTING_ROD_04",
+      "primitives": 3,
+      "materials": [
+        "RTX_INT_Steel_Rod",
+        "RTX_INT_Steel_Forged",
+        "RTX_INT_Bearing_Bronze"
+      ],
+      "triangles": 2158,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "created to fill components missing from the source model (crankcase and barrels are solid, no internals)",
+      "identificationBasis": "created to fill components missing from the source model (crankcase and barrels are solid, no internals)",
+      "identificationConfidence": "n/a - new procedural geometry",
+      "installedPosition": false,
+      "internal": true,
+      "visibilityNote": "Enclosed by the crankcase/cylinders when assembled; visible in the exploded view or with GHOSTED/XRAY.",
+      "faultRelevant": false,
+      "faultRoles": {},
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_CRANKSHAFT",
+      "objectName": "ROTAX_915IS_CRANKSHAFT",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/11_INTERNAL_ENGINE/ROTAX_915IS_CRANKSHAFT",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_CRANKSHAFT",
+      "displayName": "Crankshaft",
+      "subsystem": "11_INTERNAL_ENGINE",
+      "parent": "11_INTERNAL_ENGINE",
+      "componentType": "CRANKSHAFT",
+      "cylinderAssociation": {
+        "scope": "ENGINE",
+        "cylinders": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "basis": "single crankshaft serving all four cylinders"
+      },
+      "cylinderSpecific": false,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_CRANKSHAFT",
+      "primitives": 2,
+      "materials": [
+        "RTX_INT_Steel_Forged",
+        "RTX_INT_Steel_Polished"
+      ],
+      "triangles": 5802,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "created to fill components missing from the source model (crankcase and barrels are solid, no internals)",
+      "identificationBasis": "created to fill components missing from the source model (crankcase and barrels are solid, no internals)",
+      "identificationConfidence": "n/a - new procedural geometry",
+      "installedPosition": false,
+      "internal": true,
+      "visibilityNote": "Enclosed by the crankcase/cylinders when assembled; visible in the exploded view or with GHOSTED/XRAY.",
+      "faultRelevant": true,
+      "faultRoles": {
+        "ABNORMAL_VIBRATION": [
+          "direct"
+        ],
+        "LUBRICATION_ISSUE": [
+          "context"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_PISTON_01",
+      "objectName": "ROTAX_915IS_PISTON_01",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/11_INTERNAL_ENGINE/ROTAX_915IS_PISTON_01",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_PISTON_01",
+      "displayName": "Piston 1",
+      "subsystem": "11_INTERNAL_ENGINE",
+      "parent": "11_INTERNAL_ENGINE",
+      "componentType": "PISTON",
+      "cylinderAssociation": {
+        "scope": "SINGLE",
+        "cylinders": [
+          1
+        ],
+        "bank": "CYL_1_3",
+        "basis": "GLB extras cylinder_number (numbering per BRP-Rotax OM 915 i A §7.1.4 Fig.2; verified geometrically)"
+      },
+      "cylinderSpecific": true,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_PISTON_01",
+      "primitives": 3,
+      "materials": [
+        "RTX_INT_Aluminium_Cast",
+        "RTX_INT_Steel_Polished",
+        "RTX_INT_Ring_Groove_Dark"
+      ],
+      "triangles": 4573,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "created to fill components missing from the source model (crankcase and barrels are solid, no internals)",
+      "identificationBasis": "created to fill components missing from the source model (crankcase and barrels are solid, no internals)",
+      "identificationConfidence": "n/a - new procedural geometry",
+      "installedPosition": false,
+      "internal": true,
+      "visibilityNote": "Enclosed by the crankcase/cylinders when assembled; visible in the exploded view or with GHOSTED/XRAY.",
+      "faultRelevant": true,
+      "faultRoles": {
+        "COMBUSTION_INSTABILITY": [
+          "direct"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_PISTON_02",
+      "objectName": "ROTAX_915IS_PISTON_02",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/11_INTERNAL_ENGINE/ROTAX_915IS_PISTON_02",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_PISTON_02",
+      "displayName": "Piston 2",
+      "subsystem": "11_INTERNAL_ENGINE",
+      "parent": "11_INTERNAL_ENGINE",
+      "componentType": "PISTON",
+      "cylinderAssociation": {
+        "scope": "SINGLE",
+        "cylinders": [
+          2
+        ],
+        "bank": "CYL_2_4",
+        "basis": "GLB extras cylinder_number (numbering per BRP-Rotax OM 915 i A §7.1.4 Fig.2; verified geometrically)"
+      },
+      "cylinderSpecific": true,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_PISTON_02",
+      "primitives": 3,
+      "materials": [
+        "RTX_INT_Aluminium_Cast",
+        "RTX_INT_Steel_Polished",
+        "RTX_INT_Ring_Groove_Dark"
+      ],
+      "triangles": 4573,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "created to fill components missing from the source model (crankcase and barrels are solid, no internals)",
+      "identificationBasis": "created to fill components missing from the source model (crankcase and barrels are solid, no internals)",
+      "identificationConfidence": "n/a - new procedural geometry",
+      "installedPosition": false,
+      "internal": true,
+      "visibilityNote": "Enclosed by the crankcase/cylinders when assembled; visible in the exploded view or with GHOSTED/XRAY.",
+      "faultRelevant": true,
+      "faultRoles": {
+        "COMBUSTION_INSTABILITY": [
+          "direct"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_PISTON_03",
+      "objectName": "ROTAX_915IS_PISTON_03",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/11_INTERNAL_ENGINE/ROTAX_915IS_PISTON_03",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_PISTON_03",
+      "displayName": "Piston 3",
+      "subsystem": "11_INTERNAL_ENGINE",
+      "parent": "11_INTERNAL_ENGINE",
+      "componentType": "PISTON",
+      "cylinderAssociation": {
+        "scope": "SINGLE",
+        "cylinders": [
+          3
+        ],
+        "bank": "CYL_1_3",
+        "basis": "GLB extras cylinder_number (numbering per BRP-Rotax OM 915 i A §7.1.4 Fig.2; verified geometrically)"
+      },
+      "cylinderSpecific": true,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_PISTON_03",
+      "primitives": 3,
+      "materials": [
+        "RTX_INT_Aluminium_Cast",
+        "RTX_INT_Steel_Polished",
+        "RTX_INT_Ring_Groove_Dark"
+      ],
+      "triangles": 4573,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "created to fill components missing from the source model (crankcase and barrels are solid, no internals)",
+      "identificationBasis": "created to fill components missing from the source model (crankcase and barrels are solid, no internals)",
+      "identificationConfidence": "n/a - new procedural geometry",
+      "installedPosition": false,
+      "internal": true,
+      "visibilityNote": "Enclosed by the crankcase/cylinders when assembled; visible in the exploded view or with GHOSTED/XRAY.",
+      "faultRelevant": true,
+      "faultRoles": {
+        "COMBUSTION_INSTABILITY": [
+          "direct"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    },
+    {
+      "componentId": "ROTAX_915IS_PISTON_04",
+      "objectName": "ROTAX_915IS_PISTON_04",
+      "glbPath": "ROTAX_915IS_DIGITAL_TWIN/11_INTERNAL_ENGINE/ROTAX_915IS_PISTON_04",
+      "nodeType": "MESH",
+      "twinComponentId": "ROTAX_915IS_PISTON_04",
+      "displayName": "Piston 4",
+      "subsystem": "11_INTERNAL_ENGINE",
+      "parent": "11_INTERNAL_ENGINE",
+      "componentType": "PISTON",
+      "cylinderAssociation": {
+        "scope": "SINGLE",
+        "cylinders": [
+          4
+        ],
+        "bank": "CYL_2_4",
+        "basis": "GLB extras cylinder_number (numbering per BRP-Rotax OM 915 i A §7.1.4 Fig.2; verified geometrically)"
+      },
+      "cylinderSpecific": true,
+      "selectable": true,
+      "highlightable": true,
+      "independentlyHighlightable": true,
+      "selectionResolvesTo": "ROTAX_915IS_PISTON_04",
+      "primitives": 3,
+      "materials": [
+        "RTX_INT_Aluminium_Cast",
+        "RTX_INT_Steel_Polished",
+        "RTX_INT_Ring_Groove_Dark"
+      ],
+      "triangles": 4573,
+      "containsMultiplePhysicalParts": false,
+      "physicalContents": "created to fill components missing from the source model (crankcase and barrels are solid, no internals)",
+      "identificationBasis": "created to fill components missing from the source model (crankcase and barrels are solid, no internals)",
+      "identificationConfidence": "n/a - new procedural geometry",
+      "installedPosition": false,
+      "internal": true,
+      "visibilityNote": "Enclosed by the crankcase/cylinders when assembled; visible in the exploded view or with GHOSTED/XRAY.",
+      "faultRelevant": true,
+      "faultRoles": {
+        "COMBUSTION_INSTABILITY": [
+          "direct"
+        ]
+      },
+      "animatedIn": [
+        "EXPLODE",
+        "REPACK"
+      ]
+    }
+  ]
+}

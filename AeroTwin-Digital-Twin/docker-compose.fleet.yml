@@ -1,0 +1,86 @@
+# The REAL multi-tier deployment, brought up on one machine.
+#
+#     docker compose -f docker-compose.yml -f docker-compose.fleet.yml up
+#
+# This is not a mock of the fleet tier. It IS the fleet tier: a real
+# PostgreSQL, the real central server, and the ground station syncing to it
+# over HTTP with real station credentials. The only thing collapsed for a
+# demonstration is that everything runs on one host instead of several -- and
+# that is a compose topology detail, not a code path.
+#
+# TO PROVE IT IS REAL, STOP THE FLEET SERVER MID-DEMONSTRATION:
+#
+#     docker compose stop fleet-server
+#
+# The ground station keeps flying, the console keeps working, and
+# /api/fleet/sync shows the backlog growing. Start it again and the queue
+# drains oldest-first. That behaviour is the whole point of the design and it
+# cannot be faked with a stub.
+
+services:
+  fleet-db:
+    image: postgres:17-alpine
+    container_name: dt-fleet-db
+    environment:
+      POSTGRES_USER: twin
+      # No password in the file (SEC-08): set DT_FLEET_DB_PASSWORD in the
+      # environment or an .env file beside this one.
+      POSTGRES_PASSWORD: ${DT_FLEET_DB_PASSWORD:?set DT_FLEET_DB_PASSWORD}
+      POSTGRES_DB: fleet
+    volumes:
+      - fleet-db-data:/var/lib/postgresql/data
+    healthcheck:
+      # pg_isready, not a port check: the port opens before the database will
+      # accept a connection, and a server started against a not-yet-ready
+      # database just fails differently.
+      test: ["CMD-SHELL", "pg_isready -U twin -d fleet"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    restart: unless-stopped
+
+  fleet-server:
+    build: .
+    image: dt-uav-engine:1.0
+    container_name: dt-fleet-server
+    command: ["python", "-m", "fleet_server.app"]
+    environment:
+      DT_FLEET_DSN: postgresql://twin:${DT_FLEET_DB_PASSWORD:?set DT_FLEET_DB_PASSWORD}@fleet-db:5432/fleet
+      # Signs the account directory every station pulls (SEC-01).
+      DT_FLEET_DIRECTORY_KEY: ${DT_FLEET_DIRECTORY_KEY:?set DT_FLEET_DIRECTORY_KEY}
+      # Directory writes need this separate administrator key; unset, they are refused.
+      DT_FLEET_ADMIN_KEY: ${DT_FLEET_ADMIN_KEY:-}
+      DT_FLEET_HOST: 0.0.0.0
+      DT_FLEET_PORT: "8100"
+      DT_LOG_LEVEL: INFO
+    ports:
+      - "8100:8100"
+    depends_on:
+      fleet-db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8100/healthz').status==200 else 1)"]
+      interval: 15s
+      timeout: 5s
+      start_period: 20s
+      retries: 3
+    restart: unless-stopped
+
+  # The ground station, told where the fleet server is. Without these three
+  # variables it runs exactly as before and queues nothing -- a standalone
+  # station is a supported deployment, not a degraded one.
+  twin:
+    environment:
+      DT_FLEET_URL: http://fleet-server:8100
+      DT_STATION_ID: GCS-01
+      DT_STATION_KEY: ${DT_STATION_KEY:-}
+      DT_FLEET_DIRECTORY_KEY: ${DT_FLEET_DIRECTORY_KEY:?set DT_FLEET_DIRECTORY_KEY}
+      # Plain HTTP is accepted here only because both containers sit on the
+      # compose project's private network. Across real hosts, use HTTPS.
+      DT_FLEET_ALLOW_HTTP: "1"
+    depends_on:
+      fleet-server:
+        condition: service_started
+
+volumes:
+  fleet-db-data:

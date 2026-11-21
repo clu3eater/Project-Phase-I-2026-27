@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AeroTwin Poster A3</title>
+<style>
+  @page { size: 420mm 297mm; margin: 0; }
+  :root { --magenta: #c11cb6; --ink: #111; --banner: #2f3b52; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 420mm; height: 297mm; background: #fff; }
+  body { font-family: "Times New Roman", Times, serif; color: var(--ink);
+         -webkit-print-color-adjust: exact; print-color-adjust: exact; overflow: hidden;
+         display: flex; flex-direction: column; }
+
+  /* ---------- Header ---------- */
+  header { height: 55mm; flex: none; background: var(--magenta); color: #fff; position: relative;
+           display: flex; align-items: center; justify-content: center; text-align: center; }
+  header .logo { position: absolute; left: 12mm; top: 7mm; width: 41mm; height: 41mm; }
+  header .logo img { width: 100%; height: 100%; object-fit: contain; }
+  header .titles { line-height: 1.15; }
+  header .college { font-size: 30pt; font-weight: bold; }
+  header .dept { font-size: 20pt; font-weight: bold; }
+  header .proj { font-size: 19pt; margin-top: 0.8mm; }
+  header .meta { font-size: 14pt; margin-top: 0.5mm; }
+  header .year { font-size: 11pt; margin-top: 0.3mm; }
+
+  /* ---------- Introduction ---------- */
+  .intro { flex: none; padding: 3.5mm 9mm 3mm; font-size: 15pt; font-weight: bold; text-align: justify;
+           line-height: 1.3; border-bottom: 0.4mm solid #999; }
+
+  /* ---------- Figures ---------- */
+  .diagrams { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1fr;
+              gap: 8mm; padding: 4mm 9mm 1mm; }
+  .fig { display: flex; flex-direction: column; min-height: 0; }
+  .d { font-family: Arial, Helvetica, sans-serif; color: #000; }
+  .dhead { font-family: Arial, Helvetica, sans-serif; background: var(--banner); color: #fff;
+           border-radius: 2mm; padding: 1.7mm 4mm; margin-bottom: 3mm; text-align: center; flex: none; }
+  .dhead b { font-size: 14.5pt; letter-spacing: 0.35mm; }
+  .dhead span { font-size: 10.5pt; font-style: italic; color: #d6dcea; margin-left: 2.5mm; }
+  .cap { font-size: 10.5pt; font-style: italic; text-align: center; margin-top: 1.6mm; flex: none; }
+
+  /* draw.io default palette, plus a darker tone (--d) for badges and icons */
+  .c-blue   { --f:#dae8fc; --s:#6c8ebf; --d:#3d6496; }
+  .c-green  { --f:#d5e8d4; --s:#82b366; --d:#4f7f37; }
+  .c-orange { --f:#ffe6cc; --s:#d79b00; --d:#a86c00; }
+  .c-purple { --f:#e1d5e7; --s:#9673a6; --d:#6b4a7d; }
+  .c-yellow { --f:#fff2cc; --s:#d6b656; --d:#9c7e1c; }
+  .c-red    { --f:#f8cecc; --s:#b85450; --d:#963a36; }
+  .c-grey   { --f:#f5f5f5; --s:#666666; --d:#444444; }
+  .ic { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* Fig. 1 - layered architecture as swim lanes */
+  .stack { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+  .row { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 5mm 30mm; }
+  .lane { background: var(--f); border: 0.35mm solid var(--s); border-radius: 2mm; padding: 1.5mm;
+          display: grid; grid-template-columns: 34mm repeat(4, 1fr); column-gap: 1.5mm;
+          box-shadow: 0.5mm 0.6mm 0 rgba(0,0,0,.13); }
+  .lhead { display: flex; align-items: center; gap: 1.6mm; padding-left: 0.6mm; }
+  .lhead .ic { width: 8mm; height: 8mm; flex: none; color: var(--d); }
+  .lhead .t { font-size: 10pt; font-weight: bold; line-height: 1.12; color: #222; }
+  .lhead .t i { font-style: normal; display: inline-block; background: var(--d); color: #fff;
+                border-radius: 1mm; padding: 0.15mm 1.3mm; font-size: 8.8pt; margin-bottom: 0.7mm; }
+  .card { background: #fff; border: 0.3mm solid var(--s); border-radius: 1.4mm; display: flex;
+          align-items: center; justify-content: center; text-align: center;
+          font-size: 9.6pt; line-height: 1.15; padding: 0 1mm; }
+  .row > .dash { border-top: 0.35mm dashed #666; height: 0; align-self: center; }
+  .row > .sthead { grid-column: 3; display: flex; align-items: center; justify-content: center;
+                   font-size: 10pt; font-weight: bold; }
+  .store { position: relative; display: flex; align-items: center; justify-content: center; text-align: center; }
+  .store svg { position: absolute; left: 0; top: 50%; width: 100%; height: 13.5mm; transform: translateY(-50%); }
+  .store span { position: relative; font-size: 8.6pt; line-height: 1.12; padding-top: 2.4mm; }
+  .flow { height: 6mm; flex: none; display: grid; grid-template-columns: 1fr 5mm 30mm; }
+  .flow .mid { padding-left: 35mm; display: flex; align-items: center; justify-content: center;
+               gap: 1.5mm; font-size: 8.8pt; font-style: italic; color: #333; }
+  .flow svg { width: 2.6mm; height: 5.6mm; flex: none; }
+
+  /* Fig. 2 - methodology as numbered step cards */
+  .chart { flex: 1; display: grid; min-height: 0;
+           grid-template-columns: 1fr 6mm 1fr 6mm 1fr 6mm 1fr;
+           grid-template-rows: 1fr 9mm 1fr; }
+  .step { background: #fff; border: 0.35mm solid var(--s); border-radius: 2.2mm; overflow: hidden;
+          display: flex; flex-direction: column; box-shadow: 0.5mm 0.6mm 0 rgba(0,0,0,.13); }
+  .step .sh { background: var(--f); border-bottom: 0.3mm solid var(--s); display: flex; align-items: center;
+              gap: 1.8mm; padding: 1.7mm 2mm; font-size: 11pt; font-weight: bold; line-height: 1.1; }
+  .step .n { width: 6.4mm; height: 6.4mm; border-radius: 50%; background: var(--d); color: #fff; flex: none;
+             display: flex; align-items: center; justify-content: center; font-size: 10.5pt; }
+  .step > .ic { width: 11mm; height: 11mm; color: var(--d); align-self: center; margin: 2.6mm 0 2mm; flex: none; }
+  .step ul { list-style: none; padding: 0 2.4mm 2mm; font-size: 9.8pt; line-height: 1.24; }
+  .step li { position: relative; padding-left: 3mm; margin-bottom: 1.1mm; }
+  .step li::before { content: ""; position: absolute; left: 0.4mm; top: 1.45mm; width: 1.3mm; height: 1.3mm;
+                     border-radius: 50%; background: var(--s); }
+  .step b.k { color: var(--d); }
+  .go { display: flex; gap: 2mm; justify-content: center; margin-top: auto; padding-bottom: 3mm; }
+  .go span { font-weight: bold; font-size: 10pt; padding: 0.9mm 3mm; border-radius: 1mm; color: #fff; }
+  .go .g { background: #3d8b37; } .go .ng { background: #b8322e; }
+  .arr { display: flex; align-items: center; justify-content: center; }
+  .arr svg { width: 100%; height: 3mm; }
+  .arr.down svg { width: 3mm; height: 100%; }
+
+  /* ---------- Conclusion and sign-off ---------- */
+  .bottom { flex: none; height: 52mm; display: grid; grid-template-columns: 1fr 166mm;
+            gap: 7mm; padding: 4mm 9mm 5mm; }
+  .concl { font-size: 14.2pt; font-weight: bold; text-align: justify; line-height: 1.3; }
+  table.sig { border-collapse: collapse; width: 100%; height: 100%; font-weight: bold; }
+  .sig td, .sig th { border: 0.4mm solid #000; text-align: center; vertical-align: middle; padding: 1.2mm 2mm; }
+  .sig th { font-size: 14pt; }
+  .sig th.maps { width: 47mm; }
+  .sig th.maps span { display: block; font-size: 12.5pt; line-height: 1.3; margin-top: 1mm; }
+  .sig td { font-size: 12pt; }
+  .sig td.names { text-align: left; line-height: 1.35; }
+</style>
+</head>
+<body>
+
+<!-- shared icon set -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><circle cx="12" cy="12" r="6.6"/><path d="M12 2.4v3M12 18.6v3M2.4 12h3M18.6 12h3M5.2 5.2l2.1 2.1M16.7 16.7l2.1 2.1M5.2 18.8l2.1-2.1M16.7 7.3l2.1-2.1"/></symbol>
+  <symbol id="i-chip" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1.5"/><rect x="9.5" y="9.5" width="5" height="5"/><path d="M9 2.5V6M15 2.5V6M9 18v3.5M15 18v3.5M2.5 9H6M2.5 15H6M18 9h3.5M18 15h3.5"/></symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 2.5c.5 3.5 5.6 5.6 5.6 11a5.6 5.6 0 0 1-11.2 0c0-3 1.6-4.6 2.6-6.6.9 1.3 1.4 2.6 1.4 4 1.6-2.2 1.9-5 1.6-8.4z"/></symbol>
+  <symbol id="i-ai" viewBox="0 0 24 24"><circle cx="4.5" cy="6" r="2"/><circle cx="4.5" cy="18" r="2"/><circle cx="12" cy="12" r="2.3"/><circle cx="19.5" cy="6" r="2"/><circle cx="19.5" cy="18" r="2"/><path d="M6 7.4l4.3 3.1M6 16.6l4.3-3.1M13.7 10.5L18 7.4M13.7 13.5l4.3 3.1"/></symbol>
+  <symbol id="i-server" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="17" height="7" rx="1.5"/><path d="M7 7h.01M7 17h.01M11 7h6M11 17h6"/></symbol>
+  <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="2.5" y="3.5" width="19" height="13" rx="1.5"/><path d="M8.5 21h7M12 16.5V21M6 12.5l3.5-3.5 3 2.5 5-5"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2.5l8 3v6c0 5-3.5 8.6-8 10-4.5-1.4-8-5-8-10v-6z"/><path d="M8.3 12l2.6 2.6 5-5"/></symbol>
+  <symbol id="i-wave" viewBox="0 0 24 24"><path d="M2.5 3.5v17h19"/><path d="M5.5 14c3 0 3.6-7 7-7s4 4 8 4"/><path d="M5.5 17h15" stroke-dasharray="1.6 1.8"/></symbol>
+  <symbol id="i-diag" viewBox="0 0 24 24"><circle cx="10" cy="10" r="7"/><path d="M15.2 15.2l6 6"/><path d="M5.5 10.5h2l1.3-2.6 2 5.2 1.4-2.6h2.3"/></symbol>
+  <symbol id="i-valid" viewBox="0 0 24 24"><path d="M2.5 21h19"/><rect x="5" y="12" width="3.2" height="6"/><rect x="10.4" y="8" width="3.2" height="10"/><rect x="15.8" y="4" width="3.2" height="14"/></symbol>
+</svg>
+
+<header>
+  <div class="logo"><img src="../assets/mgm_logo.png" alt="MGM logo"></div>
+  <div class="titles">
+    <div class="college">MGM'S College of Engineering, Nanded</div>
+    <div class="dept">DEPARTMENT OF COMPUTER SCIENCE AND ENGINEERING</div>
+    <div class="proj">“AeroTwin: AI-Based Digital Twin for Health Monitoring and<br>Fault Prediction of UAV Piston Engines”</div>
+    <div class="meta">Name of Students: Pranjal Shahane, Vaishnavi Titare, Vaibhav Mandhani and Tanishka Adkalatwar</div>
+    <div class="meta">Name of the Guide: Ms. Nitu L. Pariyal</div>
+    <div class="year">Academic Year: 2026- 2027</div>
+  </div>
+</header>
+
+<section class="intro">
+  Introduction: AeroTwin is an AI-based digital twin that monitors the health of a UAV piston engine (Rotax 915 iS)
+  in real time and warns of faults before any certified alarm limit is crossed. It uses technologies such as Python,
+  a physics-based engine model (Cantera), Machine Learning and Deep Learning (scikit-learn, PyTorch), FastAPI and React
+  to compare every live sensor reading with a healthy “twin” of the engine, detect gradual wear, name the fault,
+  estimate remaining useful life and give a Go&nbsp;/&nbsp;No&#8209;Go decision, fully offline on the drone.
+</section>
+
+<section class="diagrams">
+  <!-- ===== Fig. 1: System architecture ===== -->
+  <div class="fig">
+    <div class="dhead"><b>SYSTEM ARCHITECTURE</b><span>Engine sensors to operator console</span></div>
+    <div class="stack d">
+      <div class="row">
+        <div class="lane c-blue">
+          <div class="lhead"><svg class="ic"><use href="#i-gear"/></svg><div class="t"><i>L0</i><br>Engine &amp; Bus</div></div>
+          <div class="card">Rotax 915 iS engine</div><div class="card">Dual-lane FADEC</div>
+          <div class="card">9 sensor channels</div><div class="card">CAN bus (virtual / SocketCAN)</div>
+        </div>
+        <div></div><div class="sthead">Data stores</div>
+      </div>
+      <div class="flow"><div class="mid"><svg viewBox="0 0 8 20"><path d="M4 0v13" stroke="#444" stroke-width="1.5"/><path d="M0.8 12.5L4 20l3.2-7.5z" fill="#444"/></svg>CAN frames</div></div>
+      <div class="row">
+        <div class="lane c-green">
+          <div class="lhead"><svg class="ic"><use href="#i-chip"/></svg><div class="t"><i>L1</i><br>Edge Layer</div></div>
+          <div class="card">CANaerospace decoding</div><div class="card">Sensor validation (5 states)</div>
+          <div class="card">Certified-limit rule engine</div><div class="card">72-hour edge buffer</div>
+        </div>
+        <div class="dash"></div>
+        <div class="store"><svg viewBox="0 0 100 60" preserveAspectRatio="none"><path d="M1 9v42c0 5 22 8 49 8s49-3 49-8V9" fill="#fff" stroke="#333" stroke-width="1"/><ellipse cx="50" cy="9" rx="49" ry="8" fill="#eef1f6" stroke="#333" stroke-width="1"/></svg><span>Edge buffer<br>(SQLite, 72 h)</span></div>
+      </div>
+      <div class="flow"><div class="mid"><svg viewBox="0 0 8 20"><path d="M4 0v13" stroke="#444" stroke-width="1.5"/><path d="M0.8 12.5L4 20l3.2-7.5z" fill="#444"/></svg>validated telemetry</div></div>
+      <div class="row">
+        <div class="lane c-orange">
+          <div class="lhead"><svg class="ic"><use href="#i-flame"/></svg><div class="t"><i>L2</i><br>Physics Model</div></div>
+          <div class="card">Mean-value engine model</div><div class="card">Combustion (Cantera)</div>
+          <div class="card">Turbocharger + thermal model</div><div class="card">Shadow twin (as-new engine)</div>
+        </div>
+        <div class="dash"></div>
+        <div class="store"><svg viewBox="0 0 100 60" preserveAspectRatio="none"><path d="M1 9v42c0 5 22 8 49 8s49-3 49-8V9" fill="#fff" stroke="#333" stroke-width="1"/><ellipse cx="50" cy="9" rx="49" ry="8" fill="#eef1f6" stroke="#333" stroke-width="1"/></svg><span>Engine configs<br>(YAML)</span></div>
+      </div>
+      <div class="flow"><div class="mid"><svg viewBox="0 0 8 20"><path d="M4 0v13" stroke="#444" stroke-width="1.5"/><path d="M0.8 12.5L4 20l3.2-7.5z" fill="#444"/></svg>healthy prediction and residuals</div></div>
+      <div class="row">
+        <div class="lane c-purple">
+          <div class="lhead"><svg class="ic"><use href="#i-ai"/></svg><div class="t"><i>L3</i><br>AI &amp; Analytics</div></div>
+          <div class="card">Statistical ensemble</div><div class="card">LSTM autoencoder + deep head</div>
+          <div class="card">Score fusion + fault naming</div><div class="card">Health index, RUL, OOD check</div>
+        </div>
+        <div class="dash"></div>
+        <div class="store"><svg viewBox="0 0 100 60" preserveAspectRatio="none"><path d="M1 9v42c0 5 22 8 49 8s49-3 49-8V9" fill="#fff" stroke="#333" stroke-width="1"/><ellipse cx="50" cy="9" rx="49" ry="8" fill="#eef1f6" stroke="#333" stroke-width="1"/></svg><span>Model files<br>(PyTorch / ONNX)</span></div>
+      </div>
+      <div class="flow"><div class="mid"><svg viewBox="0 0 8 20"><path d="M4 0v13" stroke="#444" stroke-width="1.5"/><path d="M0.8 12.5L4 20l3.2-7.5z" fill="#444"/></svg>anomaly scores, health, RUL</div></div>
+      <div class="row">
+        <div class="lane c-yellow">
+          <div class="lhead"><svg class="ic"><use href="#i-server"/></svg><div class="t"><i>L4</i><br>Twin Core &amp; API</div></div>
+          <div class="card">FastAPI REST + WebSocket</div><div class="card">LiveTwin pipeline (0.5 s tick)</div>
+          <div class="card">Mission reliability</div><div class="card">Squadron ops + security</div>
+        </div>
+        <div class="dash"></div>
+        <div class="store"><svg viewBox="0 0 100 60" preserveAspectRatio="none"><path d="M1 9v42c0 5 22 8 49 8s49-3 49-8V9" fill="#fff" stroke="#333" stroke-width="1"/><ellipse cx="50" cy="9" rx="49" ry="8" fill="#eef1f6" stroke="#333" stroke-width="1"/></svg><span>Squadron, user,<br>flight DBs (SQLite)</span></div>
+      </div>
+      <div class="flow"><div class="mid"><svg viewBox="0 0 8 20"><path d="M4 0v13" stroke="#444" stroke-width="1.5"/><path d="M0.8 12.5L4 20l3.2-7.5z" fill="#444"/></svg>twin state (REST / WebSocket)</div></div>
+      <div class="row">
+        <div class="lane c-red">
+          <div class="lhead"><svg class="ic"><use href="#i-monitor"/></svg><div class="t"><i>L5</i><br>Presentation</div></div>
+          <div class="card">React operator console</div><div class="card">4 role dashboards</div>
+          <div class="card">3-D engine fault view</div><div class="card">Reports (PDF / CSV)</div>
+        </div>
+        <div></div><div></div>
+      </div>
+    </div>
+    <div class="cap">Fig. 1: Layered architecture of AeroTwin, from engine sensors to the operator console</div>
+  </div>
+
+  <!-- ===== Fig. 2: Methodology ===== -->
+  <div class="fig">
+    <div class="dhead"><b>METHODOLOGY</b><span>From raw sensor data to a Go / No-Go decision</span></div>
+    <div class="chart d">
+      <div class="step c-blue"><div class="sh"><span class="n">1</span>Engine Data</div>
+        <svg class="ic"><use href="#i-gear"/></svg>
+        <ul><li>Rotax 915 iS with 9 sensor channels</li><li>200 engines simulated as they wear out</li><li>Data streamed over CAN bus</li></ul></div>
+      <div class="arr"><svg viewBox="0 0 30 10" preserveAspectRatio="none"><path d="M0 5h22" stroke="#444" stroke-width="1.5"/><path d="M21 1l9 4-9 4z" fill="#444"/></svg></div>
+      <div class="step c-green"><div class="sh"><span class="n">2</span>Edge Checks</div>
+        <svg class="ic"><use href="#i-shield"/></svg>
+        <ul><li>Decode CANaerospace frames</li><li>Reject bad sensor values (5 states)</li><li>Certified limits checked on the drone</li></ul></div>
+      <div class="arr"><svg viewBox="0 0 30 10" preserveAspectRatio="none"><path d="M0 5h22" stroke="#444" stroke-width="1.5"/><path d="M21 1l9 4-9 4z" fill="#444"/></svg></div>
+      <div class="step c-orange"><div class="sh"><span class="n">3</span>Healthy Twin</div>
+        <svg class="ic"><use href="#i-flame"/></svg>
+        <ul><li>Physics model with Cantera combustion</li><li>Predicts what a new engine would read at the same throttle and altitude</li></ul></div>
+      <div class="arr"><svg viewBox="0 0 30 10" preserveAspectRatio="none"><path d="M0 5h22" stroke="#444" stroke-width="1.5"/><path d="M21 1l9 4-9 4z" fill="#444"/></svg></div>
+      <div class="step c-purple"><div class="sh"><span class="n">4</span>Residuals</div>
+        <svg class="ic"><use href="#i-wave"/></svg>
+        <ul><li><b class="k">Gap = actual − healthy</b></li><li>Flight conditions cancel out; only the wear is left</li><li>Taken in sliding windows</li></ul></div>
+
+      <div></div><div></div><div></div><div></div><div></div><div></div>
+      <div class="arr down"><svg viewBox="0 0 10 30" preserveAspectRatio="none"><path d="M5 0v22" stroke="#444" stroke-width="1.5"/><path d="M1 21l4 9 4-9z" fill="#444"/></svg></div>
+
+      <div class="step c-grey"><div class="sh"><span class="n">&#10003;</span>Output</div>
+        <svg class="ic"><use href="#i-monitor"/></svg>
+        <ul><li>Engine health, fault name and hours left on the React console</li></ul>
+        <div class="go"><span class="g">GO</span><span class="ng">NO-GO</span></div></div>
+      <div class="arr"><svg viewBox="0 0 30 10" preserveAspectRatio="none"><path d="M30 5H8" stroke="#444" stroke-width="1.5"/><path d="M9 1L0 5l9 4z" fill="#444"/></svg></div>
+      <div class="step c-blue"><div class="sh"><span class="n">7</span>Validation</div>
+        <svg class="ic"><use href="#i-valid"/></svg>
+        <ul><li>Trained on 160, tested on 40 unseen engines</li><li>Precision <b class="k">0.996</b>, ROC&#8209;AUC&nbsp;<b class="k">0.989</b></li><li>≈&nbsp;1&nbsp;% false alarms</li><li>51&nbsp;ms per update, 150&nbsp;KB&nbsp;model</li></ul></div>
+      <div class="arr"><svg viewBox="0 0 30 10" preserveAspectRatio="none"><path d="M30 5H8" stroke="#444" stroke-width="1.5"/><path d="M9 1L0 5l9 4z" fill="#444"/></svg></div>
+      <div class="step c-red"><div class="sh"><span class="n">6</span>Diagnosis</div>
+        <svg class="ic"><use href="#i-diag"/></svg>
+        <ul><li>Names the fault (8&nbsp;types)</li><li>Engine health index</li><li>Remaining useful life (RUL) in hours</li></ul></div>
+      <div class="arr"><svg viewBox="0 0 30 10" preserveAspectRatio="none"><path d="M30 5H8" stroke="#444" stroke-width="1.5"/><path d="M9 1L0 5l9 4z" fill="#444"/></svg></div>
+      <div class="step c-yellow"><div class="sh"><span class="n">5</span>AI Detection</div>
+        <svg class="ic"><use href="#i-ai"/></svg>
+        <ul><li>Statistical ensemble</li><li>LSTM autoencoder + deep network</li><li>Scores fused into one decision</li></ul></div>
+    </div>
+    <div class="cap">Fig. 2: Step-by-step working of the AeroTwin digital twin</div>
+  </div>
+</section>
+
+<section class="bottom">
+  <div class="concl">
+    Conclusion: AeroTwin demonstrates how a physics-based digital twin combined with Machine Learning can detect
+    the gradual wear of a UAV piston engine long before a certified alarm limit is crossed. The project improves
+    understanding of engine health monitoring, sensor data validation, anomaly detection, fault diagnosis and
+    remaining-life prediction using Python, PyTorch, FastAPI and React. It also demonstrates a practical, offline
+    and affordable approach to condition-based maintenance that keeps unmanned aircraft safe and mission-ready.
+  </div>
+  <table class="sig">
+    <tr><th rowspan="2" class="maps">Maps to:<span>PO-1, PO-2, PO-3,<br>PO-4, PO-5, PO-9,<br>PO-10, PO-12<br>PSO-1, PSO-2,<br>PSO-3</span></th>
+        <th>Name of Student</th><th>Name of Guide</th></tr>
+    <tr><td class="names">Pranjal Shahane<br>Vaishnavi Titare<br>Vaibhav Mandhani<br>Tanishka Adkalatwar</td>
+        <td>Ms. Nitu L. Pariyal</td></tr>
+  </table>
+</section>
+
+</body>
+</html>

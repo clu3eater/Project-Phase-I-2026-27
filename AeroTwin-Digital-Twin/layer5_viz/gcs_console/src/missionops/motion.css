@@ -1,0 +1,197 @@
+/* MOTION FOR MISSION OPS, AND NOTHING ELSE.
+ *
+ * Every rule here is prefixed `mo-` and every selector is scoped under a
+ * `.mo-*` container, so importing this file cannot reach another page. The
+ * console's own vocabulary (`ms-*` in theme/tokens.css) still applies to the
+ * components this page reuses; this adds only what the new composition needs.
+ *
+ * WHAT IS ANIMATED, AND WHY. Motion here says one of three things: that a
+ * surface changed size (the column and the band), that something arrived (a
+ * sortie, an event, a result), or that a number moved. Nothing loops, nothing
+ * decorates, and nothing animates that an operator is trying to read.
+ *
+ * s8.1d of the PRD requires prefers-reduced-motion to disable the lot, and the
+ * block at the bottom does exactly that rather than only the flashes.
+ */
+
+:root {
+  /* The stagger index an event pip is given inline; declared so the variable
+     has a definition and a sane default when nothing sets it. */
+  --mo-i: 0;
+  --mo-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --mo-fast: 160ms;
+  --mo-base: 220ms;
+}
+
+/* THE GRID ITSELF. Collapsing the column or the band is a size change, and the
+   map takes the space over the same 220 ms rather than jumping into it. The
+   map re-measures through its own ResizeObserver, so the camera holds its
+   centre while the edge travels. */
+.mo-grid {
+  transition: grid-template-columns var(--mo-base) var(--mo-ease),
+              grid-template-rows var(--mo-base) var(--mo-ease);
+}
+
+/* Something arrived: a panel, a result, a state. */
+@keyframes mo-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+.mo-rise { animation: mo-rise var(--mo-base) var(--mo-ease) both; }
+
+@keyframes mo-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.mo-fade { animation: mo-fade var(--mo-fast) linear both; }
+
+/* The tab body crossfades rather than cutting, so switching PLAN -> RESULTS
+   does not read as the page having been replaced. */
+@keyframes mo-swap {
+  from { opacity: 0; transform: translateX(6px); }
+  to   { opacity: 1; transform: none; }
+}
+.mo-swap { animation: mo-swap var(--mo-fast) var(--mo-ease) both; }
+
+/* The state pill changes word and colour together. */
+.mo-state {
+  transition: color var(--mo-base) ease, border-color var(--mo-base) ease,
+              background var(--mo-base) ease;
+}
+
+/* EVENT PIPS ARRIVE WITH THE SORTIE. One stagger, once, left to right, so the
+   eye is taken along the timeline in the direction time runs. The delay is set
+   inline as --mo-i; it is capped so a sortie with forty events still finishes
+   arriving inside half a second. */
+@keyframes mo-pip {
+  from { opacity: 0; transform: translateY(-5px) scaleY(0.3); }
+  to   { opacity: 1; transform: none; }
+}
+.mo-pip {
+  animation: mo-pip 240ms var(--mo-ease) both;
+  animation-delay: calc(var(--mo-i, 0) * 22ms);
+}
+
+/* The phase bands fill in from nothing when a sortie lands. */
+@keyframes mo-band {
+  from { transform: scaleY(0.2); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+.mo-bands > button { animation: mo-band 260ms var(--mo-ease) both; transform-origin: bottom; }
+
+/* NUMBERS. The digits ease their colour rather than snapping between ink and
+   caution, and the bar under each cell travels to its new length. Both are
+   slow enough to be seen and short enough to be over before the next 4 Hz
+   frame arrives. */
+.mo-num { transition: color var(--mo-fast) ease; }
+.mo-bar { transition: width 150ms var(--mo-ease), background var(--mo-fast) ease; }
+/* During playback the bar is written every frame by the clock, so it must not
+   chase itself: no transition while the transport owns it. */
+.mo-live .mo-bar { transition: none; }
+
+/* A cell that has just crossed into caution says so once. */
+@keyframes mo-alarm {
+  0%   { background: color-mix(in srgb, var(--alert-caut) 30%, transparent); }
+  100% { background: transparent; }
+}
+.mo-alarm { animation: mo-alarm 420ms ease-out; }
+
+/* The primary action becomes available: one pass of a soft ring, not a loop. */
+@keyframes mo-ready {
+  0%   { outline: 0 solid color-mix(in srgb, var(--alert-advis) 55%, transparent);
+         outline-offset: 0; }
+  100% { outline: 6px solid transparent; outline-offset: 6px; }
+}
+.mo-ready { animation: mo-ready 620ms ease-out; }
+
+/* The collapsed rails, and the buttons on them. */
+.mo-tab { transition: background var(--mo-fast) ease, color var(--mo-fast) ease,
+                      border-color var(--mo-fast) ease; }
+.mo-tab:hover:not(:disabled) { background: var(--bg-raised); color: var(--ink); }
+
+/* The panel the column becomes when there is no room for a column. */
+@keyframes mo-slide-in {
+  from { opacity: 0; transform: translateX(18px); }
+  to   { opacity: 1; transform: none; }
+}
+.mo-sheet { animation: mo-slide-in var(--mo-base) var(--mo-ease) both; }
+
+
+/* ---------------------------------------------------------------------
+ * THE COMMAND DOCK
+ * ------------------------------------------------------------------- */
+
+/* THE TAB INDICATOR GLIDES. One element under the whole tab row, moved and
+   resized to the active tab, so PLAN -> RESULTS reads as one surface changing
+   subject rather than four buttons taking turns being lit. Measured in
+   JavaScript because the tabs are sized by their words. */
+.mo-ind {
+  transition: transform var(--mo-base) var(--mo-ease),
+              width var(--mo-base) var(--mo-ease);
+}
+
+/* An inspector row opening. Same 0fr -> 1fr trick the console already uses,
+   with the chevron turning on the same curve so they read as one gesture. */
+.mo-fold {
+  display: grid;
+  transition: grid-template-rows var(--mo-base) var(--mo-ease);
+}
+.mo-chev { transition: transform var(--mo-base) var(--mo-ease); }
+
+/* THE CONTEXTUAL INSPECTOR. Selecting a thing on the map pushes the summary
+   aside rather than replacing it, so the operator can see which direction
+   they went and how to come back. */
+@keyframes mo-in-right {
+  from { opacity: 0; transform: translateX(14px); }
+  to   { opacity: 1; transform: none; }
+}
+.mo-inspect { animation: mo-in-right var(--mo-base) var(--mo-ease) both; }
+
+/* THE FAULT SHEET. A focused surface over the dock: the scrim fades, the
+   panel rises. It is not a page and does not read as one. */
+@keyframes mo-scrim { from { opacity: 0; } to { opacity: 1; } }
+.mo-scrim { animation: mo-scrim var(--mo-fast) linear both; }
+@keyframes mo-sheet-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+.mo-sheet-panel { animation: mo-sheet-up var(--mo-base) var(--mo-ease) both; }
+
+/* The simulation strip arrives once, when there is a sortie to show. */
+@keyframes mo-strip {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: none; }
+}
+.mo-strip { animation: mo-strip var(--mo-base) var(--mo-ease) both; }
+
+/* A status tile changing its mind -- NOT COSTED to a figure -- eases rather
+   than snapping, because several of them land together when a costing
+   returns and four simultaneous snaps read as a flicker. */
+.mo-tile { transition: border-color var(--mo-base) ease,
+                       background var(--mo-base) ease,
+                       color var(--mo-base) ease; }
+
+/* The map's tool palette. */
+.mo-tool { transition: background var(--mo-fast) ease, color var(--mo-fast) ease,
+                       border-color var(--mo-fast) ease; }
+.mo-tool:hover:not(:disabled) { background: var(--bg-raised); color: var(--ink); }
+
+/* The progress fill on the simulation strip is written per frame by the
+   clock, so it must not chase itself. */
+.mo-progress { transition: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  /* ALL OF IT, not just the flashes. */
+  .mo-grid, .mo-num, .mo-bar, .mo-tab, .mo-state, .mo-ind, .mo-fold,
+  .mo-chev, .mo-tile, .mo-tool, .mo-handle button { transition: none; }
+  .mo-rise, .mo-fade, .mo-swap, .mo-pip, .mo-sheet, .mo-alarm, .mo-ready,
+  .mo-bands > button, .mo-inspect, .mo-scrim, .mo-sheet-panel,
+  .mo-strip { animation: none; }
+}
+
+/* THE DOCK HANDLE. Quiet until it is wanted: the button is dim on the join
+   and comes up when the pointer is near it, so the control is discoverable
+   without being a permanent vertical line down the middle of the page. */
+.mo-handle button { opacity: 0.55; transition: opacity var(--mo-fast) ease,
+                                                 color var(--mo-fast) ease; }
+.mo-handle:hover button { opacity: 1; color: var(--ink); }

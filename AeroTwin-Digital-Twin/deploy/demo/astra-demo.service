@@ -1,0 +1,30 @@
+[Unit]
+Description=ASTRA demonstration copy
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=astra
+WorkingDirectory=/opt/astra/app
+# The demonstration settings. Bound to loopback: Caddy, on the same machine,
+# is the only thing that talks to it, and it serves HTTPS to the outside.
+Environment=PYTHONUNBUFFERED=1
+Environment=DT_DEMO_MODE=1
+Environment=DT_DEMO_PASSWORD=sih2026
+Environment=DT_DEMO_IDLE_RESET_MIN=30
+Environment=DT_HOST=127.0.0.1
+Environment=DT_PORT=8000
+Environment=DT_DATA_DIR=/opt/astra/run/data
+Environment=DT_CONFIG_DIR=/opt/astra/run/configs
+# A FRESH COPY EVERY START. The working data and configuration are thrown
+# away and copied again from the bundle as shipped, so nothing an earlier
+# visitor did survives into the next run. The demonstration exits on its own
+# when it has been left alone (DT_DEMO_IDLE_RESET_MIN), and Restart=always
+# turns that exit into this fresh start.
+ExecStartPre=/bin/bash -c 'rm -rf /opt/astra/run && mkdir -p /opt/astra/run && cp -a /opt/astra/app/data /opt/astra/run/data && cp -a /opt/astra/app/configs /opt/astra/run/configs'
+ExecStart=/opt/astra/venv/bin/python -m layer4_core.twin_api
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

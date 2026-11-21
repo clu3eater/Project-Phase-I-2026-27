@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="870" viewBox="0 0 760 870">
+<rect width="100%" height="100%" fill="#fff"/>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#111111"/></marker>
+<marker id="open" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10" fill="none" stroke="#111111" stroke-width="1.4"/></marker>
+<marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M0,0 L12,6 L0,12 z" fill="#fff" stroke="#111111" stroke-width="1.3"/></marker>
+<marker id="diamond" viewBox="0 0 16 10" refX="1" refY="5" markerWidth="14" markerHeight="9" orient="auto-start-reverse"><path d="M1,5 L8,0.5 L15,5 L8,9.5 z" fill="#111111"/></marker>
+<marker id="one" viewBox="0 0 14 14" refX="13" refY="7" markerWidth="14" markerHeight="14" orient="auto-start-reverse"><path d="M13,7 L0,7 M6,1 L6,13 M10,1 L10,13" fill="none" stroke="#111111" stroke-width="1.4"/></marker>
+<marker id="many" viewBox="0 0 16 14" refX="15" refY="7" markerWidth="16" markerHeight="14" orient="auto-start-reverse"><path d="M15,1 L3,7 L15,13 M15,7 L0,7 M3,1 L3,13" fill="none" stroke="#111111" stroke-width="1.4"/><circle cx="-2" cy="7" r="0" fill="none"/></marker>
+<marker id="zmany" viewBox="0 0 22 14" refX="21" refY="7" markerWidth="22" markerHeight="14" orient="auto-start-reverse"><path d="M21,1 L11,7 L21,13 M21,7 L0,7" fill="none" stroke="#111111" stroke-width="1.4"/><circle cx="6" cy="7" r="3.6" fill="#fff" stroke="#111111" stroke-width="1.4"/></marker>
+<marker id="zone" viewBox="0 0 22 14" refX="21" refY="7" markerWidth="22" markerHeight="14" orient="auto-start-reverse"><path d="M21,7 L0,7 M15,1 L15,13" fill="none" stroke="#111111" stroke-width="1.4"/><circle cx="6" cy="7" r="3.6" fill="#fff" stroke="#111111" stroke-width="1.4"/></marker>
+</defs>
+<circle cx="50" cy="18" r="10" fill="#fff" stroke="#111111" stroke-width="1.6"/>
+<path d="M50,28 L50,56" fill="none" stroke="#111111" stroke-width="1.6"/>
+<path d="M32,38 L68,38" fill="none" stroke="#111111" stroke-width="1.6"/>
+<path d="M50,56 L36,78" fill="none" stroke="#111111" stroke-width="1.6"/>
+<path d="M50,56 L64,78" fill="none" stroke="#111111" stroke-width="1.6"/>
+<text x="50" y="96.0" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#111111">Operator</text>
+<rect x="114" y="26" width="116" height="40" rx="3" fill="#e7eef9" stroke="#111111" stroke-width="1.6"/>
+<text x="172" y="51" font-family="Arial, Helvetica, sans-serif" font-size="13.5" font-weight="bold" text-anchor="middle" fill="#111111">:Console</text>
+<rect x="242" y="26" width="116" height="40" rx="3" fill="#e7eef9" stroke="#111111" stroke-width="1.6"/>
+<text x="300" y="51" font-family="Arial, Helvetica, sans-serif" font-size="13.5" font-weight="bold" text-anchor="middle" fill="#111111">:TwinAPI</text>
+<rect x="370" y="26" width="116" height="40" rx="3" fill="#e7eef9" stroke="#111111" stroke-width="1.6"/>
+<text x="428" y="51" font-family="Arial, Helvetica, sans-serif" font-size="13.5" font-weight="bold" text-anchor="middle" fill="#111111">:OpsStore</text>
+<rect x="502" y="26" width="116" height="40" rx="3" fill="#e7eef9" stroke="#111111" stroke-width="1.6"/>
+<text x="560" y="51" font-family="Arial, Helvetica, sans-serif" font-size="13.5" font-weight="bold" text-anchor="middle" fill="#111111">:LiveTwin</text>
+<rect x="632" y="26" width="116" height="40" rx="3" fill="#e7eef9" stroke="#111111" stroke-width="1.6"/>
+<text x="690" y="51" font-family="Arial, Helvetica, sans-serif" font-size="13.5" font-weight="bold" text-anchor="middle" fill="#111111">:AI Models</text>
+<path d="M50,112 L50,855" fill="none" stroke="#111111" stroke-width="1.2" stroke-dasharray="6,5"/>
+<path d="M172,66 L172,855" fill="none" stroke="#111111" stroke-width="1.2" stroke-dasharray="6,5"/>
+<path d="M300,66 L300,855" fill="none" stroke="#111111" stroke-width="1.2" stroke-dasharray="6,5"/>
+<path d="M428,66 L428,855" fill="none" stroke="#111111" stroke-width="1.2" stroke-dasharray="6,5"/>
+<path d="M560,66 L560,855" fill="none" stroke="#111111" stroke-width="1.2" stroke-dasharray="6,5"/>
+<path d="M690,66 L690,855" fill="none" stroke="#111111" stroke-width="1.2" stroke-dasharray="6,5"/>
+<path d="M50,125 L166,125" fill="none" stroke="#111111" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="44.72" y="105" width="126.56" height="17" rx="0" fill="#fff" stroke="none" stroke-width="0"/>
+<text x="108.0" y="117" font-family="Arial, Helvetica, sans-serif" font-size="12" text-anchor="middle" fill="#111111">1: prepare aircraft</text>
+<path d="M178,155 L294,155" fill="none" stroke="#111111" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="182.07999999999998" y="135" width="107.84" height="17" rx="0" fill="#fff" stroke="none" stroke-width="0"/>
+<text x="236.0" y="147" font-family="Arial, Helvetica, sans-serif" font-size="12" text-anchor="middle" fill="#111111">2: POST /prepare</text>
+<path d="M306,185 L422,185" fill="none" stroke="#111111" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="313.2" y="165" width="101.60000000000001" height="17" rx="0" fill="#fff" stroke="none" stroke-width="0"/>
+<text x="364.0" y="177" font-family="Arial, Helvetica, sans-serif" font-size="12" text-anchor="middle" fill="#111111">3: prepare(mid)</text>
+<path d="M422,214 L306,214" fill="none" stroke="#111111" stroke-width="1.4" stroke-dasharray="6,4" marker-end="url(#open)"/>
+<rect x="331.92" y="194" width="64.16" height="17" rx="0" fill="#fff" stroke="none" stroke-width="0"/>
+<text x="364.0" y="206" font-family="Arial, Helvetica, sans-serif" font-size="12" text-anchor="middle" fill="#111111">PREFLIGHT</text>
+<path d="M294,243 L178,243" fill="none" stroke="#111111" stroke-width="1.4" stroke-dasharray="6,4" marker-end="url(#open)"/>
+<rect x="213.28" y="223" width="45.44" height="17" rx="0" fill="#fff" stroke="none" stroke-width="0"/>
+<text x="236.0" y="235" font-family="Arial, Helvetica, sans-serif" font-size="12" text-anchor="middle" fill="#111111">200 OK</text>
+<path d="M166,272 L50,272" fill="none" stroke="#111111" stroke-width="1.4" stroke-dasharray="6,4" marker-end="url(#open)"/>
+<rect x="50.96" y="252" width="114.08" height="17" rx="0" fill="#fff" stroke="none" stroke-width="0"/>
+<text x="108.0" y="264" font-family="Arial, Helvetica, sans-serif" font-size="12" text-anchor="middle" fill="#111111">4: show checklist</text>
+<path d="M50,306 L166,306" fill="none" stroke="#111111" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="57.199999999999996" y="286" width="101.60000000000001" height="17" rx="0" fill="#fff" stroke="none" stroke-width="0"/>
+<text x="108.0" y="298" font-family="Arial, Helvetica, sans-serif" font-size="12" text-anchor="middle" fill="#111111">5: start engine</text>
+<path d="M178,336 L294,336" fill="none" stroke="#111111" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="188.32" y="316" width="95.36" height="17" rx="0" fill="#fff" stroke="none" stroke-width="0"/>
+<text x="236.0" y="328" font-family="Arial, Helvetica, sans-serif" font-size="12" text-anchor="middle" fill="#111111">6: POST /start</text>
+<path d="M306,366 L422,366" fill="none" stroke="#111111" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="285.12" y="346" width="157.76" height="17" rx="0" fill="#fff" stroke="none" stroke-width="0"/>
+<text x="364.0" y="358" font-family="Arial, Helvetica, sans-serif" font-size="12" text-anchor="middle" fill="#111111">7: start(mid, checklist)</text>
+<path d="M306,398 L554,398" fill="none" stroke="#111111" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="351.12" y="378" width="157.76" height="17" rx="0" fill="#fff" stroke="none" stroke-width="0"/>
+<text x="430.0" y="390" font-family="Arial, Helvetica, sans-serif" font-size="12" text-anchor="middle" fill="#111111">8: begin_profile(phases)</text>
+<rect x="330" y="418" width="420" height="190" rx="0" fill="none" stroke="#111111" stroke-width="1.3"/>
+<polygon points="330,418 470,418 470,432 460,442 330,442" fill="#f3f3f3" stroke="#111111" stroke-width="1.2"/>
+<text x="336" y="435" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" text-anchor="start" fill="#111111">loop [every 0.5 s tick]</text>
+<path d="M566,460 L610,460 L610,482 L566,482" fill="none" stroke="#111111" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="612" y="455" width="120.32000000000001" height="17" rx="0" fill="#fff" stroke="none" stroke-width="0"/>
+<text x="616" y="467" font-family="Arial, Helvetica, sans-serif" font-size="12" text-anchor="start" fill="#111111">9: poll telemetry,</text>
+<rect x="612" y="471" width="89.12" height="17" rx="0" fill="#fff" stroke="none" stroke-width="0"/>
+<text x="616" y="483" font-family="Arial, Helvetica, sans-serif" font-size="12" text-anchor="start" fill="#111111">shadow update</text>
+<path d="M566,505 L684,505" fill="none" stroke="#111111" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="561.72" y="485" width="126.56" height="17" rx="0" fill="#fff" stroke="none" stroke-width="0"/>
+<text x="625.0" y="497" font-family="Arial, Helvetica, sans-serif" font-size="12" text-anchor="middle" fill="#111111">10: score(features)</text>
+<path d="M684,532 L566,532" fill="none" stroke="#111111" stroke-width="1.4" stroke-dasharray="6,4" marker-end="url(#open)"/>
+<rect x="564.84" y="512" width="120.32000000000001" height="17" rx="0" fill="#fff" stroke="none" stroke-width="0"/>
+<text x="625.0" y="524" font-family="Arial, Helvetica, sans-serif" font-size="12" text-anchor="middle" fill="#111111">level, health, RUL</text>
+<path d="M554,580 L178,580" fill="none" stroke="#111111" stroke-width="1.4" marker-end="url(#open)"/>
+<rect x="253.04" y="561" width="213.92000000000002" height="17" rx="0" fill="#fff" stroke="none" stroke-width="0"/>
+<text x="360" y="573" font-family="Arial, Helvetica, sans-serif" font-size="12" text-anchor="middle" fill="#111111">11: push TwinState over /ws/state</text>
+<path d="M50,640 L166,640" fill="none" stroke="#111111" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="72.8" y="620" width="70.4" height="17" rx="0" fill="#fff" stroke="none" stroke-width="0"/>
+<text x="108.0" y="632" font-family="Arial, Helvetica, sans-serif" font-size="12" text-anchor="middle" fill="#111111">12: launch</text>
+<path d="M178,670 L294,670" fill="none" stroke="#111111" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="182.07999999999998" y="650" width="107.84" height="17" rx="0" fill="#fff" stroke="none" stroke-width="0"/>
+<text x="236.0" y="662" font-family="Arial, Helvetica, sans-serif" font-size="12" text-anchor="middle" fill="#111111">13: POST /launch</text>
+<path d="M306,700 L554,700" fill="none" stroke="#111111" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="323.03999999999996" y="680" width="213.92000000000002" height="17" rx="0" fill="#fff" stroke="none" stroke-width="0"/>
+<text x="430.0" y="692" font-family="Arial, Helvetica, sans-serif" font-size="12" text-anchor="middle" fill="#111111">14: launch() [launch checks pass]</text>
+<path d="M306,732 L422,732" fill="none" stroke="#111111" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="313.2" y="712" width="101.60000000000001" height="17" rx="0" fill="#fff" stroke="none" stroke-width="0"/>
+<text x="364.0" y="724" font-family="Arial, Helvetica, sans-serif" font-size="12" text-anchor="middle" fill="#111111">15: launch(mid)</text>
+<rect x="20" y="752" width="730" height="98" rx="0" fill="none" stroke="#111111" stroke-width="1.3"/>
+<polygon points="20,752 200,752 200,766 190,776 20,776" fill="#f3f3f3" stroke="#111111" stroke-width="1.2"/>
+<text x="26" y="769" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" text-anchor="start" fill="#111111">alt [CAUTION or higher]</text>
+<path d="M554,798 L178,798" fill="none" stroke="#111111" stroke-width="1.4" marker-end="url(#open)"/>
+<rect x="253.04" y="779" width="213.92000000000002" height="17" rx="0" fill="#fff" stroke="none" stroke-width="0"/>
+<text x="360" y="791" font-family="Arial, Helvetica, sans-serif" font-size="12" text-anchor="middle" fill="#111111">16: alert banner + master caution</text>
+<path d="M50,830 L166,830" fill="none" stroke="#111111" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="54.08" y="810" width="107.84" height="17" rx="0" fill="#fff" stroke="none" stroke-width="0"/>
+<text x="108.0" y="822" font-family="Arial, Helvetica, sans-serif" font-size="12" text-anchor="middle" fill="#111111">17: recall (RTB)</text>
+<rect x="166" y="118" width="12" height="722" rx="0" fill="#fff" stroke="#111111" stroke-width="1.3"/>
+<rect x="294" y="150" width="12" height="98" rx="0" fill="#fff" stroke="#111111" stroke-width="1.3"/>
+<rect x="294" y="330" width="12" height="75" rx="0" fill="#fff" stroke="#111111" stroke-width="1.3"/>
+<rect x="294" y="666" width="12" height="76" rx="0" fill="#fff" stroke="#111111" stroke-width="1.3"/>
+<rect x="422" y="180" width="12" height="38" rx="0" fill="#fff" stroke="#111111" stroke-width="1.3"/>
+<rect x="422" y="362" width="12" height="18" rx="0" fill="#fff" stroke="#111111" stroke-width="1.3"/>
+<rect x="422" y="727" width="12" height="18" rx="0" fill="#fff" stroke="#111111" stroke-width="1.3"/>
+<rect x="554" y="392" width="12" height="458" rx="0" fill="#fff" stroke="#111111" stroke-width="1.3"/>
+<rect x="684" y="496" width="12" height="38" rx="0" fill="#fff" stroke="#111111" stroke-width="1.3"/>
+</svg>

@@ -1,0 +1,19 @@
+{
+  "n_features": 34,
+  "sequence_length": 30,
+  "float_bytes": 164450,
+  "int8_bytes": 54927,
+  "size_ratio": 2.99,
+  "float_ms_median": 0.112,
+  "float_ms_p95": 0.134,
+  "int8_ms_median": 0.126,
+  "int8_ms_p95": 0.14,
+  "speedup": 0.88,
+  "max_delta": {
+    "anomaly": 9.76569,
+    "fault": 13.45878,
+    "severity": 1.59721
+  },
+  "decisions_changed": 1,
+  "windows_compared": 300
+}

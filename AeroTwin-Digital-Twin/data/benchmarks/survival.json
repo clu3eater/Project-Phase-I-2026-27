@@ -1,0 +1,708 @@
+{
+  "features": [
+    "rpm",
+    "cht_max",
+    "egt_max",
+    "oil_pressure",
+    "oil_temperature",
+    "fuel_flow",
+    "vibration_rms_total",
+    "res_cht",
+    "res_coolant",
+    "res_egt",
+    "res_oil_pressure",
+    "res_oil_temperature",
+    "res_fuel_flow",
+    "cht_minus_coolant",
+    "cht_spread",
+    "egt_spread",
+    "injection_deviation_max",
+    "knock_retard_deg",
+    "injector_duty",
+    "vibration_kurtosis",
+    "res_isolation",
+    "res_n_excursions",
+    "res_top_abs",
+    "wastegate_pct",
+    "cooling_flap_pct",
+    "res_wastegate",
+    "res_cooling_flap",
+    "rpm_lane_delta",
+    "map_lane_delta",
+    "egt_scatter",
+    "vib_bpfo",
+    "vib_bpfi",
+    "vib_bsf",
+    "vib_ftf",
+    "sd_rpm",
+    "sd_cht_max",
+    "sd_egt_max",
+    "sd_oil_pressure",
+    "sd_oil_temperature",
+    "sd_fuel_flow",
+    "sd_vibration_rms_total",
+    "sd_res_cht",
+    "sd_res_coolant",
+    "sd_res_egt",
+    "sd_res_oil_pressure",
+    "sd_res_oil_temperature",
+    "sd_res_fuel_flow",
+    "sd_cht_minus_coolant",
+    "sd_cht_spread",
+    "sd_egt_spread",
+    "sd_injection_deviation_max",
+    "sd_knock_retard_deg",
+    "sd_injector_duty",
+    "sd_vibration_kurtosis",
+    "sd_res_isolation",
+    "sd_res_n_excursions",
+    "sd_res_top_abs",
+    "sd_wastegate_pct",
+    "sd_cooling_flap_pct",
+    "sd_res_wastegate",
+    "sd_res_cooling_flap",
+    "sd_rpm_lane_delta",
+    "sd_map_lane_delta",
+    "sd_egt_scatter",
+    "sd_vib_bpfo",
+    "sd_vib_bpfi",
+    "sd_vib_bsf",
+    "sd_vib_ftf",
+    "rate_rpm",
+    "rate_cht_max",
+    "rate_egt_max",
+    "rate_oil_pressure",
+    "rate_oil_temperature",
+    "rate_fuel_flow",
+    "rate_vibration_rms_total",
+    "rate_res_cht",
+    "rate_res_coolant",
+    "rate_res_egt",
+    "rate_res_oil_pressure",
+    "rate_res_oil_temperature",
+    "rate_res_fuel_flow",
+    "rate_cht_minus_coolant",
+    "rate_cht_spread",
+    "rate_egt_spread",
+    "rate_injection_deviation_max",
+    "rate_knock_retard_deg",
+    "rate_injector_duty",
+    "rate_vibration_kurtosis",
+    "rate_res_isolation",
+    "rate_res_n_excursions",
+    "rate_res_top_abs",
+    "rate_wastegate_pct",
+    "rate_cooling_flap_pct",
+    "rate_res_wastegate",
+    "rate_res_cooling_flap",
+    "rate_rpm_lane_delta",
+    "rate_map_lane_delta",
+    "rate_egt_scatter",
+    "rate_vib_bpfo",
+    "rate_vib_bpfi",
+    "rate_vib_bsf",
+    "rate_vib_ftf",
+    "flight_hours",
+    "health_est",
+    "rate_health_est"
+  ],
+  "seeds": [
+    0
+  ],
+  "results": [
+    {
+      "seed": 0,
+      "calibration": "val-set calibration",
+      "test": {
+        "horizons": [
+          {
+            "horizon_h": 12.0,
+            "n": 1444,
+            "positives": 41,
+            "base_rate": 0.0284,
+            "auc": 0.9087,
+            "brier": 0.0188,
+            "brier_base": 0.0276,
+            "brier_skill": 0.3185,
+            "skilful": true,
+            "reason": "skilful on test"
+          },
+          {
+            "horizon_h": 25.0,
+            "n": 1444,
+            "positives": 84,
+            "base_rate": 0.0582,
+            "auc": 0.9415,
+            "brier": 0.029,
+            "brier_base": 0.0548,
+            "brier_skill": 0.4702,
+            "skilful": true,
+            "reason": "skilful on test"
+          },
+          {
+            "horizon_h": 50.0,
+            "n": 1444,
+            "positives": 153,
+            "base_rate": 0.106,
+            "auc": 0.9277,
+            "brier": 0.0539,
+            "brier_base": 0.0947,
+            "brier_skill": 0.4312,
+            "skilful": true,
+            "reason": "skilful on test"
+          },
+          {
+            "horizon_h": 100.0,
+            "n": 1444,
+            "positives": 288,
+            "base_rate": 0.1994,
+            "auc": 0.8914,
+            "brier": 0.0844,
+            "brier_base": 0.1597,
+            "brier_skill": 0.4713,
+            "skilful": true,
+            "reason": "skilful on test"
+          },
+          {
+            "horizon_h": 200.0,
+            "n": 1444,
+            "positives": 555,
+            "base_rate": 0.3843,
+            "auc": 0.8379,
+            "brier": 0.1492,
+            "brier_base": 0.2366,
+            "brier_skill": 0.3694,
+            "skilful": true,
+            "reason": "skilful on test"
+          },
+          {
+            "horizon_h": 400.0,
+            "n": 1444,
+            "positives": 1008,
+            "base_rate": 0.6981,
+            "auc": 0.7677,
+            "brier": 0.1693,
+            "brier_base": 0.2108,
+            "brier_skill": 0.1966,
+            "skilful": true,
+            "reason": "skilful on test"
+          }
+        ]
+      },
+      "reliability": {
+        "12": [
+          {
+            "bin": "0.0-0.1",
+            "n": 1304,
+            "predicted": 0.0045,
+            "observed": 0.0092
+          },
+          {
+            "bin": "0.1-0.2",
+            "n": 87,
+            "predicted": 0.1415,
+            "observed": 0.046
+          },
+          {
+            "bin": "0.2-0.3",
+            "n": 10,
+            "predicted": 0.2282,
+            "observed": 0.2
+          },
+          {
+            "bin": "0.3-0.4",
+            "n": 25,
+            "predicted": 0.3352,
+            "observed": 0.36
+          },
+          {
+            "bin": "0.8-0.9",
+            "n": 7,
+            "predicted": 0.8667,
+            "observed": 0.7143
+          },
+          {
+            "bin": "0.9-1.0",
+            "n": 11,
+            "predicted": 0.9959,
+            "observed": 0.8182
+          }
+        ],
+        "25": [
+          {
+            "bin": "0.0-0.1",
+            "n": 1153,
+            "predicted": 0.0011,
+            "observed": 0.0043
+          },
+          {
+            "bin": "0.1-0.2",
+            "n": 177,
+            "predicted": 0.126,
+            "observed": 0.1073
+          },
+          {
+            "bin": "0.2-0.3",
+            "n": 49,
+            "predicted": 0.275,
+            "observed": 0.2449
+          },
+          {
+            "bin": "0.3-0.4",
+            "n": 4,
+            "predicted": 0.3416,
+            "observed": 0.25
+          },
+          {
+            "bin": "0.4-0.5",
+            "n": 8,
+            "predicted": 0.4,
+            "observed": 0.625
+          },
+          {
+            "bin": "0.7-0.8",
+            "n": 37,
+            "predicted": 0.7316,
+            "observed": 0.7027
+          },
+          {
+            "bin": "0.8-0.9",
+            "n": 2,
+            "predicted": 0.8501,
+            "observed": 1.0
+          },
+          {
+            "bin": "0.9-1.0",
+            "n": 14,
+            "predicted": 0.9643,
+            "observed": 1.0
+          }
+        ],
+        "50": [
+          {
+            "bin": "0.0-0.1",
+            "n": 1118,
+            "predicted": 0.0048,
+            "observed": 0.0152
+          },
+          {
+            "bin": "0.1-0.2",
+            "n": 40,
+            "predicted": 0.1203,
+            "observed": 0.125
+          },
+          {
+            "bin": "0.2-0.3",
+            "n": 46,
+            "predicted": 0.2881,
+            "observed": 0.1739
+          },
+          {
+            "bin": "0.3-0.4",
+            "n": 48,
+            "predicted": 0.3886,
+            "observed": 0.2292
+          },
+          {
+            "bin": "0.4-0.5",
+            "n": 16,
+            "predicted": 0.4,
+            "observed": 0.25
+          },
+          {
+            "bin": "0.5-0.6",
+            "n": 72,
+            "predicted": 0.5788,
+            "observed": 0.3889
+          },
+          {
+            "bin": "0.6-0.7",
+            "n": 20,
+            "predicted": 0.6395,
+            "observed": 0.45
+          },
+          {
+            "bin": "0.7-0.8",
+            "n": 42,
+            "predicted": 0.7387,
+            "observed": 0.7857
+          },
+          {
+            "bin": "0.8-0.9",
+            "n": 6,
+            "predicted": 0.8121,
+            "observed": 1.0
+          },
+          {
+            "bin": "0.9-1.0",
+            "n": 36,
+            "predicted": 0.9767,
+            "observed": 0.8889
+          }
+        ],
+        "100": [
+          {
+            "bin": "0.0-0.1",
+            "n": 971,
+            "predicted": 0.0313,
+            "observed": 0.0443
+          },
+          {
+            "bin": "0.1-0.2",
+            "n": 38,
+            "predicted": 0.1364,
+            "observed": 0.1842
+          },
+          {
+            "bin": "0.2-0.3",
+            "n": 117,
+            "predicted": 0.24,
+            "observed": 0.2051
+          },
+          {
+            "bin": "0.3-0.4",
+            "n": 22,
+            "predicted": 0.3515,
+            "observed": 0.2273
+          },
+          {
+            "bin": "0.4-0.5",
+            "n": 28,
+            "predicted": 0.4091,
+            "observed": 0.25
+          },
+          {
+            "bin": "0.5-0.6",
+            "n": 36,
+            "predicted": 0.5347,
+            "observed": 0.5
+          },
+          {
+            "bin": "0.6-0.7",
+            "n": 77,
+            "predicted": 0.677,
+            "observed": 0.6494
+          },
+          {
+            "bin": "0.7-0.8",
+            "n": 10,
+            "predicted": 0.7451,
+            "observed": 0.8
+          },
+          {
+            "bin": "0.9-1.0",
+            "n": 145,
+            "predicted": 0.9695,
+            "observed": 0.869
+          }
+        ]
+      }
+    },
+    {
+      "seed": 0,
+      "calibration": "out-of-fold calibration",
+      "test": {
+        "horizons": [
+          {
+            "horizon_h": 12.0,
+            "n": 1444,
+            "positives": 41,
+            "base_rate": 0.0284,
+            "auc": 0.9233,
+            "brier": 0.0192,
+            "brier_base": 0.0276,
+            "brier_skill": 0.3054,
+            "skilful": true,
+            "reason": "skilful on test"
+          },
+          {
+            "horizon_h": 25.0,
+            "n": 1444,
+            "positives": 84,
+            "base_rate": 0.0582,
+            "auc": 0.945,
+            "brier": 0.029,
+            "brier_base": 0.0548,
+            "brier_skill": 0.4704,
+            "skilful": true,
+            "reason": "skilful on test"
+          },
+          {
+            "horizon_h": 50.0,
+            "n": 1444,
+            "positives": 153,
+            "base_rate": 0.106,
+            "auc": 0.9252,
+            "brier": 0.05,
+            "brier_base": 0.0947,
+            "brier_skill": 0.4724,
+            "skilful": true,
+            "reason": "skilful on test"
+          },
+          {
+            "horizon_h": 100.0,
+            "n": 1444,
+            "positives": 288,
+            "base_rate": 0.1994,
+            "auc": 0.8988,
+            "brier": 0.0762,
+            "brier_base": 0.1597,
+            "brier_skill": 0.5225,
+            "skilful": true,
+            "reason": "skilful on test"
+          },
+          {
+            "horizon_h": 200.0,
+            "n": 1444,
+            "positives": 555,
+            "base_rate": 0.3843,
+            "auc": 0.8467,
+            "brier": 0.1368,
+            "brier_base": 0.2366,
+            "brier_skill": 0.4221,
+            "skilful": true,
+            "reason": "skilful on test"
+          },
+          {
+            "horizon_h": 400.0,
+            "n": 1444,
+            "positives": 1008,
+            "base_rate": 0.6981,
+            "auc": 0.7698,
+            "brier": 0.169,
+            "brier_base": 0.2108,
+            "brier_skill": 0.1983,
+            "skilful": true,
+            "reason": "skilful on test"
+          }
+        ]
+      },
+      "reliability": {
+        "12": [
+          {
+            "bin": "0.0-0.1",
+            "n": 1314,
+            "predicted": 0.007,
+            "observed": 0.0084
+          },
+          {
+            "bin": "0.1-0.2",
+            "n": 73,
+            "predicted": 0.1471,
+            "observed": 0.0822
+          },
+          {
+            "bin": "0.2-0.3",
+            "n": 27,
+            "predicted": 0.2689,
+            "observed": 0.2222
+          },
+          {
+            "bin": "0.3-0.4",
+            "n": 17,
+            "predicted": 0.3533,
+            "observed": 0.4118
+          },
+          {
+            "bin": "0.5-0.6",
+            "n": 5,
+            "predicted": 0.5385,
+            "observed": 0.8
+          },
+          {
+            "bin": "0.6-0.7",
+            "n": 1,
+            "predicted": 0.6915,
+            "observed": 1.0
+          },
+          {
+            "bin": "0.7-0.8",
+            "n": 2,
+            "predicted": 0.75,
+            "observed": 1.0
+          },
+          {
+            "bin": "0.8-0.9",
+            "n": 1,
+            "predicted": 0.8571,
+            "observed": 0.0
+          },
+          {
+            "bin": "0.9-1.0",
+            "n": 4,
+            "predicted": 1.0,
+            "observed": 1.0
+          }
+        ],
+        "25": [
+          {
+            "bin": "0.0-0.1",
+            "n": 1208,
+            "predicted": 0.0059,
+            "observed": 0.0075
+          },
+          {
+            "bin": "0.1-0.2",
+            "n": 119,
+            "predicted": 0.1324,
+            "observed": 0.1261
+          },
+          {
+            "bin": "0.2-0.3",
+            "n": 23,
+            "predicted": 0.2165,
+            "observed": 0.087
+          },
+          {
+            "bin": "0.3-0.4",
+            "n": 27,
+            "predicted": 0.3322,
+            "observed": 0.3704
+          },
+          {
+            "bin": "0.4-0.5",
+            "n": 13,
+            "predicted": 0.4206,
+            "observed": 0.4615
+          },
+          {
+            "bin": "0.5-0.6",
+            "n": 27,
+            "predicted": 0.5493,
+            "observed": 0.6296
+          },
+          {
+            "bin": "0.6-0.7",
+            "n": 1,
+            "predicted": 0.6483,
+            "observed": 1.0
+          },
+          {
+            "bin": "0.9-1.0",
+            "n": 26,
+            "predicted": 0.9478,
+            "observed": 0.9231
+          }
+        ],
+        "50": [
+          {
+            "bin": "0.0-0.1",
+            "n": 1165,
+            "predicted": 0.014,
+            "observed": 0.0197
+          },
+          {
+            "bin": "0.1-0.2",
+            "n": 18,
+            "predicted": 0.1686,
+            "observed": 0.0556
+          },
+          {
+            "bin": "0.2-0.3",
+            "n": 81,
+            "predicted": 0.2869,
+            "observed": 0.2346
+          },
+          {
+            "bin": "0.3-0.4",
+            "n": 3,
+            "predicted": 0.3345,
+            "observed": 0.3333
+          },
+          {
+            "bin": "0.4-0.5",
+            "n": 59,
+            "predicted": 0.4623,
+            "observed": 0.339
+          },
+          {
+            "bin": "0.5-0.6",
+            "n": 27,
+            "predicted": 0.5838,
+            "observed": 0.5556
+          },
+          {
+            "bin": "0.6-0.7",
+            "n": 1,
+            "predicted": 0.6054,
+            "observed": 0.0
+          },
+          {
+            "bin": "0.7-0.8",
+            "n": 47,
+            "predicted": 0.7434,
+            "observed": 0.766
+          },
+          {
+            "bin": "0.9-1.0",
+            "n": 43,
+            "predicted": 0.9473,
+            "observed": 0.8837
+          }
+        ],
+        "100": [
+          {
+            "bin": "0.0-0.1",
+            "n": 911,
+            "predicted": 0.0394,
+            "observed": 0.0395
+          },
+          {
+            "bin": "0.1-0.2",
+            "n": 170,
+            "predicted": 0.1302,
+            "observed": 0.1
+          },
+          {
+            "bin": "0.2-0.3",
+            "n": 12,
+            "predicted": 0.25,
+            "observed": 0.4167
+          },
+          {
+            "bin": "0.3-0.4",
+            "n": 66,
+            "predicted": 0.341,
+            "observed": 0.2727
+          },
+          {
+            "bin": "0.4-0.5",
+            "n": 15,
+            "predicted": 0.4444,
+            "observed": 0.3333
+          },
+          {
+            "bin": "0.5-0.6",
+            "n": 54,
+            "predicted": 0.566,
+            "observed": 0.463
+          },
+          {
+            "bin": "0.6-0.7",
+            "n": 32,
+            "predicted": 0.6528,
+            "observed": 0.7812
+          },
+          {
+            "bin": "0.7-0.8",
+            "n": 41,
+            "predicted": 0.7314,
+            "observed": 0.6098
+          },
+          {
+            "bin": "0.8-0.9",
+            "n": 46,
+            "predicted": 0.8692,
+            "observed": 0.8696
+          },
+          {
+            "bin": "0.9-1.0",
+            "n": 97,
+            "predicted": 0.9618,
+            "observed": 0.9485
+          }
+        ]
+      }
+    }
+  ]
+}

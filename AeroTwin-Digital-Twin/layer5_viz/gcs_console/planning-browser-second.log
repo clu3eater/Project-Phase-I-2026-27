@@ -1,0 +1,10 @@
+locator.waitFor: Timeout 30000ms exceeded.
+Call log:
+  - waiting for getByRole('radio', { name: 'Select MALE-01', exact: true }) to be visible
+
+    at D:\SIH\Project Phase\DIgital-Twin-for-the-Aero-Piston-Engines\layer5_viz\gcs_console\test-mission-planning.cjs:42:68 {
+  log: [
+    "  - waiting for getByRole('radio', { name: 'Select MALE-01', exact: true }) to be visible"
+  ],
+  name: 'TimeoutError'
+}

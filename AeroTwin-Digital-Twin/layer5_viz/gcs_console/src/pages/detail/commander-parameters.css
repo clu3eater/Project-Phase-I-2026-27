@@ -1,0 +1,35 @@
+.commander-parameters { container-type: inline-size; min-width: 0; }
+.commander-parameter-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 16px; align-items: start; margin-bottom: 16px; }
+.parameter-model-card { min-width: 0; position: sticky; top: 0; }
+.parameter-model-card section { margin: 0; }
+.parameter-model-card section > header { flex-wrap: wrap; }
+.parameter-model-hint { margin-bottom: 12px; line-height: 1.5; }
+.commander-engine-view { width: 100%; aspect-ratio: 1.35; min-height: 300px; max-height: 70vh; min-width: 0; --engine-part-top: 56px; --engine-part-height: calc(100% - 64px); }
+.model-expanded .parameter-model-card { grid-column: 1 / -1; position: relative; }
+.model-expanded .commander-engine-view { max-height: 78vh; }
+.model-expanded .parameter-data-column { grid-column: 1 / -1; }
+.parameter-data-column { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.parameter-data-column > section { margin: 0; }
+.parameter-cylinder-summary { display: flex; gap: 12px 24px; flex-wrap: wrap; padding: 8px 0 16px; }
+.parameter-cylinder-summary b { display: inline-block; margin-left: 8px; }
+.commander-cylinder-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.commander-cylinder-card { border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 12px; min-width: 0; }
+.parameter-cylinder-title { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
+.parameter-cylinder-number { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--ink-mute); border-radius: 4px; font-weight: 700; }
+.parameter-cylinder-title .btn { margin-left: auto; }
+.commander-system-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); gap: 12px; }
+.commander-cylinder-card .parameter-reading + .parameter-reading { margin-top: 10px; }
+.parameter-value-state { font-size: 16px; color: var(--ink-dim); }
+.parameter-technical-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.commander-parameters .btn { white-space: normal; }
+@container (max-width: 1100px) {
+  .commander-parameter-grid { grid-template-columns: minmax(0, 1fr); }
+  .parameter-model-card { position: relative; }
+}
+@container (max-width: 600px) {
+  .commander-cylinder-grid, .parameter-technical-grid { grid-template-columns: minmax(0, 1fr); }
+  .commander-engine-view { min-height: 260px; max-height: 66vh; }
+}
+@media (max-width: 900px), (max-height: 700px) {
+  .commander-parameters { overflow: visible; flex: 1 0 auto; }
+}

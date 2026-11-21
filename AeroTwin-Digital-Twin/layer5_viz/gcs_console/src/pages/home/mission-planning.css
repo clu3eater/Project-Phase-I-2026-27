@@ -1,0 +1,52 @@
+.planning-fields, .planning-extra-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.planning-title { margin: 0; font-size: 20px; }
+.planning-mission-layout { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 20px; align-items: start; }
+.planning-mission-fields { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.planning-route-panel { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.planning-route-fields { display: grid; grid-template-columns: minmax(0, 1fr) 38px minmax(0, 1fr); gap: 10px; align-items: end; }
+.planning-route-swap { height: 38px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg-raised); color: var(--ink); font-size: 20px; cursor: pointer; }
+.planning-map-preview { height: clamp(260px, 36vh, 420px); min-width: 0; }
+.planning-map-hint { margin: 0; color: var(--ink-dim); font-size: var(--size-label); line-height: 1.45; }
+.planning-extra-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.planning-note { padding: 12px 14px; border-left: 3px solid var(--ink-mute); background: var(--bg-raised); color: var(--ink-dim); line-height: 1.5; }
+.planning-explanation { margin: 0; line-height: 1.5; color: var(--ink-dim); }
+.planning-section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.planning-candidates { display: flex; flex-direction: column; gap: 8px; }
+.planning-candidate { display: block; min-width: 0; border: 1px solid var(--line); padding: 0 12px; border-radius: var(--radius-lg); }
+.planning-candidate.is-selected { border: 2px solid var(--ink); padding: 0 11px; background: var(--bg-raised); }
+.planning-candidate-main { display: flex; align-items: center; gap: 12px; min-width: 0; min-height: 56px; }
+.planning-candidate-choice { display: flex; align-items: center; gap: 10px; flex: 1 1 auto; min-width: 0; padding: 8px 0; margin: 0; cursor: pointer; }
+.planning-candidate-choice input { width: 20px; height: 20px; }
+.planning-candidate-name { display: flex; flex-direction: column; gap: 3px; min-width: 0; overflow-wrap: anywhere; }
+.planning-availability { flex: 0 0 auto; padding: 4px 8px; border: 1px solid currentColor; border-radius: 999px; font-size: var(--size-label); font-weight: 700; white-space: nowrap; }
+.planning-availability.is-available { color: var(--state-normal); }
+.planning-availability.is-unavailable { color: var(--alert-warn); }
+.planning-candidate-more { border-top: 1px solid var(--line); padding: 8px 0 10px; }
+.planning-candidate-more > summary, .planning-optional-note > summary { color: var(--ink-dim); cursor: pointer; font-size: var(--size-label); }
+.planning-candidate-detail { display: flex; flex-direction: column; gap: 9px; min-width: 0; padding-top: 10px; overflow-wrap: anywhere; }
+.planning-candidate-detail ul { margin: 6px 0 0; padding-left: 22px; line-height: 1.5; }
+.planning-candidate-facts { display: flex; gap: 10px 16px; flex-wrap: wrap; color: var(--ink-dim); }
+.planning-optional-note { padding: 8px 0; border-top: 1px solid var(--line); }
+.planning-optional-note[open] > summary { margin-bottom: 10px; }
+.planning-score-track { height: 12px; border: 1px solid var(--line); background: var(--bg-panel); margin-top: 8px; overflow: hidden; }
+.planning-score-track > span { display: block; height: 100%; background: var(--data); }
+.drawer:has(.planning-map-preview) { width: min(1040px, 96%); box-sizing: border-box; }
+.drawer:has(.planning-candidates) { width: min(780px, 96%); box-sizing: border-box; }
+.drawer:has(.planning-map-preview) .drawer-foot,
+.drawer:has(.planning-candidates) .drawer-foot { flex-wrap: wrap; }
+.drawer:has(.planning-map-preview) .btn,
+.drawer:has(.planning-candidates) .btn { white-space: normal; }
+@media (max-width: 850px) {
+  .planning-mission-layout { grid-template-columns: minmax(0, 1fr); }
+  .planning-map-preview { height: clamp(260px, 42vh, 380px); }
+}
+@media (max-width: 550px) {
+  .planning-fields, .planning-extra-fields { grid-template-columns: minmax(0, 1fr); }
+  .planning-route-fields { grid-template-columns: minmax(0, 1fr); align-items: stretch; }
+  .planning-route-swap { grid-column: 1; width: 42px; }
+  .drawer:has(.planning-map-preview) .drawer-body,
+  .drawer:has(.planning-candidates) .drawer-body { padding: 16px; }
+}
+@media (max-width: 360px) {
+  .planning-summary { grid-template-columns: minmax(0, 1fr); }
+}

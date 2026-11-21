@@ -1,0 +1,14 @@
+{
+  "baseline_mb": 29.2,
+  "after_imports_mb": 62.4,
+  "ready_mb": 68.6,
+  "after_200_inferences_mb": 68.9,
+  "growth_over_200_mb": 0.34,
+  "inference_ms_median": 0.638,
+  "inference_ms_p95": 1.205,
+  "onnx_kb": 149.6,
+  "n_rules": 37,
+  "pi_smallest_mb": 2048,
+  "share_of_smallest_pi_pct": 3.36,
+  "platform": "nt win32"
+}

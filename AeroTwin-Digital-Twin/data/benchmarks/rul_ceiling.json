@@ -1,0 +1,48 @@
+{
+  "measured": "2026-09-06",
+  "seed": 0,
+  "folds": 5,
+  "sortie_rows": 3807,
+  "engines": 73,
+  "oracle_channels": [
+    "deg_cooling_efficiency",
+    "deg_oil_quality",
+    "deg_combustion_efficiency",
+    "deg_injector_condition",
+    "deg_bearing_condition",
+    "deg_turbocharger_condition",
+    "deg_cooling_airflow",
+    "deg_battery_health",
+    "deg_oil_viscosity_ratio",
+    "deg_battery_internal_resistance_ohm",
+    "deg_bearing_clearance_mm",
+    "deg_injector_flow_variance",
+    "chi_true",
+    "thi_true",
+    "mhi_true",
+    "comb_hi_true"
+  ],
+  "horizon_hours": 400.0,
+  "oracle": {
+    "rmse": 105.682,
+    "target_sigma": 138.144,
+    "rmse_sigma_ratio": 0.765,
+    "alpha_lambda": 0.3561643835616438,
+    "relative_accuracy": 0.5830409767016809,
+    "prognostic_horizon_h": 0.0,
+    "convergence": 273.02884200414167,
+    "late_fraction": 0.40031520882584715,
+    "scored_engines": 73
+  },
+  "oracle_monotone": {
+    "rmse": 98.142,
+    "target_sigma": 138.144,
+    "rmse_sigma_ratio": 0.7104,
+    "alpha_lambda": 0.3561643835616438,
+    "relative_accuracy": 0.5815523057227728,
+    "prognostic_horizon_h": 0.0,
+    "convergence": 280.8822648385785,
+    "late_fraction": 0.38429209351195165,
+    "scored_engines": 73
+  }
+}

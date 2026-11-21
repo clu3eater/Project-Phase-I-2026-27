@@ -1,0 +1,97 @@
+# ==============================================================================
+# THE SQUADRON THIS GROUND STATION OPERATES
+#
+# Every aircraft here has its own engine twin: its own serial (twin_id), its
+# own engine definition, its own hours and wear, kept across restarts in
+# data/twin_state/<twin_id>.pkl. One ground station flies ONE aircraft at a
+# time, as a real GCS does; the others are on the ground with the condition
+# their last engine run left them in.
+#
+# The workflow this drives (layer4_core/ops.py):
+#   COMMANDER   plans a mission, allots a serviceable aircraft and an operator,
+#               approves it -- with the twin's predicted mission reliability
+#               for each candidate aircraft in front of them.
+#   OPERATOR    sees the missions approved for them, prepares the allotted
+#               aircraft on the GCS, runs the pre-flight checklist, starts the
+#               engine from cold, waits for it to warm, launches, can recall it
+#               (RTB), and debriefs after shutdown, reporting any snags.
+#   MAINTAINER  signs the before-flight inspection and maintenance release,
+#               rectifies defects (the work reaches the engine twin), runs the
+#               engine on the ground to verify, and grounds an aircraft.
+#   ENGINEER    reviews the defects the twin raises after each engine run --
+#               confirm, defer with an hours limit, or no fault found -- and
+#               imposes operating limitations on an aircraft.
+# ==============================================================================
+schema_version: 1
+
+unit: "UAV Flight, demonstration squadron"
+base: "Home base"
+
+# Hours between scheduled inspections. The oil change (A1) is part of it
+# [MML 05-20-00], and an aircraft past it is not released.
+inspection_interval_h: 100
+
+aircraft:
+  # The station's original aircraft: its engine keeps the life it already has.
+  - tail: MALE-01
+    twin_id: UAV-ENG-001
+    engine_key: rotax_915is
+    airframe: "MALE UAV, Rotax 915 iS"
+    initial_engine_hours: 0
+
+  - tail: MALE-02
+    twin_id: UAV-ENG-002
+    engine_key: rotax_915is
+    airframe: "MALE UAV, Rotax 915 iS"
+    initial_engine_hours: 420
+
+  # A high-time engine with a cooling problem starting to develop. Nobody is
+  # told: the twin has to find it, raise it after a flight, and the squadron
+  # has to act on it.
+  - tail: MALE-03
+    twin_id: UAV-ENG-003
+    engine_key: rotax_915is
+    airframe: "MALE UAV, Rotax 915 iS"
+    initial_engine_hours: 960
+    developing_faults:
+      - {mode: cooling_degradation, severity: 0.75, onset_after_hours: 0.05, ramp_hours: 0.5}
+
+  # The turbo-diesel airframe. Its engine definition is an unvalidated
+  # placeholder (configs/engines/austro_ae330.yaml) and is labelled as such.
+  - tail: TAPAS-01
+    twin_id: UAV-ENG-101
+    engine_key: austro_ae330
+    airframe: "MALE UAV, AE330-class diesel (unvalidated model)"
+    initial_engine_hours: 150
+
+# What the squadron flies. Duration is the PLANNED endurance the commander
+# approves against and the twin's reliability is assessed for; the twin flies
+# a compressed cruise (ops.simulated_cruise_hours) so a demonstration ends.
+mission_types:
+  ISR_PATROL:   {label: "ISR patrol",            duration_h: 10, altitude_ft: 18000, throttle_pct: 72, environment: STANDARD}
+  COMM_RELAY:   {label: "Communication relay",   duration_h: 18, altitude_ft: 20000, throttle_pct: 70, environment: ENDURANCE}
+  MARITIME:     {label: "Maritime surveillance", duration_h: 12, altitude_ft: 12000, throttle_pct: 68, environment: MARITIME}
+  HIGH_ALT_ISR: {label: "High-altitude ISR",     duration_h: 12, altitude_ft: 23000, throttle_pct: 82, environment: HIGH_ALTITUDE}
+  TRANSIT:      {label: "Transit / ferry",       duration_h: 4,  altitude_ft: 12000, throttle_pct: 68, environment: STANDARD}
+  TRAINING:     {label: "Training sortie",       duration_h: 2,  altitude_ft: 8000,  throttle_pct: 65, environment: STANDARD}
+
+environments: [STANDARD, HOT_WEATHER, COLD_WEATHER, HIGH_ALTITUDE, MARITIME, ENDURANCE]
+
+# The operator's checks before the engine may be started. Every one must be
+# confirmed; the confirmation is kept with the mission record.
+preflight_checklist:
+  - "Mission brief received: task, area, altitude, endurance and airspace"
+  - "Technical log checked: maintenance release valid, no open grounding defects"
+  - "Operating limitations on this aircraft reviewed"
+  - "Fuel and payload confirmed for the planned endurance"
+  - "GCS datalink established; command and telemetry verified"
+  - "Engine twin pre-flight status reviewed: no active warnings"
+  - "Weather at base and in the task area within limits"
+  - "Lost-link and recovery procedure set"
+
+ops:
+  # Engine hours the twin actually flies in the cruise of a tasked mission.
+  # DT_CRUISE_HOURS overrides it. The planned duration is what is assessed.
+  simulated_cruise_hours: 0.1
+  # Refresh of each aircraft's last-known condition in the squadron log.
+  health_flush_s: 30

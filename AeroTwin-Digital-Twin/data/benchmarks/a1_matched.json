@@ -1,0 +1,97 @@
+{
+  "full": [
+    {
+      "estimator": "LSTM (training path)",
+      "n": 4120,
+      "rmse": 113.66993029700507,
+      "rmse_sigma": 0.8190707901839389,
+      "r2": 0.329123040667458,
+      "alpha_lambda": 0.2,
+      "relative_accuracy": 0.479,
+      "late": 0.3725728155339806,
+      "nasa": 2046.677153271837
+    },
+    {
+      "estimator": "LSTM (SERVING path)",
+      "n": 4120,
+      "rmse": 113.66872805511387,
+      "rmse_sigma": 0.8190621271961703,
+      "r2": 0.32913723179288445,
+      "alpha_lambda": 0.2,
+      "relative_accuracy": 0.482,
+      "late": 0.3725728155339806,
+      "nasa": 1920.0394418991787
+    },
+    {
+      "estimator": "physics (capped, fair score)",
+      "n": 1914,
+      "rmse": 162.47155947195398,
+      "rmse_sigma": 1.1815606829917809,
+      "r2": -0.39608564759200426,
+      "alpha_lambda": 0.2,
+      "relative_accuracy": 0.363,
+      "late": 0.3343782654127482,
+      "nasa": 468973.9542214939
+    },
+    {
+      "estimator": "physics (uncapped, as served)",
+      "n": 1914,
+      "rmse": 226.89163079163663,
+      "rmse_sigma": 1.6500502064151266,
+      "r2": -1.7226656836906016,
+      "alpha_lambda": 0.133,
+      "relative_accuracy": 0.301,
+      "late": 0.47701149425287354,
+      "nasa": 589243999910.9852
+    }
+  ],
+  "matched": [
+    {
+      "estimator": "LSTM (training path)",
+      "n": 1914,
+      "rmse": 109.83111126150979,
+      "rmse_sigma": 0.7987374729316683,
+      "r2": 0.3620184493347324,
+      "alpha_lambda": 0.333,
+      "relative_accuracy": 0.55,
+      "late": 0.40752351097178685,
+      "nasa": 3951.1751059685766
+    },
+    {
+      "estimator": "LSTM (SERVING path)",
+      "n": 1914,
+      "rmse": 109.83580230166687,
+      "rmse_sigma": 0.7987715881246902,
+      "r2": 0.3619639500047602,
+      "alpha_lambda": 0.333,
+      "relative_accuracy": 0.556,
+      "late": 0.40752351097178685,
+      "nasa": 3888.3655231314146
+    },
+    {
+      "estimator": "physics (capped, fair score)",
+      "n": 1914,
+      "rmse": 162.47155947195398,
+      "rmse_sigma": 1.1815606829917809,
+      "r2": -0.39608564759200426,
+      "alpha_lambda": 0.2,
+      "relative_accuracy": 0.363,
+      "late": 0.3343782654127482,
+      "nasa": 468973.9542214939
+    },
+    {
+      "estimator": "physics (uncapped, as served)",
+      "n": 1914,
+      "rmse": 226.89163079163663,
+      "rmse_sigma": 1.6500502064151266,
+      "r2": -1.7226656836906016,
+      "alpha_lambda": 0.133,
+      "relative_accuracy": 0.301,
+      "late": 0.47701149425287354,
+      "nasa": 589243999910.9852
+    }
+  ],
+  "train_serve_rmse": 2.5766464226716854,
+  "windows": 4120,
+  "matched_windows": 1914
+}

@@ -1,0 +1,23 @@
+.venv/
+.git/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+# NOT all of data/. data/physics/ holds three TRACKED flame-lookup tables that
+# the physics needs on every tick; excluding the whole directory shipped an
+# image whose engine could not run. Exclude only what is generated or secret.
+data/synthetic/
+data/models/
+data/replay/
+data/keys/
+data/audit/
+data/training_logs/
+data/console.*
+layer5_viz/gcs_console/node_modules/
+layer5_viz/gcs_console/dist/
+engines manuals/
+*.pdf
+*.pptx
+all convo.txt

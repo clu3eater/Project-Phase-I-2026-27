@@ -1,0 +1,103 @@
+<title>PS 26054 diagram preview</title><style>body{font:14px Segoe UI,Arial;margin:24px;background:#EEF1F4;color:#14212F}h2{margin:28px 0 8px;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:#44566B}svg{display:block}</style><h1 style='font-size:19px'>PS 26054 &mdash; diagram preview</h1><p style='color:#44566B'>Approximate render of <code>ps26054_diagrams.drawio</code>. Open the .drawio itself for the real thing; this is for checking layout at a glance.</p><h2>1 Problem and Solution</h2>
+<svg viewBox="0 0 1600 900" width="100%" style="background:#FFFFFF;border:1px solid #ccd">
+<rect x="0.0" y="0.0" width="1600.0" height="46.0" rx="0" ry="0" fill="#16324F" stroke="none" stroke-width="1"/>
+<text x="18" y="28" font-size="14.0" fill="#FFFFFF" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="start">THE PROBLEM TODAY, AND WHAT WE PROPOSE | PS 26054</text>
+<text x="1580" y="26" font-size="8.0" fill="#9DB4CC" font-weight="400" font-family="ui-monospace,Consolas,monospace" text-anchor="end">REACTIVE MONITORING  -&gt;  PREDICTIVE DIGITAL TWIN</text>
+<rect x="16.0" y="62.0" width="1568.0" height="252.0" rx="8" ry="8" fill="#F0F2F1" stroke="#C0392B" stroke-width="2"/>
+<text x="30" y="81" font-size="13.0" fill="#3D4A45" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="start">A · HOW ENGINE MONITORING WORKS TODAY</text>
+<text x="1568" y="81" font-size="8.0" fill="#6B7C86" font-weight="400" font-family="ui-monospace,Consolas,monospace" text-anchor="end">THRESHOLD-BASED  |  REACTIVE  |  AFTER THE FACT</text>
+<rect x="40.0" y="112.0" width="340.0" height="62.0" rx="8" ry="8" fill="#FFFFFF" stroke="#44566B" stroke-width="1.5"/>
+<text x="210" y="142" font-size="12.0" fill="#44566B" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">Engine runs</text>
+<text x="210" y="158" font-size="8" fill="#5D6B66" font-weight="400" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">wear accumulates quietly</text>
+<rect x="420.0" y="112.0" width="340.0" height="62.0" rx="8" ry="8" fill="#FFFFFF" stroke="#44566B" stroke-width="1.5"/>
+<text x="590" y="142" font-size="12.0" fill="#44566B" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">Sensor reads a value</text>
+<text x="590" y="158" font-size="8" fill="#5D6B66" font-weight="400" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">RPM, CHT, EGT, oil pressure</text>
+<rect x="800.0" y="112.0" width="340.0" height="62.0" rx="8" ry="8" fill="#FFFFFF" stroke="#44566B" stroke-width="1.5"/>
+<text x="970" y="142" font-size="12.0" fill="#44566B" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">Compare to a fixed limit</text>
+<text x="970" y="158" font-size="8" fill="#5D6B66" font-weight="400" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">is the value over the line?</text>
+<rect x="1180.0" y="112.0" width="340.0" height="62.0" rx="8" ry="8" fill="#FFFFFF" stroke="#C0392B" stroke-width="1.5"/>
+<text x="1350" y="142" font-size="12.0" fill="#C0392B" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">Alarm raised</text>
+<text x="1350" y="158" font-size="8" fill="#5D6B66" font-weight="400" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">after the damage is done</text>
+<rect x="40.0" y="200.0" width="1520.0" height="46.0" rx="8" ry="8" fill="#FBF5F4" stroke="#C0392B" stroke-width="1.5"/>
+<text x="800" y="227" font-size="11.0" fill="#C0392B" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">The gap: a limit is only crossed once damage has already happened. Nothing here watches how the engine is CHANGING, so degradation stays invisible until it becomes a fault.</text>
+<rect x="40.0" y="256.0" width="1520.0" height="42.0" rx="8" ry="8" fill="#FFFFFF" stroke="#44566B" stroke-width="1.5"/>
+<text x="800" y="281" font-size="11.0" fill="#44566B" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">What it costs: mission aborts, unplanned maintenance, and in the worst case the loss of a high-value ISR aircraft.</text>
+<rect x="16.0" y="330.0" width="1568.0" height="248.0" rx="8" ry="8" fill="#F0F2F1" stroke="#0D8B7C" stroke-width="2"/>
+<text x="30" y="349" font-size="13.0" fill="#3D4A45" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="start">B · HOW OUR DIGITAL TWIN WORKS INSTEAD</text>
+<text x="1568" y="349" font-size="8.0" fill="#6B7C86" font-weight="400" font-family="ui-monospace,Consolas,monospace" text-anchor="end">PREDICTIVE  |  PHYSICS-INFORMED  |  EXPLAINABLE</text>
+<rect x="34.0" y="380.0" width="240.0" height="74.0" rx="8" ry="8" fill="#F2F3F5" stroke="#526076" stroke-width="1.5"/>
+<text x="154" y="416" font-size="11.0" fill="#526076" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">Engine and FADEC</text>
+<text x="154" y="430" font-size="8" fill="#5D6B66" font-weight="400" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">CAN bus telemetry</text>
+<rect x="290.0" y="380.0" width="240.0" height="74.0" rx="8" ry="8" fill="#EFF4FB" stroke="#286BCC" stroke-width="1.5"/>
+<text x="410" y="411" font-size="11.0" fill="#286BCC" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">Physics twin</text>
+<text x="410" y="425" font-size="8" fill="#5D6B66" font-weight="400" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">what an as-new engine</text>
+<text x="410" y="436" font-size="8" fill="#5D6B66" font-weight="400" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">would do now</text>
+<rect x="546.0" y="380.0" width="240.0" height="74.0" rx="8" ry="8" fill="#EEF6F5" stroke="#0D8B7C" stroke-width="1.5"/>
+<text x="666" y="411" font-size="11.0" fill="#0D8B7C" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">The difference</text>
+<text x="666" y="425" font-size="8" fill="#5D6B66" font-weight="400" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">measured minus expected</text>
+<text x="666" y="436" font-size="8" fill="#5D6B66" font-weight="400" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">this is health</text>
+<rect x="802.0" y="380.0" width="240.0" height="74.0" rx="8" ry="8" fill="#F5F1F9" stroke="#773CAC" stroke-width="1.5"/>
+<text x="922" y="411" font-size="11.0" fill="#773CAC" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">AI and ML layer</text>
+<text x="922" y="425" font-size="8" fill="#5D6B66" font-weight="400" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">anomaly, fault class,</text>
+<text x="922" y="436" font-size="8" fill="#5D6B66" font-weight="400" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">remaining life</text>
+<rect x="1058.0" y="380.0" width="240.0" height="74.0" rx="8" ry="8" fill="#F1F2FA" stroke="#4551C0" stroke-width="1.5"/>
+<text x="1178" y="411" font-size="11.0" fill="#4551C0" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">Failure probability</text>
+<text x="1178" y="425" font-size="8" fill="#5D6B66" font-weight="400" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">will it last the</text>
+<text x="1178" y="436" font-size="8" fill="#5D6B66" font-weight="400" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">next sortie?</text>
+<rect x="1314.0" y="380.0" width="240.0" height="74.0" rx="8" ry="8" fill="#EEF8F6" stroke="#0E9E8C" stroke-width="1.5"/>
+<text x="1434" y="411" font-size="11.0" fill="#0E9E8C" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">Maintenance advisory</text>
+<text x="1434" y="425" font-size="8" fill="#5D6B66" font-weight="400" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">what to do,</text>
+<text x="1434" y="436" font-size="8" fill="#5D6B66" font-weight="400" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">and by when</text>
+<rect x="34.0" y="472.0" width="1532.0" height="46.0" rx="8" ry="8" fill="#F0F8F7" stroke="#0D8B7C" stroke-width="1.5"/>
+<text x="800" y="499" font-size="11.0" fill="#0D8B7C" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">Warning arrives in HOURS, not seconds. Maintenance is planned instead of reacted to, and a commander gets a straight answer before the aircraft leaves the ground.</text>
+<text x="36" y="539" font-size="8.0" fill="#0E7F70" font-weight="400" font-family="ui-monospace,Consolas,monospace" text-anchor="start">REAL-TIME ENGINE STATE ESTIMATION  ·  ANOMALY DETECTION  ·  DEGRADATION TRACKING  ·  FAULT PREDICTION  ·  MISSION REPLAY</text>
+<rect x="16.0" y="594.0" width="774.0" height="254.0" rx="8" ry="8" fill="#F0F2F1" stroke="#286BCC" stroke-width="2"/>
+<text x="30" y="613" font-size="13.0" fill="#3D4A45" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="start">C · PARAMETERS MONITORED</text>
+<text x="774" y="613" font-size="8.0" fill="#6B7C86" font-weight="400" font-family="ui-monospace,Consolas,monospace" text-anchor="end">PS SECTION B</text>
+<rect x="34.0" y="644.0" width="240.0" height="44.0" rx="8" ry="8" fill="#FFFFFF" stroke="#286BCC" stroke-width="1.5"/>
+<text x="154" y="670" font-size="10.0" fill="#286BCC" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">RPM</text>
+<rect x="284.0" y="644.0" width="240.0" height="44.0" rx="8" ry="8" fill="#FFFFFF" stroke="#286BCC" stroke-width="1.5"/>
+<text x="404" y="670" font-size="10.0" fill="#286BCC" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">Cylinder head temperature</text>
+<rect x="534.0" y="644.0" width="240.0" height="44.0" rx="8" ry="8" fill="#FFFFFF" stroke="#286BCC" stroke-width="1.5"/>
+<text x="654" y="670" font-size="10.0" fill="#286BCC" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">Exhaust gas temperature</text>
+<rect x="34.0" y="698.0" width="240.0" height="44.0" rx="8" ry="8" fill="#FFFFFF" stroke="#286BCC" stroke-width="1.5"/>
+<text x="154" y="724" font-size="10.0" fill="#286BCC" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">Oil pressure</text>
+<rect x="284.0" y="698.0" width="240.0" height="44.0" rx="8" ry="8" fill="#FFFFFF" stroke="#286BCC" stroke-width="1.5"/>
+<text x="404" y="724" font-size="10.0" fill="#286BCC" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">Oil temperature</text>
+<rect x="534.0" y="698.0" width="240.0" height="44.0" rx="8" ry="8" fill="#FFFFFF" stroke="#286BCC" stroke-width="1.5"/>
+<text x="654" y="724" font-size="10.0" fill="#286BCC" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">Fuel flow</text>
+<rect x="34.0" y="752.0" width="240.0" height="44.0" rx="8" ry="8" fill="#FFFFFF" stroke="#286BCC" stroke-width="1.5"/>
+<text x="154" y="778" font-size="10.0" fill="#286BCC" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">Vibration signatures</text>
+<rect x="284.0" y="752.0" width="240.0" height="44.0" rx="8" ry="8" fill="#FFFFFF" stroke="#286BCC" stroke-width="1.5"/>
+<text x="404" y="778" font-size="10.0" fill="#286BCC" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">Battery / alternator health</text>
+<rect x="534.0" y="752.0" width="240.0" height="44.0" rx="8" ry="8" fill="#FFFFFF" stroke="#286BCC" stroke-width="1.5"/>
+<text x="654" y="778" font-size="10.0" fill="#286BCC" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">Injection timing</text>
+<rect x="810.0" y="594.0" width="774.0" height="254.0" rx="8" ry="8" fill="#F0F2F1" stroke="#773CAC" stroke-width="2"/>
+<text x="824" y="613" font-size="13.0" fill="#3D4A45" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="start">D · FAULTS DETECTED AND PREDICTED</text>
+<text x="1568" y="613" font-size="8.0" fill="#6B7C86" font-weight="400" font-family="ui-monospace,Consolas,monospace" text-anchor="end">PS SECTION C</text>
+<rect x="828.0" y="644.0" width="240.0" height="44.0" rx="8" ry="8" fill="#FFFFFF" stroke="#773CAC" stroke-width="1.5"/>
+<text x="948" y="670" font-size="10.0" fill="#773CAC" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">Misfire</text>
+<rect x="1078.0" y="644.0" width="240.0" height="44.0" rx="8" ry="8" fill="#FFFFFF" stroke="#773CAC" stroke-width="1.5"/>
+<text x="1198" y="670" font-size="10.0" fill="#773CAC" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">Injector abnormality</text>
+<rect x="1328.0" y="644.0" width="240.0" height="44.0" rx="8" ry="8" fill="#FFFFFF" stroke="#773CAC" stroke-width="1.5"/>
+<text x="1448" y="670" font-size="10.0" fill="#773CAC" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">Cooling degradation</text>
+<rect x="828.0" y="698.0" width="240.0" height="44.0" rx="8" ry="8" fill="#FFFFFF" stroke="#773CAC" stroke-width="1.5"/>
+<text x="948" y="724" font-size="10.0" fill="#773CAC" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">Lubrication issues</text>
+<rect x="1078.0" y="698.0" width="240.0" height="44.0" rx="8" ry="8" fill="#FFFFFF" stroke="#773CAC" stroke-width="1.5"/>
+<text x="1198" y="724" font-size="10.0" fill="#773CAC" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">Sensor drift</text>
+<rect x="1328.0" y="698.0" width="240.0" height="44.0" rx="8" ry="8" fill="#FFFFFF" stroke="#773CAC" stroke-width="1.5"/>
+<text x="1448" y="724" font-size="10.0" fill="#773CAC" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">Combustion instability</text>
+<rect x="828.0" y="752.0" width="240.0" height="44.0" rx="8" ry="8" fill="#FFFFFF" stroke="#773CAC" stroke-width="1.5"/>
+<text x="948" y="778" font-size="10.0" fill="#773CAC" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">Overheating trends</text>
+<rect x="1078.0" y="752.0" width="240.0" height="44.0" rx="8" ry="8" fill="#FFFFFF" stroke="#773CAC" stroke-width="1.5"/>
+<text x="1198" y="778" font-size="10.0" fill="#773CAC" font-weight="700" font-family="Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">Abnormal vibration</text>
+<defs><marker id="a" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="context-stroke"/></marker></defs>
+<path d="M380,143 L420,143" fill="none" stroke="#8899AB" stroke-width="1.5" marker-end="url(#a)"/>
+<path d="M760,143 L800,143" fill="none" stroke="#8899AB" stroke-width="1.5" marker-end="url(#a)"/>
+<path d="M1140,143 L1180,143" fill="none" stroke="#8899AB" stroke-width="1.5" marker-end="url(#a)"/>
+<path d="M274,417 L290,417" fill="none" stroke="#0D8B7C" stroke-width="1.5" marker-end="url(#a)"/>
+<path d="M530,417 L546,417" fill="none" stroke="#0D8B7C" stroke-width="1.5" marker-end="url(#a)"/>
+<path d="M786,417 L802,417" fill="none" stroke="#0D8B7C" stroke-width="1.5" marker-end="url(#a)"/>
+<path d="M1042,417 L1058,417" fill="none" stroke="#0D8B7C" stroke-width="1.5" marker-end="url(#a)"/>
+<path d="M1298,417 L1314,417" fill="none" stroke="#0D8B7C" stroke-width="1.5" marker-end="url(#a)"/>
+</svg>

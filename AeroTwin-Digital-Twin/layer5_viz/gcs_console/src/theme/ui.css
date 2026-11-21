@@ -1,0 +1,506 @@
+/* The console's component styles -- docs/UX_REDESIGN.md section 7.
+ *
+ * Tokens stay in tokens.css; this file only arranges them. Three rules run
+ * through every class here:
+ *
+ *  1. QUIET WHEN NORMAL (Airbus dark cockpit, ASM grey). Nothing here uses a
+ *     coding colour for decoration. Surfaces are greys; structure comes from
+ *     space and tone, not from boxes. The six coding colours appear only where
+ *     a status is being stated (ui/status.tsx).
+ *  2. ONE PRIMARY ACTION PER VIEW (Honeywell Anthem "what's next"). The primary
+ *     button is the only filled control on a page; everything else is quiet.
+ *  3. THE TYPE FLOOR IS 16 PX (Part 4 s5.1). Hierarchy is size and weight.
+ */
+
+:root {
+  --radius-lg: 6px;
+  --content-max: 1480px;
+  --page-inset: clamp(12px, 1vw, 20px);
+}
+
+/* ------------------------------------------------------------------ */
+/* Text                                                                */
+/* ------------------------------------------------------------------ */
+.t-title { font-size: clamp(21px, 1.55vw, 24px); font-weight: 700; line-height: 1.2; }
+.t-section { font-size: clamp(17px, 1.2vw, 18px); font-weight: 650; line-height: 1.3; }
+.t-body { font-size: 16px; line-height: 1.45; }
+.t-dim { color: var(--ink-dim); }
+.t-mute { color: var(--ink-mute); }
+.t-num { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+/* Data labels are the one place uppercase is used: short, scanned, not read. */
+.t-label {
+  font-size: 16px; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--ink-dim); font-weight: 600;
+}
+
+/* ------------------------------------------------------------------ */
+/* Buttons                                                             */
+/* ------------------------------------------------------------------ */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 44px; padding: 0 16px;
+  font: inherit; font-size: 16px; font-weight: 600; letter-spacing: 0.01em;
+  border-radius: var(--radius-lg); cursor: pointer; white-space: nowrap;
+  border: 1px solid var(--line); background: var(--bg-raised); color: var(--ink);
+  transition: background-color 120ms linear, border-color 120ms linear;
+}
+.btn:hover:not(:disabled) { border-color: var(--ink-mute); }
+/* Disabled is grey, not faded: an opacity cut took the legend below the
+   4.5:1 s3.4a requires. MIL-STD-1472H Table XL: grey = unavailable. */
+.btn:disabled, .btn-primary:disabled {
+  cursor: not-allowed; background: var(--bg-raised); color: var(--ink-mute);
+  border: 1px dashed var(--line); font-weight: 600;
+}
+.btn-primary:disabled:hover, .btn:disabled:hover { opacity: 1; border-color: var(--line); }
+/* The one filled control on a view: ink on the page, legend in the surface. */
+.btn-primary {
+  background: var(--ink); color: var(--bg-raised); border-color: var(--ink);
+  font-weight: 700;
+}
+.btn-primary:hover:not(:disabled) { border-color: var(--ink); opacity: 0.9; }
+/* Armed: the second press of a two-step command (s9.2). */
+.btn-armed {
+  background: var(--bg-raised); color: var(--ink); border: 2px solid var(--ink);
+  font-weight: 800;
+}
+.btn-quiet {
+  background: transparent; border-color: transparent; color: var(--ink-dim);
+  padding: 0 10px;
+}
+.btn-quiet:hover:not(:disabled) { color: var(--ink); border-color: var(--line); }
+.btn-lg { min-height: 48px; padding: 0 20px; font-size: 16px; }
+
+/* ------------------------------------------------------------------ */
+/* Surfaces                                                            */
+/* ------------------------------------------------------------------ */
+.card {
+  background: var(--bg-panel); border: 1px solid var(--line);
+  border-radius: var(--radius-lg); padding: clamp(12px, 1vw, 18px); min-width: 0;
+}
+.card-flat { background: var(--bg-panel); border-radius: var(--radius-lg);
+             padding: clamp(12px, 1vw, 18px); min-width: 0; }
+.well { background: var(--bg-raised); border-radius: var(--radius-lg);
+        padding: 12px 16px; }
+.divider { height: 1px; background: var(--line); border: 0; margin: 16px 0; }
+
+/* ------------------------------------------------------------------ */
+/* Workspace frame: title, context line, tabs                          */
+/* ------------------------------------------------------------------ */
+.ws { display: flex; flex-direction: column; height: 100%; min-height: 0; min-width: 0; }
+.ws-head {
+  display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap;
+  padding: 4px 4px 0;
+}
+.ws-head-text { flex: 1; min-width: 240px; }
+.fleet-master-detail { grid-template-columns: 340px minmax(0, 1fr); }
+.engine-details-link {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 4px;
+  width: 100%; min-height: 44px; margin: 8px 0; padding: 8px;
+  font: inherit; font-size: 16px; text-align: left; color: var(--ink);
+  background: var(--bg-raised); border: 1px solid var(--line);
+  border-radius: var(--radius-lg); cursor: pointer; overflow-wrap: anywhere;
+}
+.engine-details-link:hover { border-color: var(--ink-mute); }
+.overview-dashboard {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: minmax(clamp(220px, 25vh, 280px), 1fr); gap: var(--gap);
+  flex: 1; min-height: 0; overflow: auto; align-content: start;
+}
+/* Zoom changes the CSS viewport. Reflow cards and keep the work area
+   scrollable instead of compressing its contents into unreadable rows. */
+@media (max-width: 1200px) {
+  .overview-dashboard { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fleet-master-detail { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 1120px), (max-height: 800px) {
+  .console-shell { height: auto !important; min-height: 100vh; box-sizing: border-box; }
+  .console-workarea { flex: 1 0 auto !important; min-height: 65vh !important; }
+  .console-workarea > main { overflow: visible !important; }
+  .console-workarea .ws { height: auto; min-height: 65vh; }
+  .console-workarea .ws-body, .console-workarea .ws-body-fixed { overflow: visible; flex: 1 0 auto; }
+  .console-workarea .panel-body { overflow: visible !important; flex: 0 0 auto !important; }
+  .gsb { flex-wrap: wrap; }
+  .gsb-nav { flex-wrap: wrap; margin-left: 0; }
+  .strip { flex-wrap: wrap; }
+  .strip > .strip-cell { flex: 1 1 180px !important; }
+  .overview-dashboard { overflow: visible; flex: 1 0 auto; }
+}
+@media (max-width: 650px) {
+  .overview-dashboard { grid-template-columns: minmax(0, 1fr); }
+  .ws-head-text { min-width: 0; }
+  .ws-head { align-items: flex-start; }
+}
+.ws-sub { font-size: 16px; color: var(--ink-dim); margin-top: 4px; }
+.ws-body, .ws-body-fixed {
+  box-sizing: border-box; flex: 1; min-height: 0; min-width: 0;
+  container-type: inline-size; overscroll-behavior: contain;
+}
+.ws-body { overflow: auto; padding: var(--page-inset) 4px 8px; }
+.ws-body-fixed { overflow: auto; padding: var(--page-inset) 0 0;
+                 display: flex; flex-direction: column; }
+
+.ellipsis { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ws-bar { display: flex; align-items: flex-end; gap: 12px; min-height: 48px;
+          border-bottom: 1px solid var(--line); }
+.ws-bar + .ws-body-fixed { padding-top: 12px; }
+.tabs {
+  display: flex; gap: 4px; border-bottom: 1px solid var(--line);
+  margin-top: 12px; overflow-x: auto;
+}
+.tab {
+  font: inherit; font-size: 16px; font-weight: 600; color: var(--ink-dim);
+  background: transparent; border: 0; border-bottom: 3px solid transparent;
+  padding: 10px 14px 9px; cursor: pointer; white-space: nowrap; min-height: 44px;
+}
+.tab:hover { color: var(--ink); }
+.tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ink); }
+.tab .count {
+  display: inline-block; margin-left: 8px; padding: 0 7px; border-radius: 10px;
+  background: var(--bg-raised); border: 1px solid var(--line);
+  font-family: var(--font-num); font-size: 16px; line-height: 1.3;
+}
+
+/* ------------------------------------------------------------------ */
+/* Forms                                                               */
+/* ------------------------------------------------------------------ */
+.field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.field > span { font-size: 16px; color: var(--ink-dim); font-weight: 600; }
+.input {
+  min-height: 44px; padding: 8px 12px; font: inherit; font-size: 16px;
+  color: var(--ink); background: var(--bg-raised);
+  border: 1px solid var(--line); border-radius: var(--radius-lg); width: 100%;
+}
+.input:hover { border-color: var(--ink-mute); }
+textarea.input { min-height: 88px; resize: vertical; line-height: 1.4; }
+.check {
+  display: flex; gap: 12px; align-items: flex-start; padding: 10px 0;
+  border-bottom: 1px solid var(--line); font-size: 16px; cursor: pointer;
+}
+.check input { width: 22px; height: 22px; margin: 0; flex: 0 0 auto; }
+/* Never wider than its container, and a choice that does not fit goes to a
+   second line rather than being clipped by the rounded border -- which is how
+   "Immediate" came to read "Immedi". */
+.segmented { display: inline-flex; flex-wrap: wrap; max-width: 100%;
+             border: 1px solid var(--line);
+             border-radius: var(--radius-lg); overflow: hidden; }
+.segmented button {
+  font: inherit; font-size: 16px; min-height: 44px; padding: 0 16px;
+  white-space: nowrap;
+  background: var(--bg-raised); color: var(--ink-dim); border: 0;
+  border-left: 1px solid var(--line); cursor: pointer;
+}
+/* A field stretches its control to full width; a choice group keeps its own
+   width, or it draws an empty bordered box to the right of the last choice. */
+.field > .segmented { align-self: flex-start; }
+.segmented button:first-child { border-left: 0; }
+.segmented button[aria-pressed="true"] { background: var(--ink); color: var(--bg-raised);
+                                         font-weight: 700; }
+
+/* ------------------------------------------------------------------ */
+/* Lists and tables                                                    */
+/* ------------------------------------------------------------------ */
+.dl { display: grid; grid-template-columns: max-content 1fr; gap: 8px 20px;
+      font-size: 16px; }
+.dl dt { color: var(--ink-dim); }
+.dl dd { margin: 0; min-width: 0; }
+.table { width: 100%; border-collapse: collapse; font-size: 16px; }
+.table th {
+  text-align: left; font-weight: 600; color: var(--ink-dim);
+  padding: 8px 12px; border-bottom: 1px solid var(--line); white-space: nowrap;
+}
+.table td { padding: 10px 12px; border-bottom: 1px solid var(--line);
+            vertical-align: top; }
+.table tr.row-click { cursor: pointer; }
+.table tr.row-click:hover td { background: var(--bg-raised); }
+.num { font-family: var(--font-num); font-variant-numeric: tabular-nums;
+       text-align: right; white-space: nowrap; }
+
+.list-item {
+  display: flex; gap: 12px; align-items: center; width: 100%;
+  padding: 12px 14px; font: inherit; color: var(--ink); text-align: left;
+  background: transparent; border: 0; border-left: 3px solid transparent;
+  border-bottom: 1px solid var(--line); cursor: pointer;
+}
+.list-item:hover { background: var(--bg-raised); }
+.list-item[aria-current="true"] { background: var(--bg-raised);
+                                  border-left-color: var(--ink); }
+
+/* ------------------------------------------------------------------ */
+/* Drawer: secondary tasks slide in over the WORK AREA only.           */
+/* Part 4 s6.2d: nothing may cover Zones A or B, so the drawer lives   */
+/* inside <main>, not over the whole window.                           */
+/* ------------------------------------------------------------------ */
+.drawer-scrim {
+  position: absolute; inset: 0; background: rgba(5, 7, 10, 0.28); z-index: 20;
+}
+.drawer {
+  position: absolute; top: 0; right: 0; bottom: 0; width: min(560px, 92%);
+  background: var(--bg-panel); border-left: 2px solid var(--ink-mute); z-index: 21;
+  display: flex; flex-direction: column;
+}
+.drawer-head { display: flex; align-items: flex-start; gap: 12px;
+               padding: 20px 24px 12px; border-bottom: 1px solid var(--line); }
+.drawer-body { flex: 1; overflow: auto; padding: 16px 24px; display: flex;
+               flex-direction: column; gap: 16px; }
+.drawer-foot { display: flex; gap: 12px; justify-content: flex-end;
+               padding: 16px 24px; border-top: 1px solid var(--line); }
+
+/* ------------------------------------------------------------------ */
+/* Stepper                                                             */
+/* ------------------------------------------------------------------ */
+.stepper { display: flex; gap: 0; align-items: center; flex-wrap: wrap; }
+.step { display: flex; align-items: center; gap: 8px; font-size: 16px;
+        color: var(--ink-mute); padding: 6px 0; }
+.step-dot { width: 26px; height: 26px; border-radius: 13px; display: grid;
+            place-items: center; border: 2px solid var(--line);
+            font-family: var(--font-num); font-size: 16px; }
+.step-done { color: var(--ink-dim); }
+.step-done .step-dot { border-color: var(--ink-dim); background: var(--ink-dim);
+                       color: var(--bg-panel); }
+.step-now { color: var(--ink); font-weight: 700; }
+.step-now .step-dot { border-color: var(--ink); color: var(--ink); }
+.step-line { width: 40px; height: 2px; background: var(--line); margin: 0 10px; }
+.step-line.done { background: var(--ink-dim); }
+
+/* ------------------------------------------------------------------ */
+/* Global status bar (Zone A) and navigation                           */
+/* ------------------------------------------------------------------ */
+.gsb {
+  display: flex; align-items: center; gap: 12px; min-height: 60px;
+  padding: 6px 12px; background: var(--bg-panel);
+  border: 1px solid var(--line); border-radius: var(--radius-lg);
+}
+.gsb-nav { display: flex; gap: 2px; margin-left: 8px; }
+.gsb-tab {
+  font: inherit; font-size: 17px; font-weight: 600; color: var(--ink-dim);
+  background: transparent; border: 0; border-bottom: 3px solid transparent;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: 0 16px; min-height: 44px; cursor: pointer; white-space: nowrap;
+}
+.gsb-tab:hover { color: var(--ink); background: var(--bg-raised); }
+.gsb-tab[aria-current="page"] { color: var(--ink); background: var(--bg-raised);
+                                border-bottom-color: var(--ink); }
+.gsb-tab .count {
+  display: inline-block; margin-left: 8px; padding: 0 7px; border-radius: 10px;
+  background: var(--bg-void); border: 1px solid var(--line);
+  font-family: var(--font-num); font-size: 16px; line-height: 1.3; color: var(--ink);
+}
+.gsb-sep { width: 1px; align-self: stretch; background: var(--line); margin: 6px 2px; }
+.app-state {
+  font-size: 16px; font-weight: 700; letter-spacing: 0.06em; padding: 3px 10px;
+  border: 1px dashed var(--ink-mute); border-radius: var(--radius-lg);
+  color: var(--ink-dim); white-space: nowrap;
+}
+.menu {
+  position: absolute; right: 0; top: calc(100% + 6px); z-index: 30;
+  min-width: 240px; background: var(--bg-panel); border: 1px solid var(--line);
+  border-radius: var(--radius-lg); padding: 6px;
+  border-color: var(--ink-mute);
+}
+.menu button {
+  display: block; width: 100%; text-align: left; font: inherit; font-size: 16px;
+  padding: 10px 12px; min-height: 44px; background: transparent; border: 0;
+  color: var(--ink); border-radius: var(--radius); cursor: pointer;
+}
+.menu button:hover { background: var(--bg-raised); }
+
+/* ZONE B, FOLDING AWAY FOR A VIEW THAT CARRIES THE FOUR ITSELF.
+   0fr -> 1fr animates a height nobody has to know in pixels, and the negative
+   margin takes back the flex gap the row would otherwise leave behind. 150 ms:
+   s8.1c caps a transition at that, and a fold this short reads as the row
+   getting out of the way rather than as an effect. */
+.zone-b {
+  display: grid; grid-template-rows: 1fr;
+  transition: grid-template-rows 150ms cubic-bezier(0.22, 0.61, 0.36, 1),
+              margin-bottom 150ms cubic-bezier(0.22, 0.61, 0.36, 1),
+              opacity 120ms linear;
+}
+.zone-b-folded {
+  grid-template-rows: 0fr; opacity: 0;
+  margin-bottom: calc(var(--gap) * -1);
+}
+
+/* Engine strip (Zone B) */
+.strip {
+  display: flex; align-items: stretch; background: var(--bg-panel);
+  border: 1px solid var(--line); border-radius: var(--radius-lg); min-height: 72px;
+  overflow: hidden;
+}
+.strip-cell { padding: 8px 18px; border-left: 1px solid var(--line); min-width: 0;
+              display: flex; flex-direction: column; justify-content: center; }
+.strip-cell:first-child { border-left: 0; }
+.station-aircraft { gap: 2px; }
+.station-aircraft-select {
+  width: 100%; min-width: 0; min-height: 34px; padding: 2px 24px 2px 0;
+  border: 0; border-radius: 0; background: transparent; color: var(--ink);
+  font: inherit; font-size: 16px; font-weight: 700; cursor: pointer;
+}
+.station-aircraft-select:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.station-aircraft-select:disabled { color: var(--ink); cursor: default; opacity: 1; }
+.station-aircraft-state { font-size: 16px; font-weight: 650; line-height: 1.25; }
+.station-switch-error { color: var(--alert-warn); font-size: 16px; padding: 4px 8px; }
+/* Flight context: label size, two columns, after the four it serves. */
+.strip-context { display: grid; grid-template-columns: repeat(2, minmax(120px, auto));
+                 gap: 2px 20px; align-content: center; flex: 0 0 auto; }
+
+/* A caution or warning in Zone E sits on a raised chip: amber and red
+   text never goes directly on the near-black void (s3.3c). */
+.foot-alert { background: var(--bg-raised); border: 1px solid var(--line);
+              border-radius: var(--radius-lg); padding: 2px 10px; }
+
+/* Rail (Zone D) */
+.rail-section + .rail-section { margin-top: 20px; }
+.rail-head { display: flex; justify-content: space-between; align-items: baseline;
+             margin-bottom: 8px; }
+.task {
+  display: flex; gap: 10px; align-items: flex-start; width: 100%;
+  padding: 10px 8px; font: inherit; font-size: 16px; text-align: left;
+  color: var(--ink); background: transparent; border: 0;
+  border-bottom: 1px solid var(--line); cursor: pointer; line-height: 1.35;
+}
+.task:hover { background: var(--bg-raised); }
+.task:disabled { cursor: default; }
+.task:disabled:hover { background: transparent; }
+
+/* A board of workflow stages (Maven): one column per stage. */
+.board { display: grid; grid-template-columns: repeat(5, minmax(220px, 1fr));
+         gap: 12px; min-height: 0; }
+.board-col { background: var(--bg-panel); border-radius: var(--radius-lg);
+             padding: 12px; min-height: 160px; display: flex; flex-direction: column;
+             gap: 10px; min-width: 0; }
+.board-card {
+  display: block; width: 100%; text-align: left; font: inherit; color: var(--ink);
+  background: var(--bg-raised); border: 1px solid var(--line);
+  border-radius: var(--radius-lg); padding: 12px; cursor: pointer;
+}
+.board-card:hover { border-color: var(--ink-mute); }
+
+@media (max-width: 1500px) {
+  .gsb-wide { display: none; }
+  .strip-context { display: none; }
+  .board { grid-template-columns: repeat(5, minmax(180px, 1fr)); overflow-x: auto; }
+  .gsb-tab { padding: 0 10px; font-size: 16px; }
+}
+@media (max-width: 900px) {
+  .board { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+}
+
+/* Responsive data displays used across role workspaces. */
+.comparison-chart { min-width: 0; margin: 0; }
+.comparison-chart-title { margin-bottom: 8px; color: var(--ink-dim); font-weight: 600; }
+.comparison-chart-axis {
+  display: flex; justify-content: space-between; margin: 0 52px 4px 0;
+  color: var(--ink-mute); font-size: 16px;
+}
+.comparison-chart-rows { display: grid; gap: 6px; }
+.comparison-chart-row {
+  display: grid; grid-template-columns: minmax(96px, .8fr) minmax(64px, 1.5fr) 48px;
+  align-items: center; gap: 10px; min-width: 0;
+}
+.comparison-chart-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.comparison-chart-track {
+  height: 12px; min-width: 0; overflow: hidden; border: 1px solid var(--line);
+  border-radius: 3px; background: var(--bg-raised);
+}
+.comparison-chart-bar { display: block; height: 100%; min-width: 2px; }
+.comparison-chart-bar.is-normal { background: var(--data); }
+.comparison-chart-bar.is-neutral { background: var(--data); }
+.comparison-chart-bar.is-caution { background: var(--alert-caut); }
+.comparison-chart-bar.is-warning { background: var(--alert-warn); }
+.comparison-chart-value { text-align: right; font-family: var(--font-num); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.maintenance-layout {
+  display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  grid-template-rows: auto auto minmax(0, 1fr); gap: var(--gap);
+  min-height: 100%; min-width: 0; align-content: start;
+}
+.maintenance-summary { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(180px, .45fr); gap: 20px; align-items: center; }
+.maintenance-notice { grid-column: 1 / -1; min-width: 0; }
+.role-admin-layout, .engine-definitions-layout { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: var(--gap); min-height: 100%; min-width: 0; }
+.engine-telemetry-grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: var(--gap); height: 100%; min-height: 0; min-width: 0; }
+.engine-telemetry-visual { grid-row: 1 / span 2; display: flex; min-height: 0; min-width: 0; }
+.mission-metric-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gap); }
+.mission-detail-grid { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(320px, 1fr); gap: var(--gap); align-items: start; max-width: var(--content-max); }
+.replay-page, .simulation-page, .prognostics-page, .health-page { min-width: 0; min-height: 100%; }
+.replay-layout { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: var(--gap); align-items: start; }
+.replay-data-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr); gap: var(--gap); align-items: start; }
+.simulation-layout { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(320px, 1fr); gap: var(--gap); max-width: var(--content-max); align-items: start; }
+.health-summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: var(--space-5); align-items: start; }
+.review-health-chart { margin: 0 0 16px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+.table-scroll { max-width: 100%; overflow-x: auto; overscroll-behavior-inline: contain; }
+.user-table { min-width: 680px; }
+.user-table-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* Workspaces reflow by their usable width, which also accounts for the
+   alert rail and browser zoom. Narrow layouts grow with their content; the
+   workspace itself handles any remaining vertical overflow. */
+@container (max-width: 1120px) {
+  .fleet-master-detail { grid-template-columns: minmax(0, 1fr); }
+  .maintenance-layout { height: auto; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; }
+  .maintenance-summary { grid-column: 1; }
+  .maintenance-notice { grid-column: 1; }
+  .role-admin-layout, .engine-definitions-layout { height: auto; grid-template-columns: minmax(0, 1fr); }
+  .engine-telemetry-grid { height: auto; min-height: 100%; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto; }
+  .engine-telemetry-visual { grid-row: 1 / span 2; min-height: 420px; }
+  .mission-detail-grid { grid-template-columns: minmax(0, 1fr); }
+  .mission-metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .replay-layout { grid-template-columns: minmax(0, 1fr); }
+  .replay-data-grid, .simulation-layout { grid-template-columns: minmax(0, 1fr); }
+  .overview-dashboard { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: minmax(240px, auto); overflow: visible; flex: 1 0 auto; }
+  .board { grid-template-columns: repeat(2, minmax(0, 1fr)); overflow: visible; }
+  .panel-body { overflow: visible !important; flex: 0 0 auto !important; }
+}
+@container (max-width: 640px) {
+  .overview-dashboard, .board { grid-template-columns: minmax(0, 1fr); }
+  .maintenance-summary { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .comparison-chart-row { grid-template-columns: minmax(84px, .8fr) minmax(56px, 1.5fr) 44px; gap: 7px; }
+  .engine-telemetry-grid { grid-template-columns: minmax(0, 1fr); }
+  .engine-telemetry-visual { grid-row: auto; min-height: 380px; }
+  .mission-metric-grid { grid-template-columns: minmax(0, 1fr); }
+  .replay-data-grid { grid-template-columns: minmax(0, 1fr); }
+  .user-table-wrap, .review-engine-table-wrap { overflow-x: visible !important; }
+  .user-table, .review-engine-table { display: block; width: 100%; min-width: 0; }
+  .user-table thead, .review-engine-table thead { display: none; }
+  .user-table tbody, .review-engine-table tbody { display: grid; gap: 10px; }
+  .user-table tbody tr, .review-engine-table tbody tr {
+    display: grid; grid-template-columns: minmax(0, 1fr); padding: 8px;
+    border: 1px solid var(--line); border-radius: var(--radius-lg);
+  }
+  .user-table tbody td, .review-engine-table tbody td {
+    display: grid; grid-template-columns: minmax(104px, .7fr) minmax(0, 1fr);
+    align-items: center; gap: 10px; padding: 8px !important;
+    text-align: left !important; border-bottom: 1px solid var(--line);
+  }
+  .user-table tbody td::before, .review-engine-table tbody td::before {
+    content: attr(data-label); color: var(--ink-dim); font-weight: 600;
+  }
+  .user-table tbody td:last-child, .review-engine-table tbody td:last-child { border-bottom: 0; }
+  .user-table td[data-label="Role"] select { width: 100%; min-width: 0; }
+  .user-table td[data-label="Actions"], .review-engine-table td[data-label="Actions"] {
+    display: flex !important; flex-wrap: wrap; gap: 6px;
+  }
+  .user-table td[data-label="Actions"]::before, .review-engine-table td[data-label="Actions"]::before { flex-basis: 100%; }
+  .user-table-actions { width: 100%; }
+  .ws-head-text { min-width: 0; }
+  .ws-head { align-items: flex-start; }
+}
+
+/* THE FOUR HEALTH DRIVERS: FOUR ACROSS, OR TWO BY TWO. NEVER THREE.
+ *
+ * repeat(auto-fit, minmax(...)) cannot express that. Left to itself it passes
+ * through a three-column stage on the way down, which strands the fourth card
+ * alone on a second row with two empty tracks beside it -- the one arrangement
+ * of four equal things that looks like a mistake. Explicit steps instead:
+ * four on a station wide enough for them, two by two on a laptop, one on
+ * anything narrower. */
+.hx-drivers {
+  display: grid;
+  gap: var(--space-3);
+  align-items: stretch;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+@media (max-width: 1700px) {
+  .hx-drivers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 880px) {
+  .hx-drivers { grid-template-columns: minmax(0, 1fr); }
+}

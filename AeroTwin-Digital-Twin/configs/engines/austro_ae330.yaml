@@ -1,0 +1,249 @@
+# ==============================================================================
+# TAPAS-BH-201 (Rustom-II) PROPULSION — Austro AE330-class turbo-DIESEL
+#
+# STATUS: ADAPTATION STUB, NOT A VALIDATED MODEL.
+#
+# This file exists to prove the engine-agnostic claim of PRD Part 1 §1.2 / §6.3:
+# adding an engine is a new YAML file with ZERO code change. The only structural
+# difference from the Rotax reference is `identity.ignition: COMPRESSION`, which
+# selects the compression-ignition combustion sub-model in
+# layer2_physics/combustion.py. Every other layer — acquisition, twin core,
+# AI/ML, health monitoring, visualisation, security — is reused unchanged.
+#
+# HONESTY [PRD Part 1 §1.2 FIX 1]: the numbers below are order-of-magnitude
+# placeholders for a 2.0 L-class aero diesel, NOT manufacturer data. They are
+# sufficient to exercise the code path and to demonstrate the migration route.
+# They MUST NOT be presented as a validated Austro AE330 model, and no accuracy
+# claim may be made against this file until calibrated on VRDE/CVRDE rig data.
+# ==============================================================================
+schema_version: 1
+
+# INHERITANCE. Everything this file does not state is taken from the Rotax
+# reference (common/config.py, `extends:`). Before this line existed the stub
+# passed the section check and then died on the first physics tick, 62 keys
+# short of what the running code reads -- so the "zero code change" route had
+# never actually run. What is inherited is Rotax data, and therefore, like the
+# rest of this file, a placeholder for a diesel: the FADEC failure matrix, the
+# sensor list, the certified limits, the low-pressure fuel supply band.
+extends: rotax_915is
+
+# The Rotax manufacturer's performance table is 4500-5800 rpm; this engine is
+# rated at 3880. Inheriting it would look power up off the end of the table,
+# so it is switched off and the surrogate maps are used alone.
+performance_table: null
+
+# LIMITS THAT BELONG TO THIS ENGINE, laid over configs/thresholds.yaml while
+# this engine is the active one (common/config.py, load_thresholds). The
+# global file is written for the Rotax; without these a healthy, new diesel
+# reads ~5.2 m/s2 three-axis vibration against a Rotax alert limit of 5.0,
+# raised a vibration warning on its first flight and scored mechanical health
+# 0.56. Same ratios to the healthy level as the Rotax bands; [MOD] placeholders.
+thresholds_override:
+  parameters:
+    rpm:                       # [MOD] from this file's own ratings, not the Rotax's
+      normal_max: 3600         # continuous_power_rpm
+      alert_max: 3600
+      critical_max: 3880       # max_power_rpm
+      takeoff_max_rpm: 3880
+    vibration_rms:
+      normal_max: 6.0
+      alert_max: 8.7
+      critical_max: 14.0
+  health:
+    # The Rotax's 3500 rpm is 60 % of its 5800; this engine's 60 % is ~2300.
+    # Left at 3500 a ground run never loads the diesel enough to be judged.
+    assessment:
+      min_rpm: 2300.0
+    mhi:
+      vib_nominal: 5.3
+      vib_limit: 14.0
+
+identity:
+  engine_type: AUSTRO_AE330
+  display_name: "Austro AE330-class turbo-diesel (ADAPTATION STUB)"
+  ignition: COMPRESSION
+  fuel: JET_A1
+  platforms: ["DRDO TAPAS-BH-201 (Rustom-II)"]
+  validated: false                 # gates any accuracy claim in the UI/report
+
+geometry:
+  cylinders: 4
+  layout: INLINE
+  strokes: 4
+  bore_mm: 83.0
+  stroke_mm: 92.0
+  displacement_total_L: 1.991
+  compression_ratio: 18.0          # compression ignition
+
+ratings:
+  max_power_kW: 125.0
+  max_power_rpm: 3880
+  continuous_power_kW: 114.0
+  continuous_power_rpm: 3600
+  max_torque_Nm: 310.0
+  max_torque_rpm: 2300
+  dry_mass_kg: 185.0
+  tbo_hours: 1800.0
+
+propeller:
+  # Rotating inertia referred to the crankshaft. A placeholder like every other
+  # value in this stub: carried over from the Rotax reference so the code path
+  # runs. Not Austro data.
+  rotating_inertia_at_crank_kg_m2: 0.16   # [MOD] placeholder
+
+fuel_properties:
+  lhv_MJ_per_kg: 43.0              # Jet A-1
+  density_kg_per_L: 0.80
+  surrogate: "NC10H22"             # n-decane surrogate for diesel combustion
+  cetane_number: 47
+
+ignition_system:
+  type: COMMON_RAIL_DIRECT_INJECTION
+  nominal_timing_deg_btdc: 8.0     # injection, not spark
+  rail_pressure_bar: 1800
+
+thermodynamics:
+  gamma_mixture: 1.37
+  gamma_exhaust: 1.32
+  R_air_J_per_kgK: 287.0
+  cp_exhaust_J_per_kgK: 1120.0
+  peak_cylinder_pressure_bar: 160.0
+  wiebe:
+    duration_deg_ca: 45.0
+    shape_factor_m: 0.8            # diesel: premixed + diffusion burn
+    efficiency_factor_a: 6.9
+  combustion:
+    efficiency_new: 0.985
+    efficiency_min: 0.94
+    equivalence_ratio_cruise: 0.55  # diesels run lean
+    equivalence_ratio_climb: 0.72
+
+intake:
+  manifold_volume_m3: 0.0040
+  manifold_air_temp_max_C: 60.0     # [MOD] placeholder - engine is an unvalidated adaptation stub
+  manifold_temperature_K: 320.0
+  throttle_discharge_coeff: 0.90
+  throttle_area_max_m2: 0.00260
+  volumetric_efficiency_sea_level: 0.92
+
+turbocharger:
+  fitted: true
+  critical_altitude_ft: 18000
+  max_boost_abs_bar: 2.40
+  design_speed_rpm: 145000
+  efficiency_new: 0.75
+  wastegate:
+    closed_above_ft: 15000
+    open_fraction_sea_level: 0.60
+
+thermal:
+  # Thermally ACTIVE metal per cylinder, not just the head casting: the
+  # valve seats, ports and upper barrel all participate in the thermal
+  # transient, and using the bare casting mass made modelled CHT respond
+  # unrealistically fast to a power change.
+  head_mass_kg: 5.8
+  head_cp_J_per_kgK: 900.0
+  cooling_jacket_area_m2: 0.11
+  h_coolant_new_W_per_m2K: 9200.0   # overall UA basis, see rotax_914.yaml
+  coolant_inlet_C: 88.0
+  # Coolant loop, modelled as a second thermal node so that head-to-coolant
+  # conductance loss (scale build-up) raises CHT while coolant temperature
+  # responds differently -- which is exactly the signature the cooling
+  # degradation detector of PRD Part 2 s10.3 keys on.
+  coolant_capacity_L: 5.0
+  coolant_cp_J_per_kgK: 3400.0      # 50/50 glycol mix
+  coolant_density_kg_per_L: 1.06
+  # Airframe cooling-air flap, as on the Rotax definition: this adaptation stub
+  # carries no manufacturer data of its own, so it follows the same structure.
+  # [MOD] placeholder - engine is an unvalidated adaptation stub.
+  cooling_flap_min_fraction: 0.15
+  cooling_flap_target_C: 95.0
+  cooling_flap_gain_per_K: 0.10
+  radiator_UA_W_per_K: 1900.0          # [MOD] calibrated to the coolant limit band
+  cht_limit_C: 150.0                 # [MOD] placeholder - engine is an unvalidated adaptation stub
+  comb_heat_to_head_fraction: 0.24
+  exhaust_port_area_m2: 0.005
+  h_exhaust_W_per_m2K: 240.0
+  ram_air_cooling_coeff: 0.0040
+
+exhaust:
+  manifold_pressure_bar: 1.15
+  cylinder_pressure_at_evo_bar: 5.0
+  pipe_length_m: 0.95
+  pipe_area_m2: 0.034
+  h_pipe_W_per_m2K: 95.0
+
+oil_system:
+  type: WET_SUMP
+  capacity_L: 6.0
+  cp_J_per_kgK: 2000.0
+  density_kg_per_L: 0.86
+  pump_displacement_cm3_per_rev: 18.0
+  pump_drive_ratio: 0.5
+  pump_efficiency: 0.82
+  leakage_coeff_new: 1.00
+  gallery_dp_psi: 5.0
+  filter_dp_psi: 3.0
+  viscosity_ref_cSt: 14.5
+  beta_thermal_per_C_hr: 0.0009
+  cooler_effectiveness: 0.60
+  cooler_UA_W_per_K: 95.0
+  pump_pressure_psi_per_cm3_s: 0.17
+  cooler_flap_min_fraction: 0.0      # [MOD] placeholder, as above
+  cooler_flap_target_C: 100.0
+  cooler_flap_gain_per_K: 0.10
+  relief_valve_psi: 85.0
+
+vibration:
+  baseline_rms_m_per_s2: 2.6       # diesels vibrate harder
+  reduction_gear_teeth: 41
+  bearing:
+    n_balls: 10
+    ball_diameter_mm: 9.5
+    pitch_diameter_mm: 46.0
+  propeller_blades: 3
+
+electrical:
+  nominal_bus_V: 28.0              # 28 V bus
+  alternator_rated_A: 60.0
+  battery_capacity_Ah: 24.0
+  battery_internal_resistance_new_ohm: 0.010
+
+degradation:
+  cooling:
+    # CHT above which scale deposition accelerates. Engine-specific: a
+    # liquid-cooled head never reaches an air-cooled engine's numbers, so a
+    # hard-coded threshold silently disables the acceleration term.
+    reference_cht_C: 108.0
+    rate_per_flight_hour: 0.00018
+    maintenance_threshold: 0.70
+  oil_thermal:
+    beta_thermal_per_C_hr: 0.0009
+    viscosity_increase_limit: 0.25
+  combustion_deposits:
+    rate_per_flight_hour: 0.00007   # diesel sooting
+    maintenance_threshold: 0.94
+  injector_fouling:
+    variance_rate_per_hour: 0.0014  # common-rail nozzle coking
+    cv_maintenance_threshold: 0.08
+  bearing_wear:
+    clearance_rate_mm_per_hour: 0.000012
+    design_clearance_mm: 0.050
+    maintenance_multiple: 2.0
+  turbocharger:
+    rate_per_flight_hour: 0.00009
+    boost_loss_threshold: 0.15
+
+can:
+  dbc: "configs/can/engine.dbc"
+  bitrate: 1000000
+  sampling_hz:
+    rpm: 100
+    cht: 10
+    egt: 10
+    oil_pressure: 10
+    oil_temperature: 1
+    fuel_flow: 10
+    vibration_rms: 10
+    electrical: 10
+    injection_timing: 100

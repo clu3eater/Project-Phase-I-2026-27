@@ -1,0 +1,29 @@
+{
+  "fleet": "data/synthetic",
+  "seed": 0,
+  "epochs": 60,
+  "best_estimator": "LSTM (data-driven)",
+  "windows": 4120,
+  "target_sigma": 138.779128323546,
+  "metrics": {
+    "alpha-lambda": 0.2,
+    "relative accuracy": 0.481,
+    "RMSE / sigma": 0.8206,
+    "NASA score": 2251.5913,
+    "late fraction": 0.3718
+  },
+  "prognostic": {
+    "engines": 15.0,
+    "scored_engines": 15.0,
+    "alpha": 0.2,
+    "lambda": 0.5,
+    "min_bound_h": 10.0,
+    "prognostic_horizon_h": 0.0,
+    "prognostic_horizon_frac": 0.0,
+    "alpha_lambda": 0.2,
+    "relative_accuracy": 0.481,
+    "convergence": 331.79,
+    "late_fraction": 0.372,
+    "skipped": []
+  }
+}

@@ -1,0 +1,2742 @@
+{
+  "schema": "rotax915is.fault_component_matrix",
+  "version": "1.0.0",
+  "generated": "2026-09-16",
+  "model": {
+    "file": "ROTAX_915IS_DIGITAL_TWIN_FAULT_READY.glb",
+    "baseModel": "ROTAX_915IS_DIGITAL_TWIN_WEB_OPTIMIZED.glb",
+    "units": "metres",
+    "upAxis": "+Y (glTF)",
+    "triangles": 612787,
+    "meshNodes": 72,
+    "primitives": 240
+  },
+  "sources": {
+    "faultRegister": {
+      "title": "ASTRA Hardware Fault Register",
+      "subtitle": "DRDO / iDEX PS 26054 - Reference engine Rotax 915 iS - read from the code, 16 Sep 2026",
+      "file": "Desktop/ASTRA Hardware Fault Register.html (content in ASTRA Hardware Fault Register_files/saved_resource.html)",
+      "role": "Source of truth for the fault taxonomy, wording, mechanisms, signatures and rule lists."
+    },
+    "codeCrossCheck": {
+      "checkout": "Desktop/ASTRA-main (1)/ASTRA-main",
+      "files": [
+        "layer2_physics/degradation.py (FaultMode, Pathway, _FAULT_ACCELERATION, FAULT_RAMP_HOURS)",
+        "layer2_physics/engine_sim.py (DRIFTABLE_CHANNELS, instrument set)",
+        "layer1_edge/can_ingest.py (ValueState, ingest channel names, derived quantities)",
+        "layer1_edge/edge_rules.py (37 rule ids, AlertLevel, AlertCategory, rule parameters, fault tags)",
+        "layer1_edge/can_simulator.py (cht_max / egt_max are the max of the per-cylinder readings)"
+      ],
+      "role": "Used only to obtain exact identifiers (enum values, channel names, rule ids and levels) for things the register names by function. Where code and register differ, the register wins and the difference is recorded."
+    },
+    "engineDocumentation": {
+      "title": "BRP-Rotax Operators Manual 915 i A Series Ed.0 Rev.1",
+      "role": "Component identification and cylinder numbering (already stored in the GLB node extras). p66: liquid cooled cylinder heads, ram air cooled cylinders, cooling air baffle; p69: radiator installed below the engine (airframe side)."
+    }
+  },
+  "conventions": {
+    "directComponents": "Hardware the register names as failing (or its closest modelled host). Receives the fault render state.",
+    "contextComponents": "Hardware that explains or locates the fault. Receives HIGHLIGHT_CONTEXT only - never a warning colour.",
+    "precision": {
+      "EXACT": "The mesh is exactly the named part (or exactly the named cylinder's part).",
+      "BANK_SHARED": "One mesh serves both cylinders of a bank; highlighting it also lights the partner cylinder's part.",
+      "ENGINE_SHARED": "One mesh serves all four cylinders.",
+      "HOST": "The physical fault location is inside this mesh and not modelled separately.",
+      "GROUP_AGGREGATE": "One mesh holds several physical instruments/parts that cannot be addressed individually.",
+      "APPROXIMATE": "The modelled physics has no dedicated geometry; this is the nearest defensible representation.",
+      "INSTRUMENT": "The mesh is the instrument that produces the listed channel."
+    },
+    "renderStateByAlertLevel": {
+      "GREEN": "HEALTHY",
+      "BLUE": "WARNING",
+      "YELLOW": "WARNING",
+      "ORANGE": "WARNING",
+      "RED": "CRITICAL"
+    },
+    "unlistedComponents": "Every component not listed stays NORMAL (optionally GHOSTED when camera.ghostNonInvolved is true and the fault is focused)."
+  },
+  "cylinderMap": {
+    "1": {
+      "cylinder": 1,
+      "bank": "CYL_1_3",
+      "bankSide": "-Y (Blender) / +Z (glTF)",
+      "end": "PTO (propeller) end",
+      "exclusive": {
+        "cylinder": "ROTAX_915IS_CYLINDER_01",
+        "cylinderHead": "ROTAX_915IS_CYLINDER_HEAD_01",
+        "valveCover": "ROTAX_915IS_VALVE_COVER_01",
+        "piston": "ROTAX_915IS_PISTON_01",
+        "connectingRod": "ROTAX_915IS_CONNECTING_ROD_01"
+      },
+      "bankShared": {
+        "sparkPlugs": "ROTAX_915IS_SPARK_PLUGS_CYL_1_3",
+        "fuelInjectors": "ROTAX_915IS_FUEL_INJECTORS_CYL_1_3",
+        "fuelRail": "ROTAX_915IS_FUEL_RAIL_CYL_1_3",
+        "intakeManifold": "ROTAX_915IS_INTAKE_MANIFOLD_CYL_1_3",
+        "exhaustPipes": "ROTAX_915IS_EXHAUST_PIPES_CYL_1_3",
+        "crankcaseHalf": "ROTAX_915IS_CRANKCASE_HALF_CYL_1_3"
+      },
+      "engineShared": {
+        "ignitionCoils": "ROTAX_915IS_IGNITION_COILS",
+        "ignitionLeads": "ROTAX_915IS_IGNITION_LEADS",
+        "egtSensors": "ROTAX_915IS_EGT_SENSORS",
+        "crankshaft": "ROTAX_915IS_CRANKSHAFT"
+      },
+      "telemetry": {
+        "cht": "cht_1",
+        "egt": "egt_1",
+        "injectionTiming": "injection_timing_1",
+        "ignitionTiming": "ignition_timing_1"
+      },
+      "bankPartner": 3,
+      "verification": "Numbering per BRP-Rotax OM 915 i A §7.1.4 Fig.2 (stored in GLB extras). Verified on the GLB: cylinder, head, valve cover, piston and rod of each cylinder lie on the same side of the crank axis; cylinders 1 and 2 are at the PTO (+X Blender) end; the coolant temperature sensor is nearest head 4."
+    },
+    "2": {
+      "cylinder": 2,
+      "bank": "CYL_2_4",
+      "bankSide": "+Y (Blender) / -Z (glTF)",
+      "end": "PTO (propeller) end",
+      "exclusive": {
+        "cylinder": "ROTAX_915IS_CYLINDER_02",
+        "cylinderHead": "ROTAX_915IS_CYLINDER_HEAD_02",
+        "valveCover": "ROTAX_915IS_VALVE_COVER_02",
+        "piston": "ROTAX_915IS_PISTON_02",
+        "connectingRod": "ROTAX_915IS_CONNECTING_ROD_02"
+      },
+      "bankShared": {
+        "sparkPlugs": "ROTAX_915IS_SPARK_PLUGS_CYL_2_4",
+        "fuelInjectors": "ROTAX_915IS_FUEL_INJECTORS_CYL_2_4",
+        "fuelRail": "ROTAX_915IS_FUEL_RAIL_CYL_2_4",
+        "intakeManifold": "ROTAX_915IS_INTAKE_MANIFOLD_CYL_2_4",
+        "exhaustPipes": "ROTAX_915IS_EXHAUST_PIPES_CYL_2_4",
+        "crankcaseHalf": "ROTAX_915IS_CRANKCASE_HALF_CYL_2_4"
+      },
+      "engineShared": {
+        "ignitionCoils": "ROTAX_915IS_IGNITION_COILS",
+        "ignitionLeads": "ROTAX_915IS_IGNITION_LEADS",
+        "egtSensors": "ROTAX_915IS_EGT_SENSORS",
+        "crankshaft": "ROTAX_915IS_CRANKSHAFT"
+      },
+      "telemetry": {
+        "cht": "cht_2",
+        "egt": "egt_2",
+        "injectionTiming": "injection_timing_2",
+        "ignitionTiming": "ignition_timing_2"
+      },
+      "bankPartner": 4,
+      "verification": "Numbering per BRP-Rotax OM 915 i A §7.1.4 Fig.2 (stored in GLB extras). Verified on the GLB: cylinder, head, valve cover, piston and rod of each cylinder lie on the same side of the crank axis; cylinders 1 and 2 are at the PTO (+X Blender) end; the coolant temperature sensor is nearest head 4."
+    },
+    "3": {
+      "cylinder": 3,
+      "bank": "CYL_1_3",
+      "bankSide": "-Y (Blender) / +Z (glTF)",
+      "end": "rear (MAG) end",
+      "exclusive": {
+        "cylinder": "ROTAX_915IS_CYLINDER_03",
+        "cylinderHead": "ROTAX_915IS_CYLINDER_HEAD_03",
+        "valveCover": "ROTAX_915IS_VALVE_COVER_03",
+        "piston": "ROTAX_915IS_PISTON_03",
+        "connectingRod": "ROTAX_915IS_CONNECTING_ROD_03"
+      },
+      "bankShared": {
+        "sparkPlugs": "ROTAX_915IS_SPARK_PLUGS_CYL_1_3",
+        "fuelInjectors": "ROTAX_915IS_FUEL_INJECTORS_CYL_1_3",
+        "fuelRail": "ROTAX_915IS_FUEL_RAIL_CYL_1_3",
+        "intakeManifold": "ROTAX_915IS_INTAKE_MANIFOLD_CYL_1_3",
+        "exhaustPipes": "ROTAX_915IS_EXHAUST_PIPES_CYL_1_3",
+        "crankcaseHalf": "ROTAX_915IS_CRANKCASE_HALF_CYL_1_3"
+      },
+      "engineShared": {
+        "ignitionCoils": "ROTAX_915IS_IGNITION_COILS",
+        "ignitionLeads": "ROTAX_915IS_IGNITION_LEADS",
+        "egtSensors": "ROTAX_915IS_EGT_SENSORS",
+        "crankshaft": "ROTAX_915IS_CRANKSHAFT"
+      },
+      "telemetry": {
+        "cht": "cht_3",
+        "egt": "egt_3",
+        "injectionTiming": "injection_timing_3",
+        "ignitionTiming": "ignition_timing_3"
+      },
+      "bankPartner": 1,
+      "verification": "Numbering per BRP-Rotax OM 915 i A §7.1.4 Fig.2 (stored in GLB extras). Verified on the GLB: cylinder, head, valve cover, piston and rod of each cylinder lie on the same side of the crank axis; cylinders 1 and 2 are at the PTO (+X Blender) end; the coolant temperature sensor is nearest head 4."
+    },
+    "4": {
+      "cylinder": 4,
+      "bank": "CYL_2_4",
+      "bankSide": "+Y (Blender) / -Z (glTF)",
+      "end": "rear (MAG) end",
+      "exclusive": {
+        "cylinder": "ROTAX_915IS_CYLINDER_04",
+        "cylinderHead": "ROTAX_915IS_CYLINDER_HEAD_04",
+        "valveCover": "ROTAX_915IS_VALVE_COVER_04",
+        "piston": "ROTAX_915IS_PISTON_04",
+        "connectingRod": "ROTAX_915IS_CONNECTING_ROD_04"
+      },
+      "bankShared": {
+        "sparkPlugs": "ROTAX_915IS_SPARK_PLUGS_CYL_2_4",
+        "fuelInjectors": "ROTAX_915IS_FUEL_INJECTORS_CYL_2_4",
+        "fuelRail": "ROTAX_915IS_FUEL_RAIL_CYL_2_4",
+        "intakeManifold": "ROTAX_915IS_INTAKE_MANIFOLD_CYL_2_4",
+        "exhaustPipes": "ROTAX_915IS_EXHAUST_PIPES_CYL_2_4",
+        "crankcaseHalf": "ROTAX_915IS_CRANKCASE_HALF_CYL_2_4"
+      },
+      "engineShared": {
+        "ignitionCoils": "ROTAX_915IS_IGNITION_COILS",
+        "ignitionLeads": "ROTAX_915IS_IGNITION_LEADS",
+        "egtSensors": "ROTAX_915IS_EGT_SENSORS",
+        "crankshaft": "ROTAX_915IS_CRANKSHAFT"
+      },
+      "telemetry": {
+        "cht": "cht_4",
+        "egt": "egt_4",
+        "injectionTiming": "injection_timing_4",
+        "ignitionTiming": "ignition_timing_4"
+      },
+      "bankPartner": 2,
+      "verification": "Numbering per BRP-Rotax OM 915 i A §7.1.4 Fig.2 (stored in GLB extras). Verified on the GLB: cylinder, head, valve cover, piston and rod of each cylinder lie on the same side of the crank axis; cylinders 1 and 2 are at the PTO (+X Blender) end; the coolant temperature sensor is nearest head 4."
+    }
+  },
+  "faults": {
+    "MISFIRE": {
+      "faultId": "MISFIRE",
+      "scope": "PER_CYLINDER",
+      "parameter": {
+        "name": "cylinder",
+        "values": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "defaultAlertLevel": "ORANGE",
+      "animation": "PULSE_INTERMITTENT",
+      "resolved": {
+        "1": {
+          "key": "MISFIRE#cylinder=1",
+          "cylinder": 1,
+          "directComponents": [
+            "ROTAX_915IS_SPARK_PLUGS_CYL_1_3"
+          ],
+          "contextComponents": [
+            "ROTAX_915IS_CYLINDER_HEAD_01",
+            "ROTAX_915IS_CYLINDER_01",
+            "ROTAX_915IS_VALVE_COVER_01",
+            "ROTAX_915IS_IGNITION_COILS",
+            "ROTAX_915IS_IGNITION_LEADS"
+          ],
+          "componentDetails": [
+            {
+              "componentId": "ROTAX_915IS_SPARK_PLUGS_CYL_1_3",
+              "role": "direct",
+              "precision": "BANK_SHARED",
+              "note": "Spark plugs of cylinder 1 (the register names a failing coil or plug); the mesh also contains the plugs of cylinder 3.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_HEAD_01",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "Locator of the misfiring cylinder (cold EGT on egt_1).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_01",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "Barrel of the misfiring cylinder.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_VALVE_COVER_01",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "Visible cover of head 1: locator of the cylinder (no fault role of its own).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_IGNITION_COILS",
+              "role": "context",
+              "precision": "ENGINE_SHARED",
+              "note": "4 double coils in one mesh; the failing coil cannot be isolated, so it is context only.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_IGNITION_LEADS",
+              "role": "context",
+              "precision": "ENGINE_SHARED",
+              "note": "8 HT leads in one mesh; context only.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            }
+          ],
+          "telemetry": {
+            "primary": [
+              "egt_1",
+              "egt_spread",
+              "rpm"
+            ],
+            "context": [
+              "egt_1",
+              "egt_2",
+              "egt_3",
+              "egt_4"
+            ]
+          },
+          "telemetryStates": {},
+          "camera": {
+            "primaryTarget": "ROTAX_915IS_CYLINDER_HEAD_01",
+            "frameComponents": [
+              "ROTAX_915IS_SPARK_PLUGS_CYL_1_3",
+              "ROTAX_915IS_CYLINDER_HEAD_01"
+            ],
+            "view": "BANK_SIDE_-Y (cylinders 1/3)",
+            "ghostNonInvolved": false,
+            "xray": [],
+            "note": "Frame the live world-space bounds of frameComponents (they move during EXPLODE/REPACK).",
+            "viewDirectionGltf": [
+              0.84,
+              -0.2604,
+              0.4759
+            ],
+            "viewDirectionBlender": [
+              0.84,
+              -0.4759,
+              -0.2604
+            ],
+            "distanceFactor": 4.085,
+            "minDistanceM": 0.45,
+            "validatedVisibleFraction": 0.677,
+            "directionSource": "occlusion-scored in Blender against the assembled model (camera_hints.py); unit vector from target centre to camera"
+          }
+        },
+        "2": {
+          "key": "MISFIRE#cylinder=2",
+          "cylinder": 2,
+          "directComponents": [
+            "ROTAX_915IS_SPARK_PLUGS_CYL_2_4"
+          ],
+          "contextComponents": [
+            "ROTAX_915IS_CYLINDER_HEAD_02",
+            "ROTAX_915IS_CYLINDER_02",
+            "ROTAX_915IS_VALVE_COVER_02",
+            "ROTAX_915IS_IGNITION_COILS",
+            "ROTAX_915IS_IGNITION_LEADS"
+          ],
+          "componentDetails": [
+            {
+              "componentId": "ROTAX_915IS_SPARK_PLUGS_CYL_2_4",
+              "role": "direct",
+              "precision": "BANK_SHARED",
+              "note": "Spark plugs of cylinder 2 (the register names a failing coil or plug); the mesh also contains the plugs of cylinder 4.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_HEAD_02",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "Locator of the misfiring cylinder (cold EGT on egt_2).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_02",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "Barrel of the misfiring cylinder.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_VALVE_COVER_02",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "Visible cover of head 2: locator of the cylinder (no fault role of its own).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_IGNITION_COILS",
+              "role": "context",
+              "precision": "ENGINE_SHARED",
+              "note": "4 double coils in one mesh; the failing coil cannot be isolated, so it is context only.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_IGNITION_LEADS",
+              "role": "context",
+              "precision": "ENGINE_SHARED",
+              "note": "8 HT leads in one mesh; context only.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            }
+          ],
+          "telemetry": {
+            "primary": [
+              "egt_2",
+              "egt_spread",
+              "rpm"
+            ],
+            "context": [
+              "egt_1",
+              "egt_2",
+              "egt_3",
+              "egt_4"
+            ]
+          },
+          "telemetryStates": {},
+          "camera": {
+            "primaryTarget": "ROTAX_915IS_CYLINDER_HEAD_02",
+            "frameComponents": [
+              "ROTAX_915IS_SPARK_PLUGS_CYL_2_4",
+              "ROTAX_915IS_CYLINDER_HEAD_02"
+            ],
+            "view": "BANK_SIDE_+Y (cylinders 2/4)",
+            "ghostNonInvolved": false,
+            "xray": [],
+            "note": "Frame the live world-space bounds of frameComponents (they move during EXPLODE/REPACK).",
+            "viewDirectionGltf": [
+              0.8141,
+              -0.0521,
+              -0.5783
+            ],
+            "viewDirectionBlender": [
+              0.8141,
+              0.5783,
+              -0.0521
+            ],
+            "distanceFactor": 4.085,
+            "minDistanceM": 0.45,
+            "validatedVisibleFraction": 0.635,
+            "directionSource": "occlusion-scored in Blender against the assembled model (camera_hints.py); unit vector from target centre to camera"
+          }
+        },
+        "3": {
+          "key": "MISFIRE#cylinder=3",
+          "cylinder": 3,
+          "directComponents": [
+            "ROTAX_915IS_SPARK_PLUGS_CYL_1_3"
+          ],
+          "contextComponents": [
+            "ROTAX_915IS_CYLINDER_HEAD_03",
+            "ROTAX_915IS_CYLINDER_03",
+            "ROTAX_915IS_VALVE_COVER_03",
+            "ROTAX_915IS_IGNITION_COILS",
+            "ROTAX_915IS_IGNITION_LEADS"
+          ],
+          "componentDetails": [
+            {
+              "componentId": "ROTAX_915IS_SPARK_PLUGS_CYL_1_3",
+              "role": "direct",
+              "precision": "BANK_SHARED",
+              "note": "Spark plugs of cylinder 3 (the register names a failing coil or plug); the mesh also contains the plugs of cylinder 1.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_HEAD_03",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "Locator of the misfiring cylinder (cold EGT on egt_3).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_03",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "Barrel of the misfiring cylinder.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_VALVE_COVER_03",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "Visible cover of head 3: locator of the cylinder (no fault role of its own).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_IGNITION_COILS",
+              "role": "context",
+              "precision": "ENGINE_SHARED",
+              "note": "4 double coils in one mesh; the failing coil cannot be isolated, so it is context only.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_IGNITION_LEADS",
+              "role": "context",
+              "precision": "ENGINE_SHARED",
+              "note": "8 HT leads in one mesh; context only.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            }
+          ],
+          "telemetry": {
+            "primary": [
+              "egt_3",
+              "egt_spread",
+              "rpm"
+            ],
+            "context": [
+              "egt_1",
+              "egt_2",
+              "egt_3",
+              "egt_4"
+            ]
+          },
+          "telemetryStates": {},
+          "camera": {
+            "primaryTarget": "ROTAX_915IS_CYLINDER_HEAD_03",
+            "frameComponents": [
+              "ROTAX_915IS_SPARK_PLUGS_CYL_1_3",
+              "ROTAX_915IS_CYLINDER_HEAD_03"
+            ],
+            "view": "BANK_SIDE_-Y (cylinders 1/3)",
+            "ghostNonInvolved": false,
+            "xray": [],
+            "note": "Frame the live world-space bounds of frameComponents (they move during EXPLODE/REPACK).",
+            "viewDirectionGltf": [
+              0.1354,
+              -0.1979,
+              0.9708
+            ],
+            "viewDirectionBlender": [
+              0.1354,
+              -0.9708,
+              -0.1979
+            ],
+            "distanceFactor": 4.085,
+            "minDistanceM": 0.45,
+            "validatedVisibleFraction": 0.531,
+            "directionSource": "occlusion-scored in Blender against the assembled model (camera_hints.py); unit vector from target centre to camera"
+          }
+        },
+        "4": {
+          "key": "MISFIRE#cylinder=4",
+          "cylinder": 4,
+          "directComponents": [
+            "ROTAX_915IS_SPARK_PLUGS_CYL_2_4"
+          ],
+          "contextComponents": [
+            "ROTAX_915IS_CYLINDER_HEAD_04",
+            "ROTAX_915IS_CYLINDER_04",
+            "ROTAX_915IS_VALVE_COVER_04",
+            "ROTAX_915IS_IGNITION_COILS",
+            "ROTAX_915IS_IGNITION_LEADS"
+          ],
+          "componentDetails": [
+            {
+              "componentId": "ROTAX_915IS_SPARK_PLUGS_CYL_2_4",
+              "role": "direct",
+              "precision": "BANK_SHARED",
+              "note": "Spark plugs of cylinder 4 (the register names a failing coil or plug); the mesh also contains the plugs of cylinder 2.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_HEAD_04",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "Locator of the misfiring cylinder (cold EGT on egt_4).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_04",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "Barrel of the misfiring cylinder.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_VALVE_COVER_04",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "Visible cover of head 4: locator of the cylinder (no fault role of its own).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_IGNITION_COILS",
+              "role": "context",
+              "precision": "ENGINE_SHARED",
+              "note": "4 double coils in one mesh; the failing coil cannot be isolated, so it is context only.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_IGNITION_LEADS",
+              "role": "context",
+              "precision": "ENGINE_SHARED",
+              "note": "8 HT leads in one mesh; context only.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            }
+          ],
+          "telemetry": {
+            "primary": [
+              "egt_4",
+              "egt_spread",
+              "rpm"
+            ],
+            "context": [
+              "egt_1",
+              "egt_2",
+              "egt_3",
+              "egt_4"
+            ]
+          },
+          "telemetryStates": {},
+          "camera": {
+            "primaryTarget": "ROTAX_915IS_CYLINDER_HEAD_04",
+            "frameComponents": [
+              "ROTAX_915IS_SPARK_PLUGS_CYL_2_4",
+              "ROTAX_915IS_CYLINDER_HEAD_04"
+            ],
+            "view": "BANK_SIDE_+Y (cylinders 2/4)",
+            "ghostNonInvolved": false,
+            "xray": [],
+            "note": "Frame the live world-space bounds of frameComponents (they move during EXPLODE/REPACK).",
+            "viewDirectionGltf": [
+              -0.1768,
+              0.1562,
+              -0.9718
+            ],
+            "viewDirectionBlender": [
+              -0.1768,
+              0.9718,
+              0.1562
+            ],
+            "distanceFactor": 4.085,
+            "minDistanceM": 0.45,
+            "validatedVisibleFraction": 0.531,
+            "directionSource": "occlusion-scored in Blender against the assembled model (camera_hints.py); unit vector from target centre to camera"
+          }
+        }
+      },
+      "nullCylinder": {
+        "resolvesTo": 1,
+        "basis": "degradation.misfire_cylinder_rates: first = f.cylinder if f.cylinder else 1"
+      },
+      "progression": {
+        "magnitudeThreshold": 0.5,
+        "partnerCylinder": {
+          "1": 3,
+          "3": 1,
+          "2": 4,
+          "4": 2
+        },
+        "rule": "Above magnitude 0.5 the second cylinder of the same ignition-coil group (COIL_1_3 / COIL_2_4) also misfires.",
+        "basis": "degradation.py _MISFIRE_COIL_GROUP, misfire_cylinder_rates (DEV-204; IM failure matrix in configs/engines/rotax_915is.yaml)"
+      }
+    },
+    "INJECTOR_ABNORMAL": {
+      "faultId": "INJECTOR_ABNORMAL",
+      "scope": "PER_CYLINDER",
+      "parameter": {
+        "name": "cylinder",
+        "values": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "defaultAlertLevel": "YELLOW",
+      "animation": "PULSE_STEADY",
+      "resolved": {
+        "1": {
+          "key": "INJECTOR_ABNORMAL#cylinder=1",
+          "cylinder": 1,
+          "directComponents": [
+            "ROTAX_915IS_FUEL_INJECTORS_CYL_1_3"
+          ],
+          "contextComponents": [
+            "ROTAX_915IS_FUEL_RAIL_CYL_1_3",
+            "ROTAX_915IS_CYLINDER_HEAD_01",
+            "ROTAX_915IS_VALVE_COVER_01"
+          ],
+          "componentDetails": [
+            {
+              "componentId": "ROTAX_915IS_FUEL_INJECTORS_CYL_1_3",
+              "role": "direct",
+              "precision": "BANK_SHARED",
+              "note": "Injectors of cylinder 1; the mesh also contains the injectors of cylinder 3.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_FUEL_RAIL_CYL_1_3",
+              "role": "context",
+              "precision": "BANK_SHARED",
+              "note": "Fuel delivery to the affected injector.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_HEAD_01",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "Locator of the affected cylinder (EGT split on egt_1).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_VALVE_COVER_01",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "Visible cover of head 1: locator of the cylinder (no fault role of its own).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            }
+          ],
+          "telemetry": {
+            "primary": [
+              "egt_1",
+              "egt_spread",
+              "injection_timing_1",
+              "injection_timing_deviation_max",
+              "injector_duty",
+              "fuel_flow"
+            ],
+            "context": [
+              "injection_timing_cmd",
+              "injection_timing_deviation_spread"
+            ]
+          },
+          "telemetryStates": {},
+          "camera": {
+            "primaryTarget": "ROTAX_915IS_CYLINDER_HEAD_01",
+            "frameComponents": [
+              "ROTAX_915IS_FUEL_INJECTORS_CYL_1_3",
+              "ROTAX_915IS_CYLINDER_HEAD_01"
+            ],
+            "view": "BANK_SIDE_-Y (cylinders 1/3)",
+            "ghostNonInvolved": false,
+            "xray": [],
+            "note": "Frame the live world-space bounds of frameComponents (they move during EXPLODE/REPACK).",
+            "viewDirectionGltf": [
+              0.8263,
+              0.5521,
+              -0.1112
+            ],
+            "viewDirectionBlender": [
+              0.8263,
+              0.1112,
+              0.5521
+            ],
+            "distanceFactor": 4.085,
+            "minDistanceM": 0.45,
+            "validatedVisibleFraction": 0.396,
+            "directionSource": "occlusion-scored in Blender against the assembled model (camera_hints.py); unit vector from target centre to camera"
+          }
+        },
+        "2": {
+          "key": "INJECTOR_ABNORMAL#cylinder=2",
+          "cylinder": 2,
+          "directComponents": [
+            "ROTAX_915IS_FUEL_INJECTORS_CYL_2_4"
+          ],
+          "contextComponents": [
+            "ROTAX_915IS_FUEL_RAIL_CYL_2_4",
+            "ROTAX_915IS_CYLINDER_HEAD_02",
+            "ROTAX_915IS_VALVE_COVER_02"
+          ],
+          "componentDetails": [
+            {
+              "componentId": "ROTAX_915IS_FUEL_INJECTORS_CYL_2_4",
+              "role": "direct",
+              "precision": "BANK_SHARED",
+              "note": "Injectors of cylinder 2; the mesh also contains the injectors of cylinder 4.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_FUEL_RAIL_CYL_2_4",
+              "role": "context",
+              "precision": "BANK_SHARED",
+              "note": "Fuel delivery to the affected injector.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_HEAD_02",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "Locator of the affected cylinder (EGT split on egt_2).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_VALVE_COVER_02",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "Visible cover of head 2: locator of the cylinder (no fault role of its own).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            }
+          ],
+          "telemetry": {
+            "primary": [
+              "egt_2",
+              "egt_spread",
+              "injection_timing_2",
+              "injection_timing_deviation_max",
+              "injector_duty",
+              "fuel_flow"
+            ],
+            "context": [
+              "injection_timing_cmd",
+              "injection_timing_deviation_spread"
+            ]
+          },
+          "telemetryStates": {},
+          "camera": {
+            "primaryTarget": "ROTAX_915IS_CYLINDER_HEAD_02",
+            "frameComponents": [
+              "ROTAX_915IS_FUEL_INJECTORS_CYL_2_4",
+              "ROTAX_915IS_CYLINDER_HEAD_02"
+            ],
+            "view": "BANK_SIDE_+Y (cylinders 2/4)",
+            "ghostNonInvolved": false,
+            "xray": [],
+            "note": "Frame the live world-space bounds of frameComponents (they move during EXPLODE/REPACK).",
+            "viewDirectionGltf": [
+              0.9564,
+              0.2812,
+              0.0792
+            ],
+            "viewDirectionBlender": [
+              0.9564,
+              -0.0792,
+              0.2812
+            ],
+            "distanceFactor": 4.085,
+            "minDistanceM": 0.45,
+            "validatedVisibleFraction": 0.5,
+            "directionSource": "occlusion-scored in Blender against the assembled model (camera_hints.py); unit vector from target centre to camera"
+          }
+        },
+        "3": {
+          "key": "INJECTOR_ABNORMAL#cylinder=3",
+          "cylinder": 3,
+          "directComponents": [
+            "ROTAX_915IS_FUEL_INJECTORS_CYL_1_3"
+          ],
+          "contextComponents": [
+            "ROTAX_915IS_FUEL_RAIL_CYL_1_3",
+            "ROTAX_915IS_CYLINDER_HEAD_03",
+            "ROTAX_915IS_VALVE_COVER_03"
+          ],
+          "componentDetails": [
+            {
+              "componentId": "ROTAX_915IS_FUEL_INJECTORS_CYL_1_3",
+              "role": "direct",
+              "precision": "BANK_SHARED",
+              "note": "Injectors of cylinder 3; the mesh also contains the injectors of cylinder 1.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_FUEL_RAIL_CYL_1_3",
+              "role": "context",
+              "precision": "BANK_SHARED",
+              "note": "Fuel delivery to the affected injector.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_HEAD_03",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "Locator of the affected cylinder (EGT split on egt_3).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_VALVE_COVER_03",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "Visible cover of head 3: locator of the cylinder (no fault role of its own).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            }
+          ],
+          "telemetry": {
+            "primary": [
+              "egt_3",
+              "egt_spread",
+              "injection_timing_3",
+              "injection_timing_deviation_max",
+              "injector_duty",
+              "fuel_flow"
+            ],
+            "context": [
+              "injection_timing_cmd",
+              "injection_timing_deviation_spread"
+            ]
+          },
+          "telemetryStates": {},
+          "camera": {
+            "primaryTarget": "ROTAX_915IS_CYLINDER_HEAD_03",
+            "frameComponents": [
+              "ROTAX_915IS_FUEL_INJECTORS_CYL_1_3",
+              "ROTAX_915IS_CYLINDER_HEAD_03"
+            ],
+            "view": "BANK_SIDE_-Y (cylinders 1/3)",
+            "ghostNonInvolved": false,
+            "xray": [],
+            "note": "Frame the live world-space bounds of frameComponents (they move during EXPLODE/REPACK).",
+            "viewDirectionGltf": [
+              -0.5251,
+              0.5729,
+              0.6293
+            ],
+            "viewDirectionBlender": [
+              -0.5251,
+              -0.6293,
+              0.5729
+            ],
+            "distanceFactor": 4.085,
+            "minDistanceM": 0.45,
+            "validatedVisibleFraction": 0.271,
+            "directionSource": "occlusion-scored in Blender against the assembled model (camera_hints.py); unit vector from target centre to camera"
+          }
+        },
+        "4": {
+          "key": "INJECTOR_ABNORMAL#cylinder=4",
+          "cylinder": 4,
+          "directComponents": [
+            "ROTAX_915IS_FUEL_INJECTORS_CYL_2_4"
+          ],
+          "contextComponents": [
+            "ROTAX_915IS_FUEL_RAIL_CYL_2_4",
+            "ROTAX_915IS_CYLINDER_HEAD_04",
+            "ROTAX_915IS_VALVE_COVER_04"
+          ],
+          "componentDetails": [
+            {
+              "componentId": "ROTAX_915IS_FUEL_INJECTORS_CYL_2_4",
+              "role": "direct",
+              "precision": "BANK_SHARED",
+              "note": "Injectors of cylinder 4; the mesh also contains the injectors of cylinder 2.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_FUEL_RAIL_CYL_2_4",
+              "role": "context",
+              "precision": "BANK_SHARED",
+              "note": "Fuel delivery to the affected injector.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_HEAD_04",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "Locator of the affected cylinder (EGT split on egt_4).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_VALVE_COVER_04",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "Visible cover of head 4: locator of the cylinder (no fault role of its own).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            }
+          ],
+          "telemetry": {
+            "primary": [
+              "egt_4",
+              "egt_spread",
+              "injection_timing_4",
+              "injection_timing_deviation_max",
+              "injector_duty",
+              "fuel_flow"
+            ],
+            "context": [
+              "injection_timing_cmd",
+              "injection_timing_deviation_spread"
+            ]
+          },
+          "telemetryStates": {},
+          "camera": {
+            "primaryTarget": "ROTAX_915IS_CYLINDER_HEAD_04",
+            "frameComponents": [
+              "ROTAX_915IS_FUEL_INJECTORS_CYL_2_4",
+              "ROTAX_915IS_CYLINDER_HEAD_04"
+            ],
+            "view": "BANK_SIDE_+Y (cylinders 2/4)",
+            "ghostNonInvolved": false,
+            "xray": [],
+            "note": "Frame the live world-space bounds of frameComponents (they move during EXPLODE/REPACK).",
+            "viewDirectionGltf": [
+              -0.976,
+              0.1979,
+              0.0905
+            ],
+            "viewDirectionBlender": [
+              -0.976,
+              -0.0905,
+              0.1979
+            ],
+            "distanceFactor": 4.085,
+            "minDistanceM": 0.45,
+            "validatedVisibleFraction": 0.406,
+            "directionSource": "occlusion-scored in Blender against the assembled model (camera_hints.py); unit vector from target centre to camera"
+          }
+        },
+        "ALL": {
+          "key": "INJECTOR_ABNORMAL#cylinder=ALL",
+          "cylinder": null,
+          "directComponents": [
+            "ROTAX_915IS_FUEL_INJECTORS_CYL_1_3",
+            "ROTAX_915IS_FUEL_INJECTORS_CYL_2_4"
+          ],
+          "contextComponents": [
+            "ROTAX_915IS_FUEL_RAIL_CYL_1_3",
+            "ROTAX_915IS_CYLINDER_HEAD_01",
+            "ROTAX_915IS_VALVE_COVER_01",
+            "ROTAX_915IS_FUEL_RAIL_CYL_2_4",
+            "ROTAX_915IS_CYLINDER_HEAD_02",
+            "ROTAX_915IS_VALVE_COVER_02",
+            "ROTAX_915IS_CYLINDER_HEAD_03",
+            "ROTAX_915IS_VALVE_COVER_03",
+            "ROTAX_915IS_CYLINDER_HEAD_04",
+            "ROTAX_915IS_VALVE_COVER_04"
+          ],
+          "componentDetails": [
+            {
+              "componentId": "ROTAX_915IS_FUEL_INJECTORS_CYL_1_3",
+              "role": "direct",
+              "precision": "BANK_SHARED",
+              "note": "All cylinders (cylinder = null). bank shared mesh.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_FUEL_INJECTORS_CYL_2_4",
+              "role": "direct",
+              "precision": "BANK_SHARED",
+              "note": "All cylinders (cylinder = null). bank shared mesh.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_FUEL_RAIL_CYL_1_3",
+              "role": "context",
+              "precision": "BANK_SHARED",
+              "note": "All cylinders (cylinder = null).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_HEAD_01",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "All cylinders (cylinder = null).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_VALVE_COVER_01",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "All cylinders (cylinder = null).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_FUEL_RAIL_CYL_2_4",
+              "role": "context",
+              "precision": "BANK_SHARED",
+              "note": "All cylinders (cylinder = null).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_HEAD_02",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "All cylinders (cylinder = null).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_VALVE_COVER_02",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "All cylinders (cylinder = null).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_HEAD_03",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "All cylinders (cylinder = null).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_VALVE_COVER_03",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "All cylinders (cylinder = null).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_HEAD_04",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "All cylinders (cylinder = null).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_VALVE_COVER_04",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "All cylinders (cylinder = null).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            }
+          ],
+          "telemetry": {
+            "primary": [
+              "egt_1",
+              "egt_spread",
+              "injection_timing_1",
+              "injection_timing_deviation_max",
+              "injector_duty",
+              "fuel_flow",
+              "egt_2",
+              "injection_timing_2",
+              "egt_3",
+              "injection_timing_3",
+              "egt_4",
+              "injection_timing_4"
+            ],
+            "context": [
+              "injection_timing_cmd",
+              "injection_timing_deviation_spread"
+            ]
+          },
+          "telemetryStates": {},
+          "camera": {
+            "primaryTarget": null,
+            "frameComponents": [
+              "ROTAX_915IS_FUEL_INJECTORS_CYL_1_3",
+              "ROTAX_915IS_FUEL_INJECTORS_CYL_2_4"
+            ],
+            "view": "TOP_FRONT",
+            "ghostNonInvolved": false,
+            "xray": [],
+            "note": "Frame the live world-space bounds of frameComponents (they move during EXPLODE/REPACK).",
+            "viewDirectionGltf": [
+              0.9564,
+              0.2812,
+              0.0792
+            ],
+            "viewDirectionBlender": [
+              0.9564,
+              -0.0792,
+              0.2812
+            ],
+            "distanceFactor": 4.085,
+            "minDistanceM": 0.45,
+            "validatedVisibleFraction": 0.208,
+            "directionSource": "occlusion-scored in Blender against the assembled model (camera_hints.py); unit vector from target centre to camera"
+          }
+        }
+      },
+      "nullCylinder": {
+        "resolvesTo": "ALL",
+        "basis": "InjectedFault.cylinder: None = affects all cylinders"
+      }
+    },
+    "COOLING_DEGRADATION": {
+      "faultId": "COOLING_DEGRADATION",
+      "scope": "ENGINE",
+      "parameter": null,
+      "defaultAlertLevel": "YELLOW",
+      "animation": "NONE",
+      "resolved": {
+        "ENGINE": {
+          "key": "COOLING_DEGRADATION",
+          "directComponents": [
+            "ROTAX_915IS_CYLINDER_HEAD_01",
+            "ROTAX_915IS_CYLINDER_HEAD_02",
+            "ROTAX_915IS_CYLINDER_HEAD_03",
+            "ROTAX_915IS_CYLINDER_HEAD_04",
+            "ROTAX_915IS_WATER_PUMP"
+          ],
+          "contextComponents": [
+            "ROTAX_915IS_COOLANT_HOSES",
+            "ROTAX_915IS_COOLANT_EXPANSION_TANK",
+            "ROTAX_915IS_SENSOR_COOLANT_TEMP"
+          ],
+          "componentDetails": [
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_HEAD_01",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "Liquid-cooled head: host of the unmodelled coolant jacket.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_HEAD_02",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "Liquid-cooled head: host of the unmodelled coolant jacket.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_HEAD_03",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "Liquid-cooled head: host of the unmodelled coolant jacket.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_HEAD_04",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "Liquid-cooled head: host of the unmodelled coolant jacket.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_WATER_PUMP",
+              "role": "direct",
+              "precision": "EXACT",
+              "note": "Coolant pump (register: coolant-pump wear).",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_COOLANT_HOSES",
+              "role": "context",
+              "precision": "ENGINE_SHARED",
+              "note": "Coolant path between pump, heads and expansion tank.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_COOLANT_EXPANSION_TANK",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "Coolant loop reservoir.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_SENSOR_COOLANT_TEMP",
+              "role": "context",
+              "precision": "INSTRUMENT",
+              "note": "coolant_temperature stays steady while CHT rises - the signature.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            }
+          ],
+          "telemetry": {
+            "primary": [
+              "cht_1",
+              "cht_2",
+              "cht_3",
+              "cht_4",
+              "cht_max",
+              "cht_spread",
+              "coolant_temperature"
+            ],
+            "context": []
+          },
+          "telemetryStates": {},
+          "camera": {
+            "primaryTarget": "ROTAX_915IS_WATER_PUMP",
+            "frameComponents": [
+              "ROTAX_915IS_CYLINDER_HEAD_01",
+              "ROTAX_915IS_CYLINDER_HEAD_02",
+              "ROTAX_915IS_CYLINDER_HEAD_03",
+              "ROTAX_915IS_CYLINDER_HEAD_04",
+              "ROTAX_915IS_WATER_PUMP"
+            ],
+            "view": "TOP_FRONT",
+            "ghostNonInvolved": false,
+            "xray": [],
+            "note": "Frame the live world-space bounds of frameComponents (they move during EXPLODE/REPACK).",
+            "viewDirectionGltf": [
+              -0.976,
+              0.1979,
+              0.0905
+            ],
+            "viewDirectionBlender": [
+              -0.976,
+              -0.0905,
+              0.1979
+            ],
+            "distanceFactor": 4.085,
+            "minDistanceM": 0.45,
+            "validatedVisibleFraction": 0.463,
+            "directionSource": "occlusion-scored in Blender against the assembled model (camera_hints.py); unit vector from target centre to camera"
+          }
+        }
+      }
+    },
+    "LUBRICATION_ISSUE": {
+      "faultId": "LUBRICATION_ISSUE",
+      "scope": "ENGINE",
+      "parameter": null,
+      "defaultAlertLevel": "YELLOW",
+      "animation": "PULSE_STEADY",
+      "resolved": {
+        "ENGINE": {
+          "key": "LUBRICATION_ISSUE",
+          "directComponents": [
+            "ROTAX_915IS_OIL_TANK",
+            "ROTAX_915IS_OIL_PUMP",
+            "ROTAX_915IS_OIL_FILTER",
+            "ROTAX_915IS_OIL_LINES_TURBO",
+            "ROTAX_915IS_TURBO_OIL_SUMP"
+          ],
+          "contextComponents": [
+            "ROTAX_915IS_CRANKSHAFT",
+            "ROTAX_915IS_CRANKCASE_HALF_CYL_1_3",
+            "ROTAX_915IS_CRANKCASE_HALF_CYL_2_4",
+            "ROTAX_915IS_SENSOR_OIL_PRESSURE",
+            "ROTAX_915IS_SENSOR_OIL_TEMP"
+          ],
+          "componentDetails": [
+            {
+              "componentId": "ROTAX_915IS_OIL_TANK",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "Oil reservoir (oil not modelled).",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_OIL_PUMP",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "Oil pump module with pressure regulator.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_OIL_FILTER",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "Oil filter.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_OIL_LINES_TURBO",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "Turbocharger oil feed/return lines.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_TURBO_OIL_SUMP",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "Turbocharger oil sump.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_CRANKSHAFT",
+              "role": "context",
+              "precision": "APPROXIMATE",
+              "note": "Bearing wear grows underneath (bearings are not separate meshes).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_CRANKCASE_HALF_CYL_1_3",
+              "role": "context",
+              "precision": "HOST",
+              "note": "Crankcase (bearing housings, oil galleries).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_CRANKCASE_HALF_CYL_2_4",
+              "role": "context",
+              "precision": "HOST",
+              "note": "Crankcase (bearing housings, oil galleries).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_SENSOR_OIL_PRESSURE",
+              "role": "context",
+              "precision": "INSTRUMENT",
+              "note": "oil_pressure - primary signature channel.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_SENSOR_OIL_TEMP",
+              "role": "context",
+              "precision": "INSTRUMENT",
+              "note": "oil_temperature - primary signature channel.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            }
+          ],
+          "telemetry": {
+            "primary": [
+              "oil_pressure",
+              "oil_temperature",
+              "rpm"
+            ],
+            "context": []
+          },
+          "telemetryStates": {},
+          "camera": {
+            "primaryTarget": "ROTAX_915IS_OIL_PUMP",
+            "frameComponents": [
+              "ROTAX_915IS_OIL_TANK",
+              "ROTAX_915IS_OIL_PUMP",
+              "ROTAX_915IS_OIL_FILTER",
+              "ROTAX_915IS_OIL_LINES_TURBO",
+              "ROTAX_915IS_TURBO_OIL_SUMP"
+            ],
+            "view": "REAR",
+            "ghostNonInvolved": false,
+            "xray": [],
+            "note": "Frame the live world-space bounds of frameComponents (they move during EXPLODE/REPACK).",
+            "viewDirectionGltf": [
+              0.9864,
+              -0.1562,
+              -0.0504
+            ],
+            "viewDirectionBlender": [
+              0.9864,
+              0.0504,
+              -0.1562
+            ],
+            "distanceFactor": 4.085,
+            "minDistanceM": 0.45,
+            "validatedVisibleFraction": 0.858,
+            "directionSource": "occlusion-scored in Blender against the assembled model (camera_hints.py); unit vector from target centre to camera"
+          }
+        }
+      }
+    },
+    "SENSOR_DRIFT": {
+      "faultId": "SENSOR_DRIFT",
+      "scope": "INSTRUMENT",
+      "parameter": {
+        "name": "channel",
+        "values": [
+          "oil_temperature",
+          "coolant_temperature",
+          "manifold_pressure",
+          "cht",
+          "egt",
+          "fuel_flow",
+          "oil_pressure",
+          "rpm"
+        ],
+        "note": "The driftable instrument chosen per fault instance (engine_sim.DRIFTABLE_CHANNELS)."
+      },
+      "defaultAlertLevel": "YELLOW",
+      "animation": "PULSE_STEADY",
+      "resolved": {
+        "oil_temperature": {
+          "key": "SENSOR_DRIFT#channel=oil_temperature",
+          "channel": "oil_temperature",
+          "driftableInstrument": "oil_temperature",
+          "drift": {
+            "biasFullSeverity": "±7.0 °C",
+            "ageingDrift": "0.003 °C/h",
+            "residualSnrHealthy": 2.78,
+            "observableAsDrift": "yes"
+          },
+          "directComponents": [
+            "ROTAX_915IS_SENSOR_OIL_TEMP"
+          ],
+          "contextComponents": [],
+          "componentDetails": [
+            {
+              "componentId": "ROTAX_915IS_SENSOR_OIL_TEMP",
+              "role": "direct",
+              "precision": "INSTRUMENT",
+              "note": "Oil temperature sensor (identification confidence medium).",
+              "renderState": "HIGHLIGHT_SUSPECT",
+              "renderStateIfInvalid": "HIGHLIGHT_INVALID"
+            }
+          ],
+          "engineComponents": "NORMAL - the engine's true state is bit-identical to a healthy engine.",
+          "telemetry": {
+            "primary": [
+              "oil_temperature"
+            ],
+            "context": []
+          },
+          "telemetryStates": {
+            "oil_temperature": "SUSPECT"
+          },
+          "telemetryStateRule": "SUSPECT when the lane vote / shadow residual flags the channel; INVALID when range, rate or service-code checks remove the value (then use renderStateIfInvalid).",
+          "geometry": "instrument mesh available",
+          "camera": {
+            "primaryTarget": "ROTAX_915IS_SENSOR_OIL_TEMP",
+            "frameComponents": [
+              "ROTAX_915IS_SENSOR_OIL_TEMP"
+            ],
+            "view": "AUTO",
+            "ghostNonInvolved": false,
+            "xray": [],
+            "note": "Frame the live world-space bounds of frameComponents (they move during EXPLODE/REPACK).",
+            "viewDirectionGltf": [
+              0.1354,
+              -0.1979,
+              0.9708
+            ],
+            "viewDirectionBlender": [
+              0.1354,
+              -0.9708,
+              -0.1979
+            ],
+            "distanceFactor": 7.5,
+            "minDistanceM": 0.45,
+            "validatedVisibleFraction": 0.979,
+            "directionSource": "occlusion-scored in Blender against the assembled model (camera_hints.py); unit vector from target centre to camera"
+          }
+        },
+        "coolant_temperature": {
+          "key": "SENSOR_DRIFT#channel=coolant_temperature",
+          "channel": "coolant_temperature",
+          "driftableInstrument": "coolant_temperature",
+          "drift": {
+            "biasFullSeverity": "±6.5 °C",
+            "ageingDrift": "0.003 °C/h",
+            "residualSnrHealthy": 2.36,
+            "observableAsDrift": "yes"
+          },
+          "directComponents": [
+            "ROTAX_915IS_SENSOR_COOLANT_TEMP"
+          ],
+          "contextComponents": [],
+          "componentDetails": [
+            {
+              "componentId": "ROTAX_915IS_SENSOR_COOLANT_TEMP",
+              "role": "direct",
+              "precision": "INSTRUMENT",
+              "note": "Coolant temperature sensor on head 4.",
+              "renderState": "HIGHLIGHT_SUSPECT",
+              "renderStateIfInvalid": "HIGHLIGHT_INVALID"
+            }
+          ],
+          "engineComponents": "NORMAL - the engine's true state is bit-identical to a healthy engine.",
+          "telemetry": {
+            "primary": [
+              "coolant_temperature"
+            ],
+            "context": []
+          },
+          "telemetryStates": {
+            "coolant_temperature": "SUSPECT"
+          },
+          "telemetryStateRule": "SUSPECT when the lane vote / shadow residual flags the channel; INVALID when range, rate or service-code checks remove the value (then use renderStateIfInvalid).",
+          "geometry": "instrument mesh available",
+          "camera": {
+            "primaryTarget": "ROTAX_915IS_SENSOR_COOLANT_TEMP",
+            "frameComponents": [
+              "ROTAX_915IS_SENSOR_COOLANT_TEMP"
+            ],
+            "view": "AUTO",
+            "ghostNonInvolved": false,
+            "xray": [],
+            "note": "Frame the live world-space bounds of frameComponents (they move during EXPLODE/REPACK).",
+            "viewDirectionGltf": [
+              -0.6954,
+              0.5312,
+              -0.4839
+            ],
+            "viewDirectionBlender": [
+              -0.6954,
+              0.4839,
+              0.5312
+            ],
+            "distanceFactor": 7.5,
+            "minDistanceM": 0.45,
+            "validatedVisibleFraction": 1.0,
+            "directionSource": "occlusion-scored in Blender against the assembled model (camera_hints.py); unit vector from target centre to camera"
+          }
+        },
+        "oil_pressure": {
+          "key": "SENSOR_DRIFT#channel=oil_pressure",
+          "channel": "oil_pressure",
+          "driftableInstrument": "oil_pressure",
+          "drift": {
+            "biasFullSeverity": "±0.55 bar",
+            "ageingDrift": "0.00014 bar/h",
+            "residualSnrHealthy": 0.27,
+            "observableAsDrift": "below the shadow model's own error"
+          },
+          "directComponents": [
+            "ROTAX_915IS_SENSOR_OIL_PRESSURE"
+          ],
+          "contextComponents": [],
+          "componentDetails": [
+            {
+              "componentId": "ROTAX_915IS_SENSOR_OIL_PRESSURE",
+              "role": "direct",
+              "precision": "INSTRUMENT",
+              "note": "Oil pressure sensor (identification confidence medium).",
+              "renderState": "HIGHLIGHT_SUSPECT",
+              "renderStateIfInvalid": "HIGHLIGHT_INVALID"
+            }
+          ],
+          "engineComponents": "NORMAL - the engine's true state is bit-identical to a healthy engine.",
+          "telemetry": {
+            "primary": [
+              "oil_pressure"
+            ],
+            "context": []
+          },
+          "telemetryStates": {
+            "oil_pressure": "SUSPECT"
+          },
+          "telemetryStateRule": "SUSPECT when the lane vote / shadow residual flags the channel; INVALID when range, rate or service-code checks remove the value (then use renderStateIfInvalid).",
+          "geometry": "instrument mesh available",
+          "camera": {
+            "primaryTarget": "ROTAX_915IS_SENSOR_OIL_PRESSURE",
+            "frameComponents": [
+              "ROTAX_915IS_SENSOR_OIL_PRESSURE"
+            ],
+            "view": "AUTO",
+            "ghostNonInvolved": false,
+            "xray": [],
+            "note": "Frame the live world-space bounds of frameComponents (they move during EXPLODE/REPACK).",
+            "viewDirectionGltf": [
+              -0.9032,
+              0.0312,
+              0.4281
+            ],
+            "viewDirectionBlender": [
+              -0.9032,
+              -0.4281,
+              0.0312
+            ],
+            "distanceFactor": 7.5,
+            "minDistanceM": 0.45,
+            "validatedVisibleFraction": 1.0,
+            "directionSource": "occlusion-scored in Blender against the assembled model (camera_hints.py); unit vector from target centre to camera"
+          }
+        },
+        "manifold_pressure": {
+          "key": "SENSOR_DRIFT#channel=manifold_pressure",
+          "channel": "manifold_pressure",
+          "driftableInstrument": "manifold_pressure",
+          "drift": {
+            "biasFullSeverity": "±0.09 bar",
+            "ageingDrift": null,
+            "residualSnrHealthy": 1.11,
+            "observableAsDrift": "marginal"
+          },
+          "directComponents": [
+            "ROTAX_915IS_SENSORS_MAP_MAT"
+          ],
+          "contextComponents": [],
+          "componentDetails": [
+            {
+              "componentId": "ROTAX_915IS_SENSORS_MAP_MAT",
+              "role": "direct",
+              "precision": "GROUP_AGGREGATE",
+              "note": "MAP and MAT sensors share one mesh; the MAP sensor cannot be isolated.",
+              "renderState": "HIGHLIGHT_SUSPECT",
+              "renderStateIfInvalid": "HIGHLIGHT_INVALID"
+            }
+          ],
+          "engineComponents": "NORMAL - the engine's true state is bit-identical to a healthy engine.",
+          "telemetry": {
+            "primary": [
+              "manifold_pressure"
+            ],
+            "context": []
+          },
+          "telemetryStates": {
+            "manifold_pressure": "SUSPECT"
+          },
+          "telemetryStateRule": "SUSPECT when the lane vote / shadow residual flags the channel; INVALID when range, rate or service-code checks remove the value (then use renderStateIfInvalid).",
+          "geometry": "instrument mesh available",
+          "camera": {
+            "primaryTarget": "ROTAX_915IS_SENSORS_MAP_MAT",
+            "frameComponents": [
+              "ROTAX_915IS_SENSORS_MAP_MAT"
+            ],
+            "view": "AUTO",
+            "ghostNonInvolved": false,
+            "xray": [],
+            "note": "Frame the live world-space bounds of frameComponents (they move during EXPLODE/REPACK).",
+            "viewDirectionGltf": [
+              -0.4163,
+              0.9062,
+              0.0736
+            ],
+            "viewDirectionBlender": [
+              -0.4163,
+              -0.0736,
+              0.9062
+            ],
+            "distanceFactor": 5.094,
+            "minDistanceM": 0.45,
+            "validatedVisibleFraction": 1.0,
+            "directionSource": "occlusion-scored in Blender against the assembled model (camera_hints.py); unit vector from target centre to camera"
+          }
+        },
+        "egt": {
+          "key": "SENSOR_DRIFT#channel=egt",
+          "channel": "egt",
+          "driftableInstrument": "egt",
+          "drift": {
+            "biasFullSeverity": "±38 °C",
+            "ageingDrift": "0.02 °C/h",
+            "residualSnrHealthy": 0.89,
+            "observableAsDrift": "marginal"
+          },
+          "directComponents": [
+            "ROTAX_915IS_EGT_SENSORS"
+          ],
+          "contextComponents": [],
+          "componentDetails": [
+            {
+              "componentId": "ROTAX_915IS_EGT_SENSORS",
+              "role": "direct",
+              "precision": "GROUP_AGGREGATE",
+              "note": "All four EGT probes in one mesh; the simulator biases all four readings together.",
+              "renderState": "HIGHLIGHT_SUSPECT",
+              "renderStateIfInvalid": "HIGHLIGHT_INVALID"
+            }
+          ],
+          "engineComponents": "NORMAL - the engine's true state is bit-identical to a healthy engine.",
+          "telemetry": {
+            "primary": [
+              "egt_1",
+              "egt_2",
+              "egt_3",
+              "egt_4",
+              "egt_max"
+            ],
+            "context": []
+          },
+          "telemetryStates": {
+            "egt_1": "SUSPECT",
+            "egt_2": "SUSPECT",
+            "egt_3": "SUSPECT",
+            "egt_4": "SUSPECT",
+            "egt_max": "SUSPECT"
+          },
+          "telemetryStateRule": "SUSPECT when the lane vote / shadow residual flags the channel; INVALID when range, rate or service-code checks remove the value (then use renderStateIfInvalid).",
+          "geometry": "instrument mesh available",
+          "camera": {
+            "primaryTarget": "ROTAX_915IS_EGT_SENSORS",
+            "frameComponents": [
+              "ROTAX_915IS_EGT_SENSORS"
+            ],
+            "view": "AUTO",
+            "ghostNonInvolved": false,
+            "xray": [],
+            "note": "Frame the live world-space bounds of frameComponents (they move during EXPLODE/REPACK).",
+            "viewDirectionGltf": [
+              0.0278,
+              0.9479,
+              0.3173
+            ],
+            "viewDirectionBlender": [
+              0.0278,
+              -0.3173,
+              0.9479
+            ],
+            "distanceFactor": 4.085,
+            "minDistanceM": 0.45,
+            "validatedVisibleFraction": 0.625,
+            "directionSource": "occlusion-scored in Blender against the assembled model (camera_hints.py); unit vector from target centre to camera"
+          }
+        },
+        "cht": {
+          "key": "SENSOR_DRIFT#channel=cht",
+          "channel": "cht",
+          "driftableInstrument": "cht",
+          "drift": {
+            "biasFullSeverity": "±9.0 °C",
+            "ageingDrift": "0.004 °C/h",
+            "residualSnrHealthy": 1.06,
+            "observableAsDrift": "marginal"
+          },
+          "directComponents": [],
+          "contextComponents": [],
+          "componentDetails": [],
+          "engineComponents": "NORMAL - the engine's true state is bit-identical to a healthy engine.",
+          "telemetry": {
+            "primary": [
+              "cht_1",
+              "cht_2",
+              "cht_3",
+              "cht_4",
+              "cht_max"
+            ],
+            "context": []
+          },
+          "telemetryStates": {
+            "cht_1": "SUSPECT",
+            "cht_2": "SUSPECT",
+            "cht_3": "SUSPECT",
+            "cht_4": "SUSPECT",
+            "cht_max": "SUSPECT"
+          },
+          "telemetryStateRule": "SUSPECT when the lane vote / shadow residual flags the channel; INVALID when range, rate or service-code checks remove the value (then use renderStateIfInvalid).",
+          "geometry": "telemetry-only - No CHT sensor geometry in the model (cht_1..cht_4 are on the bus).",
+          "camera": {
+            "primaryTarget": null,
+            "frameComponents": [],
+            "view": "NONE",
+            "ghostNonInvolved": false,
+            "xray": [],
+            "note": "No instrument geometry; keep the current view."
+          }
+        },
+        "fuel_flow": {
+          "key": "SENSOR_DRIFT#channel=fuel_flow",
+          "channel": "fuel_flow",
+          "driftableInstrument": "fuel_flow",
+          "drift": {
+            "biasFullSeverity": "±1.3 L/h",
+            "ageingDrift": null,
+            "residualSnrHealthy": 0.45,
+            "observableAsDrift": "below the shadow model's own error"
+          },
+          "directComponents": [],
+          "contextComponents": [],
+          "componentDetails": [],
+          "engineComponents": "NORMAL - the engine's true state is bit-identical to a healthy engine.",
+          "telemetry": {
+            "primary": [
+              "fuel_flow"
+            ],
+            "context": []
+          },
+          "telemetryStates": {
+            "fuel_flow": "SUSPECT"
+          },
+          "telemetryStateRule": "SUSPECT when the lane vote / shadow residual flags the channel; INVALID when range, rate or service-code checks remove the value (then use renderStateIfInvalid).",
+          "geometry": "telemetry-only - No fuel flow meter geometry in the model.",
+          "camera": {
+            "primaryTarget": null,
+            "frameComponents": [],
+            "view": "NONE",
+            "ghostNonInvolved": false,
+            "xray": [],
+            "note": "No instrument geometry; keep the current view."
+          }
+        },
+        "rpm": {
+          "key": "SENSOR_DRIFT#channel=rpm",
+          "channel": "rpm",
+          "driftableInstrument": "rpm",
+          "drift": {
+            "biasFullSeverity": "±55 rpm",
+            "ageingDrift": null,
+            "residualSnrHealthy": null,
+            "observableAsDrift": "none - the shadow model is driven by measured rpm, so its residual is zero by construction"
+          },
+          "directComponents": [],
+          "contextComponents": [],
+          "componentDetails": [],
+          "engineComponents": "NORMAL - the engine's true state is bit-identical to a healthy engine.",
+          "telemetry": {
+            "primary": [
+              "rpm"
+            ],
+            "context": []
+          },
+          "telemetryStates": {
+            "rpm": "SUSPECT"
+          },
+          "telemetryStateRule": "SUSPECT when the lane vote / shadow residual flags the channel; INVALID when range, rate or service-code checks remove the value (then use renderStateIfInvalid).",
+          "geometry": "telemetry-only - No engine-speed pickup geometry in the model.",
+          "camera": {
+            "primaryTarget": null,
+            "frameComponents": [],
+            "view": "NONE",
+            "ghostNonInvolved": false,
+            "xray": [],
+            "note": "No instrument geometry; keep the current view."
+          }
+        }
+      }
+    },
+    "COMBUSTION_INSTABILITY": {
+      "faultId": "COMBUSTION_INSTABILITY",
+      "scope": "PER_CYLINDER",
+      "parameter": {
+        "name": "cylinder",
+        "values": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "defaultAlertLevel": "YELLOW",
+      "animation": "PULSE_IRREGULAR",
+      "resolved": {
+        "1": {
+          "key": "COMBUSTION_INSTABILITY#cylinder=1",
+          "cylinder": 1,
+          "directComponents": [
+            "ROTAX_915IS_CYLINDER_HEAD_01",
+            "ROTAX_915IS_CYLINDER_01",
+            "ROTAX_915IS_PISTON_01"
+          ],
+          "contextComponents": [
+            "ROTAX_915IS_SPARK_PLUGS_CYL_1_3",
+            "ROTAX_915IS_FUEL_INJECTORS_CYL_1_3",
+            "ROTAX_915IS_VALVE_COVER_01"
+          ],
+          "componentDetails": [
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_HEAD_01",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "Combustion chamber roof (chamber not a separate mesh).",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_01",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "Combustion chamber bore.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_PISTON_01",
+              "role": "direct",
+              "precision": "EXACT",
+              "note": "Piston crown (internal; deposits form on the chamber surfaces).",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_SPARK_PLUGS_CYL_1_3",
+              "role": "context",
+              "precision": "BANK_SHARED",
+              "note": "Ignition quality; mesh shared with cylinder 3.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_FUEL_INJECTORS_CYL_1_3",
+              "role": "context",
+              "precision": "BANK_SHARED",
+              "note": "Mixture quality; mesh shared with cylinder 3.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_VALVE_COVER_01",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "Visible cover of head 1: locator of the cylinder (no fault role of its own).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            }
+          ],
+          "telemetry": {
+            "primary": [
+              "egt_1",
+              "egt_max",
+              "knock_retard",
+              "ignition_timing_1",
+              "ignition_timing_deviation_max"
+            ],
+            "context": [
+              "ignition_timing_cmd",
+              "knock_intensity",
+              "vibration_rms_total"
+            ]
+          },
+          "telemetryStates": {},
+          "camera": {
+            "primaryTarget": "ROTAX_915IS_CYLINDER_HEAD_01",
+            "frameComponents": [
+              "ROTAX_915IS_CYLINDER_HEAD_01",
+              "ROTAX_915IS_CYLINDER_01",
+              "ROTAX_915IS_PISTON_01"
+            ],
+            "view": "BANK_SIDE_-Y (cylinders 1/3)",
+            "ghostNonInvolved": true,
+            "xray": [
+              "ROTAX_915IS_CYLINDER_01",
+              "ROTAX_915IS_CYLINDER_HEAD_01"
+            ],
+            "note": "Frame the live world-space bounds of frameComponents (they move during EXPLODE/REPACK).",
+            "viewDirectionGltf": [
+              0.6791,
+              0.7188,
+              0.1493
+            ],
+            "viewDirectionBlender": [
+              0.6791,
+              -0.1493,
+              0.7188
+            ],
+            "distanceFactor": 4.085,
+            "minDistanceM": 0.45,
+            "validatedVisibleFraction": 0.993,
+            "directionSource": "occlusion-scored in Blender against the assembled model (camera_hints.py); unit vector from target centre to camera"
+          }
+        },
+        "2": {
+          "key": "COMBUSTION_INSTABILITY#cylinder=2",
+          "cylinder": 2,
+          "directComponents": [
+            "ROTAX_915IS_CYLINDER_HEAD_02",
+            "ROTAX_915IS_CYLINDER_02",
+            "ROTAX_915IS_PISTON_02"
+          ],
+          "contextComponents": [
+            "ROTAX_915IS_SPARK_PLUGS_CYL_2_4",
+            "ROTAX_915IS_FUEL_INJECTORS_CYL_2_4",
+            "ROTAX_915IS_VALVE_COVER_02"
+          ],
+          "componentDetails": [
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_HEAD_02",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "Combustion chamber roof (chamber not a separate mesh).",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_02",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "Combustion chamber bore.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_PISTON_02",
+              "role": "direct",
+              "precision": "EXACT",
+              "note": "Piston crown (internal; deposits form on the chamber surfaces).",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_SPARK_PLUGS_CYL_2_4",
+              "role": "context",
+              "precision": "BANK_SHARED",
+              "note": "Ignition quality; mesh shared with cylinder 4.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_FUEL_INJECTORS_CYL_2_4",
+              "role": "context",
+              "precision": "BANK_SHARED",
+              "note": "Mixture quality; mesh shared with cylinder 4.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_VALVE_COVER_02",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "Visible cover of head 2: locator of the cylinder (no fault role of its own).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            }
+          ],
+          "telemetry": {
+            "primary": [
+              "egt_2",
+              "egt_max",
+              "knock_retard",
+              "ignition_timing_2",
+              "ignition_timing_deviation_max"
+            ],
+            "context": [
+              "ignition_timing_cmd",
+              "knock_intensity",
+              "vibration_rms_total"
+            ]
+          },
+          "telemetryStates": {},
+          "camera": {
+            "primaryTarget": "ROTAX_915IS_CYLINDER_HEAD_02",
+            "frameComponents": [
+              "ROTAX_915IS_CYLINDER_HEAD_02",
+              "ROTAX_915IS_CYLINDER_02",
+              "ROTAX_915IS_PISTON_02"
+            ],
+            "view": "BANK_SIDE_+Y (cylinders 2/4)",
+            "ghostNonInvolved": true,
+            "xray": [
+              "ROTAX_915IS_CYLINDER_02",
+              "ROTAX_915IS_CYLINDER_HEAD_02"
+            ],
+            "note": "Frame the live world-space bounds of frameComponents (they move during EXPLODE/REPACK).",
+            "viewDirectionGltf": [
+              0.8263,
+              0.5521,
+              -0.1112
+            ],
+            "viewDirectionBlender": [
+              0.8263,
+              0.1112,
+              0.5521
+            ],
+            "distanceFactor": 4.085,
+            "minDistanceM": 0.45,
+            "validatedVisibleFraction": 1.0,
+            "directionSource": "occlusion-scored in Blender against the assembled model (camera_hints.py); unit vector from target centre to camera"
+          }
+        },
+        "3": {
+          "key": "COMBUSTION_INSTABILITY#cylinder=3",
+          "cylinder": 3,
+          "directComponents": [
+            "ROTAX_915IS_CYLINDER_HEAD_03",
+            "ROTAX_915IS_CYLINDER_03",
+            "ROTAX_915IS_PISTON_03"
+          ],
+          "contextComponents": [
+            "ROTAX_915IS_SPARK_PLUGS_CYL_1_3",
+            "ROTAX_915IS_FUEL_INJECTORS_CYL_1_3",
+            "ROTAX_915IS_VALVE_COVER_03"
+          ],
+          "componentDetails": [
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_HEAD_03",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "Combustion chamber roof (chamber not a separate mesh).",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_03",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "Combustion chamber bore.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_PISTON_03",
+              "role": "direct",
+              "precision": "EXACT",
+              "note": "Piston crown (internal; deposits form on the chamber surfaces).",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_SPARK_PLUGS_CYL_1_3",
+              "role": "context",
+              "precision": "BANK_SHARED",
+              "note": "Ignition quality; mesh shared with cylinder 1.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_FUEL_INJECTORS_CYL_1_3",
+              "role": "context",
+              "precision": "BANK_SHARED",
+              "note": "Mixture quality; mesh shared with cylinder 1.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_VALVE_COVER_03",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "Visible cover of head 3: locator of the cylinder (no fault role of its own).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            }
+          ],
+          "telemetry": {
+            "primary": [
+              "egt_3",
+              "egt_max",
+              "knock_retard",
+              "ignition_timing_3",
+              "ignition_timing_deviation_max"
+            ],
+            "context": [
+              "ignition_timing_cmd",
+              "knock_intensity",
+              "vibration_rms_total"
+            ]
+          },
+          "telemetryStates": {},
+          "camera": {
+            "primaryTarget": "ROTAX_915IS_CYLINDER_HEAD_03",
+            "frameComponents": [
+              "ROTAX_915IS_CYLINDER_HEAD_03",
+              "ROTAX_915IS_CYLINDER_03",
+              "ROTAX_915IS_PISTON_03"
+            ],
+            "view": "BANK_SIDE_-Y (cylinders 1/3)",
+            "ghostNonInvolved": true,
+            "xray": [
+              "ROTAX_915IS_CYLINDER_03",
+              "ROTAX_915IS_CYLINDER_HEAD_03"
+            ],
+            "note": "Frame the live world-space bounds of frameComponents (they move during EXPLODE/REPACK).",
+            "viewDirectionGltf": [
+              0.144,
+              0.9896,
+              -0.0
+            ],
+            "viewDirectionBlender": [
+              0.144,
+              0.0,
+              0.9896
+            ],
+            "distanceFactor": 4.085,
+            "minDistanceM": 0.45,
+            "validatedVisibleFraction": 0.965,
+            "directionSource": "occlusion-scored in Blender against the assembled model (camera_hints.py); unit vector from target centre to camera"
+          }
+        },
+        "4": {
+          "key": "COMBUSTION_INSTABILITY#cylinder=4",
+          "cylinder": 4,
+          "directComponents": [
+            "ROTAX_915IS_CYLINDER_HEAD_04",
+            "ROTAX_915IS_CYLINDER_04",
+            "ROTAX_915IS_PISTON_04"
+          ],
+          "contextComponents": [
+            "ROTAX_915IS_SPARK_PLUGS_CYL_2_4",
+            "ROTAX_915IS_FUEL_INJECTORS_CYL_2_4",
+            "ROTAX_915IS_VALVE_COVER_04"
+          ],
+          "componentDetails": [
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_HEAD_04",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "Combustion chamber roof (chamber not a separate mesh).",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_04",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "Combustion chamber bore.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_PISTON_04",
+              "role": "direct",
+              "precision": "EXACT",
+              "note": "Piston crown (internal; deposits form on the chamber surfaces).",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_SPARK_PLUGS_CYL_2_4",
+              "role": "context",
+              "precision": "BANK_SHARED",
+              "note": "Ignition quality; mesh shared with cylinder 2.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_FUEL_INJECTORS_CYL_2_4",
+              "role": "context",
+              "precision": "BANK_SHARED",
+              "note": "Mixture quality; mesh shared with cylinder 2.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_VALVE_COVER_04",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "Visible cover of head 4: locator of the cylinder (no fault role of its own).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            }
+          ],
+          "telemetry": {
+            "primary": [
+              "egt_4",
+              "egt_max",
+              "knock_retard",
+              "ignition_timing_4",
+              "ignition_timing_deviation_max"
+            ],
+            "context": [
+              "ignition_timing_cmd",
+              "knock_intensity",
+              "vibration_rms_total"
+            ]
+          },
+          "telemetryStates": {},
+          "camera": {
+            "primaryTarget": "ROTAX_915IS_CYLINDER_HEAD_04",
+            "frameComponents": [
+              "ROTAX_915IS_CYLINDER_HEAD_04",
+              "ROTAX_915IS_CYLINDER_04",
+              "ROTAX_915IS_PISTON_04"
+            ],
+            "view": "BANK_SIDE_+Y (cylinders 2/4)",
+            "ghostNonInvolved": true,
+            "xray": [
+              "ROTAX_915IS_CYLINDER_04",
+              "ROTAX_915IS_CYLINDER_HEAD_04"
+            ],
+            "note": "Frame the live world-space bounds of frameComponents (they move during EXPLODE/REPACK).",
+            "viewDirectionGltf": [
+              -0.1829,
+              0.9688,
+              -0.1675
+            ],
+            "viewDirectionBlender": [
+              -0.1829,
+              0.1675,
+              0.9688
+            ],
+            "distanceFactor": 4.085,
+            "minDistanceM": 0.45,
+            "validatedVisibleFraction": 0.951,
+            "directionSource": "occlusion-scored in Blender against the assembled model (camera_hints.py); unit vector from target centre to camera"
+          }
+        },
+        "ALL": {
+          "key": "COMBUSTION_INSTABILITY#cylinder=ALL",
+          "cylinder": null,
+          "directComponents": [
+            "ROTAX_915IS_CYLINDER_HEAD_01",
+            "ROTAX_915IS_CYLINDER_01",
+            "ROTAX_915IS_PISTON_01",
+            "ROTAX_915IS_CYLINDER_HEAD_02",
+            "ROTAX_915IS_CYLINDER_02",
+            "ROTAX_915IS_PISTON_02",
+            "ROTAX_915IS_CYLINDER_HEAD_03",
+            "ROTAX_915IS_CYLINDER_03",
+            "ROTAX_915IS_PISTON_03",
+            "ROTAX_915IS_CYLINDER_HEAD_04",
+            "ROTAX_915IS_CYLINDER_04",
+            "ROTAX_915IS_PISTON_04"
+          ],
+          "contextComponents": [
+            "ROTAX_915IS_SPARK_PLUGS_CYL_1_3",
+            "ROTAX_915IS_FUEL_INJECTORS_CYL_1_3",
+            "ROTAX_915IS_VALVE_COVER_01",
+            "ROTAX_915IS_SPARK_PLUGS_CYL_2_4",
+            "ROTAX_915IS_FUEL_INJECTORS_CYL_2_4",
+            "ROTAX_915IS_VALVE_COVER_02",
+            "ROTAX_915IS_VALVE_COVER_03",
+            "ROTAX_915IS_VALVE_COVER_04"
+          ],
+          "componentDetails": [
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_HEAD_01",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "All cylinders (cylinder = null). host mesh.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_01",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "All cylinders (cylinder = null). host mesh.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_PISTON_01",
+              "role": "direct",
+              "precision": "EXACT",
+              "note": "All cylinders (cylinder = null). exact mesh.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_HEAD_02",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "All cylinders (cylinder = null). host mesh.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_02",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "All cylinders (cylinder = null). host mesh.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_PISTON_02",
+              "role": "direct",
+              "precision": "EXACT",
+              "note": "All cylinders (cylinder = null). exact mesh.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_HEAD_03",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "All cylinders (cylinder = null). host mesh.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_03",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "All cylinders (cylinder = null). host mesh.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_PISTON_03",
+              "role": "direct",
+              "precision": "EXACT",
+              "note": "All cylinders (cylinder = null). exact mesh.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_HEAD_04",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "All cylinders (cylinder = null). host mesh.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_04",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "All cylinders (cylinder = null). host mesh.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_PISTON_04",
+              "role": "direct",
+              "precision": "EXACT",
+              "note": "All cylinders (cylinder = null). exact mesh.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_SPARK_PLUGS_CYL_1_3",
+              "role": "context",
+              "precision": "BANK_SHARED",
+              "note": "All cylinders (cylinder = null).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_FUEL_INJECTORS_CYL_1_3",
+              "role": "context",
+              "precision": "BANK_SHARED",
+              "note": "All cylinders (cylinder = null).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_VALVE_COVER_01",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "All cylinders (cylinder = null).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_SPARK_PLUGS_CYL_2_4",
+              "role": "context",
+              "precision": "BANK_SHARED",
+              "note": "All cylinders (cylinder = null).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_FUEL_INJECTORS_CYL_2_4",
+              "role": "context",
+              "precision": "BANK_SHARED",
+              "note": "All cylinders (cylinder = null).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_VALVE_COVER_02",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "All cylinders (cylinder = null).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_VALVE_COVER_03",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "All cylinders (cylinder = null).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_VALVE_COVER_04",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "All cylinders (cylinder = null).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            }
+          ],
+          "telemetry": {
+            "primary": [
+              "egt_1",
+              "egt_max",
+              "knock_retard",
+              "ignition_timing_1",
+              "ignition_timing_deviation_max",
+              "egt_2",
+              "ignition_timing_2",
+              "egt_3",
+              "ignition_timing_3",
+              "egt_4",
+              "ignition_timing_4"
+            ],
+            "context": [
+              "ignition_timing_cmd",
+              "knock_intensity",
+              "vibration_rms_total"
+            ]
+          },
+          "telemetryStates": {},
+          "camera": {
+            "primaryTarget": null,
+            "frameComponents": [
+              "ROTAX_915IS_CYLINDER_HEAD_01",
+              "ROTAX_915IS_CYLINDER_01",
+              "ROTAX_915IS_PISTON_01",
+              "ROTAX_915IS_CYLINDER_HEAD_02",
+              "ROTAX_915IS_CYLINDER_02",
+              "ROTAX_915IS_PISTON_02",
+              "ROTAX_915IS_CYLINDER_HEAD_03",
+              "ROTAX_915IS_CYLINDER_03",
+              "ROTAX_915IS_PISTON_03",
+              "ROTAX_915IS_CYLINDER_HEAD_04",
+              "ROTAX_915IS_CYLINDER_04",
+              "ROTAX_915IS_PISTON_04"
+            ],
+            "view": "TOP_FRONT",
+            "ghostNonInvolved": true,
+            "xray": [
+              "ROTAX_915IS_CYLINDER_01",
+              "ROTAX_915IS_CYLINDER_02",
+              "ROTAX_915IS_CYLINDER_03",
+              "ROTAX_915IS_CYLINDER_04",
+              "ROTAX_915IS_CYLINDER_HEAD_01",
+              "ROTAX_915IS_CYLINDER_HEAD_02",
+              "ROTAX_915IS_CYLINDER_HEAD_03",
+              "ROTAX_915IS_CYLINDER_HEAD_04"
+            ],
+            "note": "Frame the live world-space bounds of frameComponents (they move during EXPLODE/REPACK).",
+            "viewDirectionGltf": [
+              0.6791,
+              0.7188,
+              0.1493
+            ],
+            "viewDirectionBlender": [
+              0.6791,
+              -0.1493,
+              0.7188
+            ],
+            "distanceFactor": 4.085,
+            "minDistanceM": 0.45,
+            "validatedVisibleFraction": 0.957,
+            "directionSource": "occlusion-scored in Blender against the assembled model (camera_hints.py); unit vector from target centre to camera"
+          }
+        }
+      },
+      "nullCylinder": {
+        "resolvesTo": "ALL",
+        "basis": "InjectedFault.cylinder: None = affects all cylinders"
+      }
+    },
+    "OVERHEATING_TREND": {
+      "faultId": "OVERHEATING_TREND",
+      "scope": "ENGINE",
+      "parameter": null,
+      "defaultAlertLevel": "YELLOW",
+      "animation": "NONE",
+      "resolved": {
+        "ENGINE": {
+          "key": "OVERHEATING_TREND",
+          "directComponents": [
+            "ROTAX_915IS_AIR_BAFFLES",
+            "ROTAX_915IS_CYLINDER_01",
+            "ROTAX_915IS_CYLINDER_02",
+            "ROTAX_915IS_CYLINDER_03",
+            "ROTAX_915IS_CYLINDER_04"
+          ],
+          "contextComponents": [
+            "ROTAX_915IS_CYLINDER_HEAD_01",
+            "ROTAX_915IS_CYLINDER_HEAD_02",
+            "ROTAX_915IS_CYLINDER_HEAD_03",
+            "ROTAX_915IS_CYLINDER_HEAD_04",
+            "ROTAX_915IS_COOLANT_HOSES",
+            "ROTAX_915IS_COOLANT_EXPANSION_TANK",
+            "ROTAX_915IS_SENSOR_COOLANT_TEMP"
+          ],
+          "componentDetails": [
+            {
+              "componentId": "ROTAX_915IS_AIR_BAFFLES",
+              "role": "direct",
+              "precision": "EXACT",
+              "note": "Cooling air baffle (OM p66) - the modelled part of the cooling-air path.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_01",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "Ram-air-cooled finned barrel (heat rejection to air).",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_02",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "Ram-air-cooled finned barrel (heat rejection to air).",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_03",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "Ram-air-cooled finned barrel (heat rejection to air).",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_04",
+              "role": "direct",
+              "precision": "HOST",
+              "note": "Ram-air-cooled finned barrel (heat rejection to air).",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_HEAD_01",
+              "role": "context",
+              "precision": "HOST",
+              "note": "Thermal region: CHT rises with the whole loop.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_HEAD_02",
+              "role": "context",
+              "precision": "HOST",
+              "note": "Thermal region: CHT rises with the whole loop.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_HEAD_03",
+              "role": "context",
+              "precision": "HOST",
+              "note": "Thermal region: CHT rises with the whole loop.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_CYLINDER_HEAD_04",
+              "role": "context",
+              "precision": "HOST",
+              "note": "Thermal region: CHT rises with the whole loop.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_COOLANT_HOSES",
+              "role": "context",
+              "precision": "ENGINE_SHARED",
+              "note": "Coolant loop rises together with CHT.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_COOLANT_EXPANSION_TANK",
+              "role": "context",
+              "precision": "EXACT",
+              "note": "Coolant loop reservoir.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_SENSOR_COOLANT_TEMP",
+              "role": "context",
+              "precision": "INSTRUMENT",
+              "note": "coolant_temperature - the certified limit (CLNT_HIGH / CLNT_CRIT).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            }
+          ],
+          "telemetry": {
+            "primary": [
+              "coolant_temperature",
+              "cht_max",
+              "cht_1",
+              "cht_2",
+              "cht_3",
+              "cht_4"
+            ],
+            "context": []
+          },
+          "telemetryStates": {},
+          "camera": {
+            "primaryTarget": "ROTAX_915IS_AIR_BAFFLES",
+            "frameComponents": [
+              "ROTAX_915IS_AIR_BAFFLES",
+              "ROTAX_915IS_CYLINDER_01",
+              "ROTAX_915IS_CYLINDER_02",
+              "ROTAX_915IS_CYLINDER_03",
+              "ROTAX_915IS_CYLINDER_04"
+            ],
+            "view": "TOP_FRONT",
+            "ghostNonInvolved": false,
+            "xray": [],
+            "note": "Frame the live world-space bounds of frameComponents (they move during EXPLODE/REPACK).",
+            "viewDirectionGltf": [
+              0.8263,
+              0.5521,
+              -0.1112
+            ],
+            "viewDirectionBlender": [
+              0.8263,
+              0.1112,
+              0.5521
+            ],
+            "distanceFactor": 4.085,
+            "minDistanceM": 0.45,
+            "validatedVisibleFraction": 0.579,
+            "directionSource": "occlusion-scored in Blender against the assembled model (camera_hints.py); unit vector from target centre to camera"
+          }
+        }
+      }
+    },
+    "ABNORMAL_VIBRATION": {
+      "faultId": "ABNORMAL_VIBRATION",
+      "scope": "ENGINE",
+      "parameter": null,
+      "defaultAlertLevel": "YELLOW",
+      "animation": "MICRO_JITTER_LOCAL",
+      "resolved": {
+        "ENGINE": {
+          "key": "ABNORMAL_VIBRATION",
+          "directComponents": [
+            "ROTAX_915IS_CRANKSHAFT"
+          ],
+          "contextComponents": [
+            "ROTAX_915IS_CRANKCASE_HALF_CYL_1_3",
+            "ROTAX_915IS_CRANKCASE_HALF_CYL_2_4",
+            "ROTAX_915IS_GEARBOX"
+          ],
+          "componentDetails": [
+            {
+              "componentId": "ROTAX_915IS_CRANKSHAFT",
+              "role": "direct",
+              "precision": "APPROXIMATE",
+              "note": "Rotating assembly carrying the modelled engine-speed bearing orders; no bearing mesh exists.",
+              "renderState": "HIGHLIGHT_WARNING"
+            },
+            {
+              "componentId": "ROTAX_915IS_CRANKCASE_HALF_CYL_1_3",
+              "role": "context",
+              "precision": "HOST",
+              "note": "Bearing housings.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_CRANKCASE_HALF_CYL_2_4",
+              "role": "context",
+              "precision": "HOST",
+              "note": "Bearing housings.",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            },
+            {
+              "componentId": "ROTAX_915IS_GEARBOX",
+              "role": "context",
+              "precision": "APPROXIMATE",
+              "note": "Gear-mesh amplitude rises with bearing wear (no independent gearbox factor).",
+              "renderState": "HIGHLIGHT_CONTEXT"
+            }
+          ],
+          "telemetry": {
+            "primary": [
+              "vibration_rms_total",
+              "vibration_kurtosis",
+              "vibration_rms_x",
+              "vibration_rms_y",
+              "vibration_rms_z"
+            ],
+            "context": []
+          },
+          "telemetryStates": {},
+          "camera": {
+            "primaryTarget": "ROTAX_915IS_CRANKSHAFT",
+            "frameComponents": [
+              "ROTAX_915IS_CRANKSHAFT"
+            ],
+            "view": "SIDE",
+            "ghostNonInvolved": true,
+            "xray": [
+              "ROTAX_915IS_CRANKCASE_HALF_CYL_1_3",
+              "ROTAX_915IS_CRANKCASE_HALF_CYL_2_4"
+            ],
+            "note": "Frame the live world-space bounds of frameComponents (they move during EXPLODE/REPACK).",
+            "viewDirectionGltf": [
+              -0.2474,
+              0.8438,
+              0.4763
+            ],
+            "viewDirectionBlender": [
+              -0.2474,
+              -0.4763,
+              0.8438
+            ],
+            "distanceFactor": 4.085,
+            "minDistanceM": 0.45,
+            "validatedVisibleFraction": 1.0,
+            "directionSource": "occlusion-scored in Blender against the assembled model (camera_hints.py); unit vector from target centre to camera"
+          }
+        }
+      }
+    }
+  },
+  "cameraConvention": "camera.position = centre(frameComponents live bounds) + viewDirectionGltf * max(radius * distanceFactor, minDistanceM); look at the centre; vertical FOV about 23 deg (50 mm on a 36 mm sensor, 16:9). viewDirectionGltf is in glTF/three.js world space (+Y up).",
+  "summary": {
+    "injectableFaults": 8,
+    "perCylinderMappings": 12,
+    "allCylinderMappings": 2,
+    "engineLevelMappings": 4,
+    "instrumentLevelMappings": 8,
+    "instrumentMappingsWithGeometry": 5,
+    "instrumentMappingsTelemetryOnly": 3
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "dataset": "NGAFID 2days",
+  "protocol": "published 5-fold, class 1 = before maintenance, ROC-AUC/PR-AUC",
+  "seed": 0,
+  "results": [
+    {
+      "issue": "intake gasket leak/damage",
+      "flights": 4310,
+      "positives": 2098,
+      "backend": "catboost",
+      "roc_auc_mean": 0.7716,
+      "roc_auc_sd": 0.0231,
+      "roc_auc_folds": [
+        0.7611,
+        0.7369,
+        0.7816,
+        0.7713,
+        0.8071
+      ],
+      "pr_auc_mean": 0.7651,
+      "published_conv_mhsa": 0.826
+    },
+    {
+      "issue": "rocker cover leak/loose/damage",
+      "flights": 2260,
+      "positives": 1024,
+      "backend": "catboost",
+      "roc_auc_mean": 0.7636,
+      "roc_auc_sd": 0.0091,
+      "roc_auc_folds": [
+        0.752,
+        0.7695,
+        0.7759,
+        0.7664,
+        0.7542
+      ],
+      "pr_auc_mean": 0.7286,
+      "published_conv_mhsa": 0.775
+    }
+  ]
+}

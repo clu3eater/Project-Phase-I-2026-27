@@ -1,0 +1,147 @@
+# ---------------------------------------------------------------------------
+# REFERENCE MALE-CLASS AIRFRAME — the numbers a route simulation needs that
+# are NOT engine properties.
+#
+# WHY THIS FILE EXISTS SEPARATELY FROM THE ENGINE
+# -----------------------------------------------
+# This system models an engine. An engine has a type certificate, a data sheet
+# and an operators manual, and every number in configs/engines/ is traceable to
+# one of them.
+#
+# A flight is not an engine. To turn a route into a flight you need a mass, a
+# propeller efficiency and a descent rate, and none of those is a property of
+# the Rotax 915 iS. Burying them in code would make them look like engine data.
+# They are here instead, tagged, so that anyone reading an answer can see
+# exactly which parts of it are measured engine behaviour and which parts are
+# an assumption about the aircraft the engine is bolted to.
+#
+# WHAT IS NOT CLAIMED HERE
+# ------------------------
+# configs/engines/rotax_915is.yaml says, about its own platform list:
+#
+#     "Platform list is deliberately generic. Do not claim a specific DRDO or
+#      foreign MALE UAV uses this engine without a citation."
+#
+# The same rule applies to this file and is the reason it is called
+# "male_uav_reference" and not the name of an aircraft. These are
+# representative figures for the CLASS of aircraft a 141 hp turbocharged
+# piston engine propels. They are not a description of any particular
+# airframe, and nothing here should be quoted as one.
+#
+# WHAT THE ANSWERS ACTUALLY DEPEND ON
+# -----------------------------------
+# Only the timeline depends on this file. Specifically:
+#
+#   mass_kg and prop_efficiency  ->  rate of climb, and therefore how long the
+#                                    climb takes and where on the map it ends
+#   descent_fpm, takeoff_s, landing_s, reserve_minutes  ->  the shape and the
+#                                    reserve check
+#
+# The numbers that make this system worth having do NOT depend on it:
+#
+#   power available at altitude, power required, excess power, the practical
+#   ceiling, every temperature and pressure, fuel flow, wear and the limiting
+#   component are all measured from the engine model and the type certificate,
+#   with no airframe input at all.
+#
+# PROVENANCE TAGS, same convention as configs/engines/
+#   [MOD]  MODELLED. Not published for any specific aircraft. Chosen as a
+#          representative figure for the class and stated so it can be changed.
+#   [STD]  A standard engineering figure, not specific to any aircraft.
+#   [REG]  An operating rule rather than a physical property.
+# ---------------------------------------------------------------------------
+
+name: "Reference MALE-class airframe"
+key: male_uav_reference
+note: >-
+  Representative figures for the class of unmanned aircraft a 141 hp
+  turbocharged piston engine propels. NOT a description of any specific
+  aircraft, DRDO or foreign. Change these to match the airframe actually
+  being planned; the engine answers beside them do not move when you do.
+
+mass:
+  # All-up mass at the point in the sortie being flown. The climb rate is
+  # inversely proportional to this and to nothing else in the file, so it is
+  # the one number worth arguing about.
+  #
+  # 650 kg is the middle of the 600-750 kg band typical of unmanned aircraft in
+  # this power class. It is MODELLED, not quoted: no manufacturer publishes a
+  # mass for "the aircraft a 915 iS goes on", because that is not a thing.
+  all_up_kg: 650.0                   # [MOD]
+
+propeller:
+  # Shaft power that reaches the air as thrust power. 0.80 is the standard
+  # cruise figure for a well-matched constant-speed propeller; a fixed-pitch
+  # installation is lower away from its design point. Used only in the climb
+  # rate, where it multiplies the excess power.
+  efficiency: 0.80                   # [STD]
+
+climb:
+  # BOUNDS on a COMPUTED rate, not the rate itself.
+  #
+  # The rate of climb is computed from the excess power the engine actually
+  # has at that altitude -- which is why it falls as the aircraft climbs, falls
+  # further on a hot day, and falls further still as the turbocharger wears.
+  # That computation is the point of this feature and these two numbers do not
+  # replace it.
+  #
+  # max_fpm stops the arithmetic producing an unrealistically steep climb near
+  # sea level, where excess power is largest and the airframe, not the engine,
+  # is the limit. min_fpm is the rate below which an operator would not call it
+  # a climb: the aircraft is mushing, and the altitude is effectively its
+  # ceiling. Reaching min_fpm is what this simulation reports as "cannot climb
+  # any higher today".
+  max_fpm: 900.0                     # [MOD]
+  min_fpm: 100.0                     # [MOD]
+  # Throttle held in the climb. Below max continuous: a climb is minutes long
+  # and the take-off rating is a five-minute limit [TCDS].
+  throttle_pct: 95.0                 # [MOD]
+
+descent:
+  # Descent is not power-limited -- an aircraft descends by reducing power --
+  # so unlike the climb this is an operational choice and not a computation.
+  fpm: 800.0                         # [MOD]
+  throttle_pct: 35.0                 # [MOD]
+
+start:
+  # STARTING THE ENGINE, WHICH THE SORTIE ACTUALLY BEGINS WITH.
+  #
+  # The simulation starts from a stopped, cold engine on the starter and lets
+  # it catch on its own dynamics -- the rpm, oil pressure and temperatures that
+  # come out of the start are computed, not scripted. These three numbers say
+  # how long the starter is engaged for, what lever position it is started and
+  # idled at, and how long to wait for the oil before giving up.
+  duration_s: 20.0                   # [MOD] starter engaged, catch and settle
+  # Idle lever. The engine finds its OWN idle speed from here -- measured at
+  # about 1,905 rpm, against the 1,800 rpm minimum idle the manual gives -- so
+  # this is a throttle position and not a speed being asserted.
+  idle_throttle_pct: 18.0            # [MOD]
+  # A CUT-OFF, NOT A DURATION. The warm-up runs until the oil reaches the
+  # minimum temperature the operators manual requires before take-off
+  # (configs/thresholds.yaml: oil_temperature.takeoff_min, 50 degC [OM s2.1]),
+  # which on a cold morning takes longer than on a hot afternoon -- as it does
+  # on the aircraft. This only bounds how long the simulation will wait before
+  # reporting that the oil never got there.
+  warmup_max_s: 900.0                # [MOD]
+
+takeoff:
+  # Ground roll plus initial climb to the screen height, at the take-off
+  # rating. The five-minute take-off power limit [TCDS] is not approached.
+  duration_s: 150.0                  # [MOD]
+  throttle_pct: 100.0                # [MOD]
+  # Height above the departure field at which the take-off phase ends and the
+  # en-route climb begins.
+  screen_ft: 1000.0                  # [MOD]
+
+landing:
+  duration_s: 240.0                  # [MOD]
+  throttle_pct: 25.0                 # [MOD]
+
+reserve:
+  # Fuel an operator will not plan to land below, expressed as minutes at the
+  # sortie's own measured burn rather than as a fixed number of litres -- a
+  # reserve is a duration, and a litre buys less of it on a thirsty day.
+  #
+  # 45 minutes is the usual piston figure and is the conservative one; the
+  # turbine equivalent is 30.
+  minutes: 45.0                      # [REG]

@@ -1,0 +1,15 @@
+{
+  "rows": 832,
+  "cols": 832,
+  "lon_min": 64.6875,
+  "lon_max": 101.25,
+  "lat_max": 38.82259097617712,
+  "lat_min": 5.61598581915534,
+  "zoom": 7,
+  "downsample": 4,
+  "dtype": "int16-le",
+  "units": "metres",
+  "pooling": "maximum",
+  "source": "AWS Terrain Tiles (open data), terrarium encoding",
+  "note": "downsampled by MAXIMUM so terrain clearance errs on the safe side: a peak inside a cell is never averaged away"
+}

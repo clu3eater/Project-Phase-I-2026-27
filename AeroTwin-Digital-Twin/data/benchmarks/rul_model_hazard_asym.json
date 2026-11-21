@@ -1,0 +1,29 @@
+{
+  "fleet": "data\\synthetic_hazard",
+  "seed": 0,
+  "epochs": 60,
+  "best_estimator": "LSTM (data-driven)",
+  "windows": 4125,
+  "target_sigma": 139.64214156898854,
+  "metrics": {
+    "alpha-lambda": 0.562,
+    "relative accuracy": 0.649,
+    "RMSE / sigma": 0.6835,
+    "NASA score": 49272.2729,
+    "late fraction": 0.3217
+  },
+  "prognostic": {
+    "engines": 16.0,
+    "scored_engines": 16.0,
+    "alpha": 0.2,
+    "lambda": 0.5,
+    "min_bound_h": 10.0,
+    "prognostic_horizon_h": 0.0,
+    "prognostic_horizon_frac": 0.0,
+    "alpha_lambda": 0.562,
+    "relative_accuracy": 0.649,
+    "convergence": 305.59,
+    "late_fraction": 0.322,
+    "skipped": []
+  }
+}

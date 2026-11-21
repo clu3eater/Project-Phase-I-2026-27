@@ -1,0 +1,221 @@
+# Continuous integration -- DRDO / IDEX PS 26054.
+#
+# WHY THIS FILE EXISTS
+# --------------------
+# It did not, and that is how a broken container reached the repository.
+# `.github/workflows/` was an empty directory: 508 tests, a display-standard
+# checker, a traceability matrix and a licence audit all existed, and nothing
+# ran any of them automatically.
+#
+# The `container` job below is the one that matters most. The image had NEVER
+# been able to start -- the Dockerfile installed the core dependencies only,
+# so `layer4_core.twin_api` died on `ModuleNotFoundError: No module named
+# 'jwt'` before reaching main(). A job that builds the image and waits for the
+# pipeline to report ticks would have caught that the day it was written.
+#
+# Jobs are ordered cheapest-first so an obvious failure reports in a minute
+# rather than twenty.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    # The full suite, including the slow live-pipeline tests, once a night.
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+
+env:
+  PYTHON_VERSION: "3.12"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # -------------------------------------------------------------------------
+  lint:
+    name: Lint and types
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[security,reports,edge,fleet,dev]"
+      # ADVISORY, NOT BLOCKING, AND THAT IS RECORDED RATHER THAN HIDDEN.
+      # The tree has never been ruff-clean: 333 findings on the first run
+      # (100 in the shipped packages, 233 in scripts/), all pre-dating CI.
+      # Turning the check off, or narrowing it until it passes, would make a
+      # red light green by removing the light. It runs, it reports, and
+      # clearing the debt is tracked work -- at which point `continue-on-error`
+      # comes off and it starts blocking.
+      - name: ruff
+        run: ruff check . --output-format=concise
+        continue-on-error: true
+      - name: mypy
+        run: mypy common layer1_edge layer2_physics layer3_ai layer4_core
+        continue-on-error: true   # advisory until the tree is fully annotated
+
+  # -------------------------------------------------------------------------
+  audit:
+    name: Compliance and licence audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[security,reports,edge,fleet,dev]"
+      # Each of these already exits non-zero on a finding, so CI needs no
+      # extra logic -- it just has to run them, which is what was missing.
+      - name: Display standard (MIL-STD-1472H / 411F)
+        run: python scripts/hmi_check.py
+      - name: Problem-statement traceability
+        run: python scripts/ps_compliance.py
+      - name: Licence audit (indigenisation claim, docs/INDIGENISATION.md)
+        run: python scripts/licence_audit.py
+
+  # -------------------------------------------------------------------------
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[security,reports,edge,fleet,dev]"
+      # On push and PR run everything except the live-pipeline tests, which
+      # drive the real loop for seconds at a time. The nightly schedule runs
+      # the lot, including those.
+      - name: Fast suite
+        if: github.event_name != 'schedule'
+        run: pytest -q -m "not slow"
+      - name: Full suite
+        if: github.event_name == 'schedule'
+        run: pytest -q
+
+  # -------------------------------------------------------------------------
+  # THE SAME TESTS WITH THE TRAINED NETWORKS LOADED.
+  #
+  # The job above installs what `run.py` installs by default -- no torch -- so
+  # the RUL network is never served, the engine's residual reference is never
+  # fed, and every build offset stays 0. `run.py --full`, and any deployment
+  # that serves the network, run a different twin: one that learns each
+  # engine's build offset in its first level flight. Two tests passed above
+  # and failed there (test_twin_compare: a fault injected before the engine's
+  # reference was learned became its reference), and nothing ran them there.
+  #
+  # checkout does not fetch LFS content, and a 130-byte pointer where
+  # rul_lstm.pt should be means the network is not served, torch or not -- so
+  # the trained models (about 17 MB) are pulled explicitly, and nothing else,
+  # and the job refuses to go on unless the network really loads. torch comes
+  # from the CPU index: the default Linux wheel brings the CUDA stack,
+  # gigabytes for a runner with no GPU.
+  test-ml:
+    name: Tests with the trained networks (torch)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch the trained models from Git LFS
+        run: git lfs pull --include="data/models/**"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -e ".[security,reports,edge,fleet,dev,ml]"
+      - name: The RUL network is actually served
+        run: python -c "from layer3_ai.rul_serving import LstmRulServer as S; s = S(); assert s.available, s.unavailable_reason; print('RUL network served')"
+      - name: Fast suite
+        if: github.event_name != 'schedule'
+        run: pytest -q -m "not slow"
+      - name: Full suite
+        if: github.event_name == 'schedule'
+        run: pytest -q
+
+  # -------------------------------------------------------------------------
+  container:
+    name: Container builds and actually starts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image
+        run: docker build -t dt-uav-engine:ci .
+
+      # Building is not the test. The image built perfectly well before this
+      # job existed and still could not run, because the failure was a missing
+      # OPTIONAL dependency that only surfaces at import time.
+      - name: Start container
+        run: |
+          docker run -d --name dt-ci -p 8000:8000 dt-uav-engine:ci
+          sleep 5
+          docker logs dt-ci
+
+      # Readiness is the pipeline reporting advancing ticks, not the port
+      # opening -- the port opens a second or two before the engine runs.
+      - name: Wait for the pipeline to produce ticks
+        run: |
+          for i in $(seq 1 60); do
+            if curl -sf http://127.0.0.1:8000/api/healthz | grep -q '"ok":true'; then
+              echo "healthy after ${i}s"
+              curl -s http://127.0.0.1:8000/api/healthz
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "::error::container never reported a running pipeline"
+          docker logs dt-ci
+          exit 1
+
+      - name: Ticks must keep advancing, not merely be non-zero
+        run: |
+          A=$(curl -s http://127.0.0.1:8000/api/healthz | python -c "import sys,json; print(json.load(sys.stdin)['ticks'])")
+          sleep 6
+          B=$(curl -s http://127.0.0.1:8000/api/healthz | python -c "import sys,json; print(json.load(sys.stdin)['ticks'])")
+          echo "ticks $A -> $B"
+          if [ "$B" -le "$A" ]; then
+            echo "::error::the twin stopped ticking (DEV-149 class regression)"
+            docker logs dt-ci
+            exit 1
+          fi
+
+      # The physics needs data/physics/*.json on every tick. .dockerignore
+      # used to exclude all of data/, so the image shipped without them.
+      - name: Flame lookup present in the image
+        run: docker exec dt-ci python -c "import pathlib,sys; p=pathlib.Path('/app/data/physics/flame_rotax_915is.json'); sys.exit(0 if p.is_file() else 1)"
+
+      - name: Container does not run as root
+        run: |
+          U=$(docker exec dt-ci id -un)
+          echo "container user: $U"
+          [ "$U" != "root" ] || { echo "::error::container runs as root"; exit 1; }
+
+      - name: Console was built into the image
+        run: |
+          code=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:8000/)
+          echo "root URL returned $code"
+          [ "$code" = "200" ] || { echo "::error::console missing"; exit 1; }
+
+      - name: Teardown
+        if: always()
+        run: docker rm -f dt-ci || true

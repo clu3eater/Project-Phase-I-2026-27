@@ -1,0 +1,2064 @@
+{
+  "schema": "rotax915is.fault_registry",
+  "version": "1.0.0",
+  "generated": "2026-09-16",
+  "model": {
+    "file": "ROTAX_915IS_DIGITAL_TWIN_FAULT_READY.glb",
+    "baseModel": "ROTAX_915IS_DIGITAL_TWIN_WEB_OPTIMIZED.glb",
+    "units": "metres",
+    "upAxis": "+Y (glTF)",
+    "triangles": 612787,
+    "meshNodes": 72,
+    "primitives": 240
+  },
+  "sources": {
+    "faultRegister": {
+      "title": "ASTRA Hardware Fault Register",
+      "subtitle": "DRDO / iDEX PS 26054 - Reference engine Rotax 915 iS - read from the code, 16 Sep 2026",
+      "file": "Desktop/ASTRA Hardware Fault Register.html (content in ASTRA Hardware Fault Register_files/saved_resource.html)",
+      "role": "Source of truth for the fault taxonomy, wording, mechanisms, signatures and rule lists."
+    },
+    "codeCrossCheck": {
+      "checkout": "Desktop/ASTRA-main (1)/ASTRA-main",
+      "files": [
+        "layer2_physics/degradation.py (FaultMode, Pathway, _FAULT_ACCELERATION, FAULT_RAMP_HOURS)",
+        "layer2_physics/engine_sim.py (DRIFTABLE_CHANNELS, instrument set)",
+        "layer1_edge/can_ingest.py (ValueState, ingest channel names, derived quantities)",
+        "layer1_edge/edge_rules.py (37 rule ids, AlertLevel, AlertCategory, rule parameters, fault tags)",
+        "layer1_edge/can_simulator.py (cht_max / egt_max are the max of the per-cylinder readings)"
+      ],
+      "role": "Used only to obtain exact identifiers (enum values, channel names, rule ids and levels) for things the register names by function. Where code and register differ, the register wins and the difference is recorded."
+    },
+    "engineDocumentation": {
+      "title": "BRP-Rotax Operators Manual 915 i A Series Ed.0 Rev.1",
+      "role": "Component identification and cylinder numbering (already stored in the GLB node extras). p66: liquid cooled cylinder heads, ram air cooled cylinders, cooling air baffle; p69: radiator installed below the engine (airframe side)."
+    }
+  },
+  "categories": {
+    "INJECTABLE_FAULT_MODE": "The 8 FaultMode values the simulator can inject and the detectors must catch (this file).",
+    "WEAR_PATHWAY": "Slow degradation present on every engine from hour one (wear_registry.json). Not an acute fault.",
+    "SENSOR_DRIFT": "The instrument-layer fault mode (FaultMode.SENSOR_DRIFT); the engine stays healthy.",
+    "VALUE_STATE": "Per-channel data quality carried to the HMI (valueStates below).",
+    "UNMODELLED_HARDWARE_FAULT": "Real-world faults the simulator does not model or inject (unsupported_faults.json). Must never be shown as an AI-detected simulated fault."
+  },
+  "alertLevels": [
+    {
+      "level": "GREEN",
+      "rank": 1,
+      "category": "NORMAL"
+    },
+    {
+      "level": "BLUE",
+      "rank": 2,
+      "category": "ADVISORY"
+    },
+    {
+      "level": "YELLOW",
+      "rank": 3,
+      "category": "CAUTION"
+    },
+    {
+      "level": "ORANGE",
+      "rank": 4,
+      "category": "CAUTION"
+    },
+    {
+      "level": "RED",
+      "rank": 5,
+      "category": "WARNING"
+    }
+  ],
+  "alertLevelsSource": "edge_rules.py AlertLevel / AlertCategory (MIL-STD-411F mapping)",
+  "valueStates": [
+    {
+      "state": "VALID",
+      "meaning": "Decoded, in range, fresh.",
+      "raises": null
+    },
+    {
+      "state": "STALE",
+      "meaning": "No update within the expected interval.",
+      "raises": "ORANGE DATA_STALE"
+    },
+    {
+      "state": "INVALID",
+      "meaning": "Failed a plausibility check or the transmitter said so.",
+      "raises": "YELLOW SENSOR_FAULT"
+    },
+    {
+      "state": "MISSING",
+      "meaning": "Never received on this bus.",
+      "raises": null
+    },
+    {
+      "state": "SUSPECT",
+      "meaning": "Plausible, but the redundant lane disagrees.",
+      "raises": "YELLOW SENSOR_FAULT"
+    }
+  ],
+  "valueStateRule": "An invalid reading is removed, never replaced; the console renders a removed value as '———' (PRD Part 4 §7.2).",
+  "dataPathBehaviours": [
+    {
+      "failure": "Ground link drops",
+      "system": "Edge node keeps acquiring, detecting and alerting; 72 h of telemetry buffered to SQLite (WAL).",
+      "operator": "Nothing changes onboard; offline alerts keep original timestamps."
+    },
+    {
+      "failure": "Link returns",
+      "system": "Buffered frames upload oldest-first.",
+      "operator": "Explicit back-fill notice naming the time span."
+    },
+    {
+      "failure": "Edge node loses power",
+      "system": "WAL-mode SQLite survives; buffer resumes on restart.",
+      "operator": "A gap in the flight history rather than fabricated continuity."
+    },
+    {
+      "failure": "Telemetry stops at the receiver",
+      "system": "Channels age past their interval and go STALE.",
+      "operator": "ORANGE TELEMETRY STALE - 'Values shown are not current.'"
+    },
+    {
+      "failure": "Frames corrupted or undecodable",
+      "system": "Counted as decode errors and dropped.",
+      "operator": "Affected channels go STALE on the next interval; the counter climbs."
+    }
+  ],
+  "faultVisualStates": [
+    {
+      "state": "HEALTHY",
+      "meaning": "No active fault for this faultId.",
+      "direct": "NORMAL",
+      "context": "NORMAL",
+      "telemetry": "VALID"
+    },
+    {
+      "state": "WARNING",
+      "meaning": "Fault active, annunciated at YELLOW or ORANGE.",
+      "direct": "HIGHLIGHT_WARNING",
+      "context": "HIGHLIGHT_CONTEXT"
+    },
+    {
+      "state": "CRITICAL",
+      "meaning": "Fault active, annunciated at RED.",
+      "direct": "HIGHLIGHT_CRITICAL",
+      "context": "HIGHLIGHT_CONTEXT"
+    },
+    {
+      "state": "RECOVERING",
+      "meaning": "Fault cleared; transient fade-out only.",
+      "direct": "HIGHLIGHT_RECOVERING",
+      "context": "NORMAL"
+    },
+    {
+      "state": "SUSPECT",
+      "meaning": "Instrument disagreement (lane vote or shadow residual). Used by SENSOR_DRIFT only.",
+      "direct": "HIGHLIGHT_SUSPECT",
+      "context": "NORMAL",
+      "telemetry": "SUSPECT"
+    },
+    {
+      "state": "INVALID",
+      "meaning": "Instrument value removed by range / rate / service-code checks. Used by SENSOR_DRIFT and data-path handling.",
+      "direct": "HIGHLIGHT_INVALID",
+      "context": "NORMAL",
+      "telemetry": "INVALID"
+    },
+    {
+      "state": "STALE",
+      "meaning": "Telemetry not current (DATA_STALE). A data-path state: never highlights engine hardware.",
+      "direct": null,
+      "context": null,
+      "telemetry": "STALE"
+    }
+  ],
+  "alertLevelToFaultVisualState": {
+    "GREEN": "HEALTHY",
+    "BLUE": "WARNING",
+    "YELLOW": "WARNING",
+    "ORANGE": "WARNING",
+    "RED": "CRITICAL"
+  },
+  "componentRenderStates": [
+    {
+      "state": "NORMAL",
+      "precedence": 0,
+      "material": "original",
+      "emissive": null,
+      "emissiveIntensity": 0.0,
+      "baseColorTint": 0.0,
+      "pulse": null,
+      "use": "No fault involvement. Always the default."
+    },
+    {
+      "state": "HIGHLIGHT_CONTEXT",
+      "precedence": 1,
+      "material": "original tinted + emissive",
+      "emissive": "#C9D6E6",
+      "emissiveIntensity": 0.25,
+      "baseColorTint": 0.35,
+      "pulse": null,
+      "use": "Secondary/context component of an active fault. Deliberately faint so context never reads as failed hardware."
+    },
+    {
+      "state": "HIGHLIGHT_RECOVERING",
+      "precedence": 2,
+      "material": "original tinted + emissive",
+      "emissive": "#34C759",
+      "emissiveIntensity": 0.45,
+      "baseColorTint": 0.5,
+      "pulse": null,
+      "decaySeconds": 3.0,
+      "use": "Direct component of a fault that has just cleared; fades to NORMAL."
+    },
+    {
+      "state": "HIGHLIGHT_INVALID",
+      "precedence": 3,
+      "material": "original tinted + emissive",
+      "emissive": "#D9DEE5",
+      "emissiveIntensity": 0.45,
+      "baseColorTint": 0.55,
+      "pulse": null,
+      "use": "Instrument whose channel is INVALID (range, rate or service-code failure). Data-quality state, not mechanical damage."
+    },
+    {
+      "state": "HIGHLIGHT_SUSPECT",
+      "precedence": 4,
+      "material": "original tinted + emissive",
+      "emissive": "#B57CFF",
+      "emissiveIntensity": 0.7,
+      "baseColorTint": 0.6,
+      "pulse": {
+        "hz": 0.5,
+        "amplitude": 0.2
+      },
+      "use": "Instrument whose channel is SUSPECT (lane disagreement / residual). Data-quality state."
+    },
+    {
+      "state": "HIGHLIGHT_WARNING",
+      "precedence": 5,
+      "material": "original tinted + emissive",
+      "emissive": "#FFB000",
+      "baseColorTint": 0.65,
+      "emissiveIntensity": {
+        "YELLOW": 0.55,
+        "ORANGE": 0.85
+      },
+      "pulse": {
+        "hz": 0.8,
+        "amplitude": 0.25
+      },
+      "use": "Direct component of a fault annunciated at YELLOW or ORANGE (MIL-STD-411F caution)."
+    },
+    {
+      "state": "HIGHLIGHT_CRITICAL",
+      "precedence": 6,
+      "material": "original tinted + emissive",
+      "emissive": "#FF3B30",
+      "emissiveIntensity": 1.1,
+      "baseColorTint": 0.7,
+      "pulse": {
+        "hz": 1.6,
+        "amplitude": 0.35
+      },
+      "use": "Direct component of a fault annunciated at RED (MIL-STD-411F warning)."
+    }
+  ],
+  "componentRenderStatesNote": "Highlight = original material with baseColor lerped toward the state colour by baseColorTint, plus emissive = state colour x emissiveIntensity. Emission alone washes out on coloured parts (Rotax-blue covers read white), so the tint is required.",
+  "renderModifiers": [
+    {
+      "modifier": "GHOSTED",
+      "appliesTo": "components not involved in the focused fault",
+      "opacity": 0.12,
+      "depthWrite": false,
+      "use": "Optional focus aid that reveals internal components (pistons, crankshaft). Not a fault state; never used for involved components."
+    },
+    {
+      "modifier": "XRAY",
+      "appliesTo": "involved components that enclose an involved internal component",
+      "opacity": 0.35,
+      "depthWrite": false,
+      "use": "Keeps the state colour of a host component (cylinder, head, crankcase) while letting the internal direct component show through."
+    }
+  ],
+  "stateStacking": "When several active faults address one component, render the state with the highest precedence (HIGHLIGHT_CRITICAL > HIGHLIGHT_WARNING > HIGHLIGHT_SUSPECT > HIGHLIGHT_INVALID > HIGHLIGHT_RECOVERING > HIGHLIGHT_CONTEXT > NORMAL).",
+  "animationTypes": {
+    "NONE": "No time-varying effect; the render state alone carries the information.",
+    "PULSE_STEADY": "Sinusoidal emissive modulation using the render state's pulse (hz, amplitude). Event-driven: only materials currently in a pulsing state are updated per frame.",
+    "PULSE_INTERMITTENT": "PULSE_STEADY with pseudo-random skipped beats (a beat is dropped with p=0.3). Represents intermittent firing; no geometric change, no damage effect.",
+    "PULSE_IRREGULAR": "PULSE_STEADY with per-beat amplitude jitter (±40 % of the state amplitude). Represents unstable combustion; no geometric change.",
+    "MICRO_JITTER_LOCAL": "Optional, off by default: a positional render offset of at most 0.3 mm applied only to the direct components (never the whole engine), amplitude scaled by vibration_rms_total. Conceptual - not a physical simulation."
+  },
+  "telemetryChannels": [
+    {
+      "channel": "rpm",
+      "kind": "MEASURED",
+      "unit": "rpm",
+      "perCylinder": false,
+      "driftableInstrument": "rpm",
+      "drift": {
+        "biasFullSeverity": "±55 rpm",
+        "ageingDrift": null,
+        "residualSnrHealthy": null,
+        "observableAsDrift": "none - the shadow model is driven by measured rpm, so its residual is zero by construction"
+      }
+    },
+    {
+      "channel": "propeller_rpm",
+      "kind": "MEASURED",
+      "unit": "rpm",
+      "perCylinder": false
+    },
+    {
+      "channel": "cht_max",
+      "kind": "MEASURED",
+      "unit": "degC",
+      "perCylinder": false,
+      "driftableInstrument": "cht",
+      "note": "Transmitted by the FADEC as the maximum of the four per-cylinder readings (can_simulator.py).",
+      "drift": {
+        "biasFullSeverity": "±9.0 °C",
+        "ageingDrift": "0.004 °C/h",
+        "residualSnrHealthy": 1.06,
+        "observableAsDrift": "marginal"
+      }
+    },
+    {
+      "channel": "cht_1",
+      "kind": "MEASURED",
+      "unit": "degC",
+      "perCylinder": true,
+      "cylinder": 1,
+      "driftableInstrument": "cht",
+      "drift": {
+        "biasFullSeverity": "±9.0 °C",
+        "ageingDrift": "0.004 °C/h",
+        "residualSnrHealthy": 1.06,
+        "observableAsDrift": "marginal"
+      }
+    },
+    {
+      "channel": "cht_2",
+      "kind": "MEASURED",
+      "unit": "degC",
+      "perCylinder": true,
+      "cylinder": 2,
+      "driftableInstrument": "cht",
+      "drift": {
+        "biasFullSeverity": "±9.0 °C",
+        "ageingDrift": "0.004 °C/h",
+        "residualSnrHealthy": 1.06,
+        "observableAsDrift": "marginal"
+      }
+    },
+    {
+      "channel": "cht_3",
+      "kind": "MEASURED",
+      "unit": "degC",
+      "perCylinder": true,
+      "cylinder": 3,
+      "driftableInstrument": "cht",
+      "drift": {
+        "biasFullSeverity": "±9.0 °C",
+        "ageingDrift": "0.004 °C/h",
+        "residualSnrHealthy": 1.06,
+        "observableAsDrift": "marginal"
+      }
+    },
+    {
+      "channel": "cht_4",
+      "kind": "MEASURED",
+      "unit": "degC",
+      "perCylinder": true,
+      "cylinder": 4,
+      "driftableInstrument": "cht",
+      "drift": {
+        "biasFullSeverity": "±9.0 °C",
+        "ageingDrift": "0.004 °C/h",
+        "residualSnrHealthy": 1.06,
+        "observableAsDrift": "marginal"
+      }
+    },
+    {
+      "channel": "coolant_temperature",
+      "kind": "MEASURED",
+      "unit": "degC",
+      "perCylinder": false,
+      "driftableInstrument": "coolant_temperature",
+      "drift": {
+        "biasFullSeverity": "±6.5 °C",
+        "ageingDrift": "0.003 °C/h",
+        "residualSnrHealthy": 2.36,
+        "observableAsDrift": "yes"
+      }
+    },
+    {
+      "channel": "egt_max",
+      "kind": "MEASURED",
+      "unit": "degC",
+      "perCylinder": false,
+      "driftableInstrument": "egt",
+      "note": "Maximum of the four per-cylinder readings (can_simulator.py).",
+      "drift": {
+        "biasFullSeverity": "±38 °C",
+        "ageingDrift": "0.02 °C/h",
+        "residualSnrHealthy": 0.89,
+        "observableAsDrift": "marginal"
+      }
+    },
+    {
+      "channel": "egt_1",
+      "kind": "MEASURED",
+      "unit": "degC",
+      "perCylinder": true,
+      "cylinder": 1,
+      "driftableInstrument": "egt",
+      "drift": {
+        "biasFullSeverity": "±38 °C",
+        "ageingDrift": "0.02 °C/h",
+        "residualSnrHealthy": 0.89,
+        "observableAsDrift": "marginal"
+      }
+    },
+    {
+      "channel": "egt_2",
+      "kind": "MEASURED",
+      "unit": "degC",
+      "perCylinder": true,
+      "cylinder": 2,
+      "driftableInstrument": "egt",
+      "drift": {
+        "biasFullSeverity": "±38 °C",
+        "ageingDrift": "0.02 °C/h",
+        "residualSnrHealthy": 0.89,
+        "observableAsDrift": "marginal"
+      }
+    },
+    {
+      "channel": "egt_3",
+      "kind": "MEASURED",
+      "unit": "degC",
+      "perCylinder": true,
+      "cylinder": 3,
+      "driftableInstrument": "egt",
+      "drift": {
+        "biasFullSeverity": "±38 °C",
+        "ageingDrift": "0.02 °C/h",
+        "residualSnrHealthy": 0.89,
+        "observableAsDrift": "marginal"
+      }
+    },
+    {
+      "channel": "egt_4",
+      "kind": "MEASURED",
+      "unit": "degC",
+      "perCylinder": true,
+      "cylinder": 4,
+      "driftableInstrument": "egt",
+      "drift": {
+        "biasFullSeverity": "±38 °C",
+        "ageingDrift": "0.02 °C/h",
+        "residualSnrHealthy": 0.89,
+        "observableAsDrift": "marginal"
+      }
+    },
+    {
+      "channel": "oil_pressure",
+      "kind": "MEASURED",
+      "unit": "psi (ingest converts from the bus value)",
+      "perCylinder": false,
+      "driftableInstrument": "oil_pressure",
+      "drift": {
+        "biasFullSeverity": "±0.55 bar",
+        "ageingDrift": "0.00014 bar/h",
+        "residualSnrHealthy": 0.27,
+        "observableAsDrift": "below the shadow model's own error"
+      }
+    },
+    {
+      "channel": "oil_temperature",
+      "kind": "MEASURED",
+      "unit": "degC",
+      "perCylinder": false,
+      "driftableInstrument": "oil_temperature",
+      "drift": {
+        "biasFullSeverity": "±7.0 °C",
+        "ageingDrift": "0.003 °C/h",
+        "residualSnrHealthy": 2.78,
+        "observableAsDrift": "yes"
+      }
+    },
+    {
+      "channel": "fuel_flow",
+      "kind": "MEASURED",
+      "unit": "L/h",
+      "perCylinder": false,
+      "driftableInstrument": "fuel_flow",
+      "drift": {
+        "biasFullSeverity": "±1.3 L/h",
+        "ageingDrift": null,
+        "residualSnrHealthy": 0.45,
+        "observableAsDrift": "below the shadow model's own error"
+      }
+    },
+    {
+      "channel": "manifold_pressure",
+      "kind": "MEASURED",
+      "unit": "bar",
+      "perCylinder": false,
+      "driftableInstrument": "manifold_pressure",
+      "drift": {
+        "biasFullSeverity": "±0.09 bar",
+        "ageingDrift": null,
+        "residualSnrHealthy": 1.11,
+        "observableAsDrift": "marginal"
+      }
+    },
+    {
+      "channel": "manifold_air_temperature",
+      "kind": "MEASURED",
+      "unit": "degC",
+      "perCylinder": false
+    },
+    {
+      "channel": "fuel_pressure",
+      "kind": "MEASURED",
+      "unit": "bar",
+      "perCylinder": false,
+      "note": "Register: constant rail pressure plus noise in simulation; FUELP_LOW can never fire in simulation."
+    },
+    {
+      "channel": "vibration_rms_x",
+      "kind": "MEASURED",
+      "perCylinder": false
+    },
+    {
+      "channel": "vibration_rms_y",
+      "kind": "MEASURED",
+      "perCylinder": false
+    },
+    {
+      "channel": "vibration_rms_z",
+      "kind": "MEASURED",
+      "perCylinder": false
+    },
+    {
+      "channel": "vibration_kurtosis",
+      "kind": "MEASURED",
+      "perCylinder": false
+    },
+    {
+      "channel": "battery_voltage",
+      "kind": "MEASURED",
+      "unit": "V",
+      "perCylinder": false
+    },
+    {
+      "channel": "alternator_current",
+      "kind": "MEASURED",
+      "unit": "A",
+      "perCylinder": false
+    },
+    {
+      "channel": "battery_current",
+      "kind": "MEASURED",
+      "unit": "A",
+      "perCylinder": false
+    },
+    {
+      "channel": "injection_timing_1",
+      "kind": "MEASURED",
+      "perCylinder": true,
+      "cylinder": 1
+    },
+    {
+      "channel": "injection_timing_2",
+      "kind": "MEASURED",
+      "perCylinder": true,
+      "cylinder": 2
+    },
+    {
+      "channel": "injection_timing_3",
+      "kind": "MEASURED",
+      "perCylinder": true,
+      "cylinder": 3
+    },
+    {
+      "channel": "injection_timing_4",
+      "kind": "MEASURED",
+      "perCylinder": true,
+      "cylinder": 4
+    },
+    {
+      "channel": "ignition_timing_1",
+      "kind": "MEASURED",
+      "perCylinder": true,
+      "cylinder": 1
+    },
+    {
+      "channel": "ignition_timing_2",
+      "kind": "MEASURED",
+      "perCylinder": true,
+      "cylinder": 2
+    },
+    {
+      "channel": "ignition_timing_3",
+      "kind": "MEASURED",
+      "perCylinder": true,
+      "cylinder": 3
+    },
+    {
+      "channel": "ignition_timing_4",
+      "kind": "MEASURED",
+      "perCylinder": true,
+      "cylinder": 4
+    },
+    {
+      "channel": "injection_timing_cmd",
+      "kind": "COMMANDED",
+      "perCylinder": false
+    },
+    {
+      "channel": "ignition_timing_cmd",
+      "kind": "COMMANDED",
+      "perCylinder": false
+    },
+    {
+      "channel": "injection_period",
+      "kind": "MEASURED",
+      "perCylinder": false
+    },
+    {
+      "channel": "injector_duty",
+      "kind": "MEASURED",
+      "perCylinder": false
+    },
+    {
+      "channel": "knock_intensity",
+      "kind": "MEASURED",
+      "perCylinder": false
+    },
+    {
+      "channel": "knock_retard",
+      "kind": "MEASURED",
+      "perCylinder": false
+    },
+    {
+      "channel": "throttle_pct",
+      "kind": "MEASURED",
+      "perCylinder": false
+    },
+    {
+      "channel": "wastegate_pct",
+      "kind": "MEASURED",
+      "perCylinder": false
+    },
+    {
+      "channel": "air_flow",
+      "kind": "MEASURED",
+      "perCylinder": false
+    },
+    {
+      "channel": "altitude_ft",
+      "kind": "MEASURED",
+      "perCylinder": false
+    },
+    {
+      "channel": "oat",
+      "kind": "MEASURED",
+      "perCylinder": false
+    },
+    {
+      "channel": "airspeed_kmh",
+      "kind": "MEASURED",
+      "perCylinder": false
+    },
+    {
+      "channel": "injection_timing_deviation_max",
+      "kind": "DERIVED",
+      "perCylinder": false,
+      "derivedFrom": "injection_timing_1..4 - injection_timing_cmd"
+    },
+    {
+      "channel": "injection_timing_deviation_spread",
+      "kind": "DERIVED",
+      "perCylinder": false,
+      "derivedFrom": "injection_timing_1..4 - injection_timing_cmd"
+    },
+    {
+      "channel": "ignition_timing_deviation_max",
+      "kind": "DERIVED",
+      "perCylinder": false,
+      "derivedFrom": "ignition_timing_1..4 - ignition_timing_cmd"
+    },
+    {
+      "channel": "cht_spread",
+      "kind": "DERIVED",
+      "perCylinder": false,
+      "derivedFrom": "max - min of cht_1..4"
+    },
+    {
+      "channel": "egt_spread",
+      "kind": "DERIVED",
+      "perCylinder": false,
+      "derivedFrom": "max - min of egt_1..4 (MISFIRE rule uses mean - min of egt_1..4)"
+    },
+    {
+      "channel": "vibration_rms_total",
+      "kind": "DERIVED",
+      "perCylinder": false,
+      "derivedFrom": "sqrt(x^2 + y^2 + z^2) of vibration_rms_x/y/z"
+    },
+    {
+      "channel": "sensor_validity",
+      "kind": "RULE_PARAMETER",
+      "perCylinder": false,
+      "note": "Count of channels in INVALID/SUSPECT (SENSOR_FAULT) or STALE (DATA_STALE); not a transmitted value."
+    }
+  ],
+  "driftableInstruments": [
+    {
+      "instrument": "oil_temperature",
+      "busChannels": [
+        "oil_temperature"
+      ],
+      "biasFullSeverity": "±7.0 °C",
+      "ageingDrift": "0.003 °C/h",
+      "residualSnrHealthy": 2.78,
+      "observableAsDrift": "yes"
+    },
+    {
+      "instrument": "coolant_temperature",
+      "busChannels": [
+        "coolant_temperature"
+      ],
+      "biasFullSeverity": "±6.5 °C",
+      "ageingDrift": "0.003 °C/h",
+      "residualSnrHealthy": 2.36,
+      "observableAsDrift": "yes"
+    },
+    {
+      "instrument": "manifold_pressure",
+      "busChannels": [
+        "manifold_pressure"
+      ],
+      "biasFullSeverity": "±0.09 bar",
+      "ageingDrift": null,
+      "residualSnrHealthy": 1.11,
+      "observableAsDrift": "marginal"
+    },
+    {
+      "instrument": "cht",
+      "busChannels": [
+        "cht_1",
+        "cht_2",
+        "cht_3",
+        "cht_4",
+        "cht_max"
+      ],
+      "biasFullSeverity": "±9.0 °C",
+      "ageingDrift": "0.004 °C/h",
+      "residualSnrHealthy": 1.06,
+      "observableAsDrift": "marginal"
+    },
+    {
+      "instrument": "egt",
+      "busChannels": [
+        "egt_1",
+        "egt_2",
+        "egt_3",
+        "egt_4",
+        "egt_max"
+      ],
+      "biasFullSeverity": "±38 °C",
+      "ageingDrift": "0.02 °C/h",
+      "residualSnrHealthy": 0.89,
+      "observableAsDrift": "marginal"
+    },
+    {
+      "instrument": "fuel_flow",
+      "busChannels": [
+        "fuel_flow"
+      ],
+      "biasFullSeverity": "±1.3 L/h",
+      "ageingDrift": null,
+      "residualSnrHealthy": 0.45,
+      "observableAsDrift": "below the shadow model's own error"
+    },
+    {
+      "instrument": "oil_pressure",
+      "busChannels": [
+        "oil_pressure"
+      ],
+      "biasFullSeverity": "±0.55 bar",
+      "ageingDrift": "0.00014 bar/h",
+      "residualSnrHealthy": 0.27,
+      "observableAsDrift": "below the shadow model's own error"
+    },
+    {
+      "instrument": "rpm",
+      "busChannels": [
+        "rpm"
+      ],
+      "biasFullSeverity": "±55 rpm",
+      "ageingDrift": null,
+      "residualSnrHealthy": null,
+      "observableAsDrift": "none - the shadow model is driven by measured rpm, so its residual is zero by construction"
+    }
+  ],
+  "faultOnset": "Cox proportional hazards h(t) = h0·exp(γ·d(t)), baseline 0.004 per flight hour, 20× hazard ratio between a destroyed and an as-new pathway; sensor drift stays at a flat hazard.",
+  "faults": [
+    {
+      "faultId": "MISFIRE",
+      "enumValue": "misfire",
+      "displayName": "Misfire",
+      "scope": "PER_CYLINDER",
+      "perCylinder": true,
+      "parameter": {
+        "name": "cylinder",
+        "values": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "onset": "step · 0.5–8 h",
+      "healthFactors": [],
+      "registerChips": [
+        "step · 0.5–8 h",
+        "per cylinder",
+        "signal path",
+        "Tier 3 F1 0.864"
+      ],
+      "tier3F1": 0.864,
+      "description": "An ignition coil or spark plug fails and one cylinder stops firing. Raw fuel washes past the rings into the oil.",
+      "mechanism": "Expressed in engine_sim.py, not in a health factor: the affected cylinder's EGT is scaled by (1 − 0.28·m) and rpm droops 45·m with 40 % jitter. It accelerates chamber deposits ×10 and oil breakdown ×4, and is deliberately not coupled to injector fouling.",
+      "signature": "One cylinder cold against its three siblings, rough running, a small rpm loss at constant throttle.",
+      "accelerates": {
+        "combustion_deposits": 10.0,
+        "oil_thermal": 4.0
+      },
+      "detection": {
+        "rules": [
+          {
+            "ruleId": "MISFIRE",
+            "level": "ORANGE",
+            "legend": "MISFIRE SUSPECTED",
+            "parameter": "egt_spread",
+            "codeFaultTag": "misfire",
+            "registerNote": "The rule fires when the coldest cylinder sits more than 0.8 × the split-fault limit below the mean, above 2000 rpm."
+          }
+        ],
+        "other": [
+          "TIER 3 supervised fault head"
+        ],
+        "ruleIds": [
+          "MISFIRE"
+        ]
+      },
+      "telemetry": {
+        "primary": [
+          "egt_{N}",
+          "egt_spread",
+          "rpm"
+        ],
+        "context": [
+          "egt_1",
+          "egt_2",
+          "egt_3",
+          "egt_4"
+        ]
+      },
+      "affectedSubsystems": [
+        "05_IGNITION",
+        "01_ENGINE_CORE"
+      ],
+      "visualization": {
+        "type": "COMPONENT_HIGHLIGHT",
+        "animation": "PULSE_INTERMITTENT",
+        "camera": {
+          "primary": "ROTAX_915IS_CYLINDER_HEAD_0{N}",
+          "view": "BANK_SIDE",
+          "ghostNonInvolved": false
+        },
+        "renderStates": [
+          "HIGHLIGHT_WARNING",
+          "HIGHLIGHT_CRITICAL",
+          "HIGHLIGHT_CONTEXT",
+          "HIGHLIGHT_RECOVERING"
+        ],
+        "faultStates": [
+          "HEALTHY",
+          "WARNING",
+          "CRITICAL",
+          "RECOVERING"
+        ]
+      },
+      "limitations": [
+        "The failing coil or plug of the selected cylinder cannot be isolated: spark plugs are one mesh per bank (2 cylinders) and the ignition coils/leads are one engine-wide mesh each.",
+        "Fuel washing into the oil is not visualised.",
+        "No mechanical damage is shown - a misfire is a signal-path fault."
+      ],
+      "cylinderSemantics": {
+        "indexUsedByPhysics": true,
+        "nullCylinder": {
+          "resolvesTo": 1,
+          "basis": "degradation.misfire_cylinder_rates: first = f.cylinder if f.cylinder else 1"
+        },
+        "progression": {
+          "magnitudeThreshold": 0.5,
+          "partnerCylinder": {
+            "1": 3,
+            "3": 1,
+            "2": 4,
+            "4": 2
+          },
+          "rule": "Above magnitude 0.5 the second cylinder of the same ignition-coil group (COIL_1_3 / COIL_2_4) also misfires.",
+          "basis": "degradation.py _MISFIRE_COIL_GROUP, misfire_cylinder_rates (DEV-204; IM failure matrix in configs/engines/rotax_915is.yaml)"
+        }
+      },
+      "alertLevelsDocumented": [
+        "ORANGE"
+      ],
+      "defaultAlertLevel": "ORANGE",
+      "defaultAlertLevelBasis": "Lowest level among the rules the register lists for this fault; use only when no live alert level is available.",
+      "affectedComponentIds": [
+        "ROTAX_915IS_CYLINDER_01",
+        "ROTAX_915IS_CYLINDER_02",
+        "ROTAX_915IS_CYLINDER_03",
+        "ROTAX_915IS_CYLINDER_04",
+        "ROTAX_915IS_CYLINDER_HEAD_01",
+        "ROTAX_915IS_CYLINDER_HEAD_02",
+        "ROTAX_915IS_CYLINDER_HEAD_03",
+        "ROTAX_915IS_CYLINDER_HEAD_04",
+        "ROTAX_915IS_IGNITION_COILS",
+        "ROTAX_915IS_IGNITION_LEADS",
+        "ROTAX_915IS_SPARK_PLUGS_CYL_1_3",
+        "ROTAX_915IS_SPARK_PLUGS_CYL_2_4",
+        "ROTAX_915IS_VALVE_COVER_01",
+        "ROTAX_915IS_VALVE_COVER_02",
+        "ROTAX_915IS_VALVE_COVER_03",
+        "ROTAX_915IS_VALVE_COVER_04"
+      ],
+      "telemetryChannels": [
+        "egt_1",
+        "egt_2",
+        "egt_3",
+        "egt_4",
+        "egt_spread",
+        "rpm"
+      ],
+      "matrixKey": "fault_component_matrix.json#/faults/MISFIRE",
+      "templateNote": "{N} = cylinder number, {CHANNEL} = drifting instrument; resolved values are in the matrix and in telemetryChannels / affectedComponentIds."
+    },
+    {
+      "faultId": "INJECTOR_ABNORMAL",
+      "enumValue": "injector_abnormal",
+      "displayName": "Injector abnormality",
+      "scope": "PER_CYLINDER",
+      "perCylinder": true,
+      "parameter": {
+        "name": "cylinder",
+        "values": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "onset": "ramp · 40–250 h",
+      "healthFactors": [
+        "injector_condition"
+      ],
+      "registerChips": [
+        "ramp · 40–250 h",
+        "per cylinder",
+        "injector_condition",
+        "Tier 3 F1 0.215"
+      ],
+      "tier3F1": 0.215,
+      "description": "Deposits build on the pintle or the nozzle cokes; the per-cylinder fuel split scatters.",
+      "mechanism": "injector_condition ≤ 1 − 0.75·m; the injector-fouling pathway runs ×9 faster while the fault is active.",
+      "signature": "Cylinder-to-cylinder EGT split widening, injection-timing deviation, injector duty rising to hold fuel flow.",
+      "accelerates": {
+        "injector_fouling": 9.0
+      },
+      "detection": {
+        "rules": [
+          {
+            "ruleId": "EGT_SPLIT_HIGH",
+            "level": "YELLOW",
+            "legend": "EGT SPLIT HIGH",
+            "parameter": "egt_spread",
+            "codeFaultTag": "injector_abnormal"
+          },
+          {
+            "ruleId": "EGT_SPLIT_CRIT",
+            "level": "ORANGE",
+            "legend": "EGT SPLIT HIGH",
+            "parameter": "egt_spread",
+            "codeFaultTag": "injector_abnormal"
+          },
+          {
+            "ruleId": "INJ_DEV_FAULT",
+            "level": "ORANGE",
+            "legend": "INJ TIMING DEV",
+            "parameter": "injection_timing_deviation_max",
+            "codeFaultTag": "injector_abnormal"
+          },
+          {
+            "ruleId": "INJ_DEV_DEGRADED",
+            "level": "YELLOW",
+            "legend": "INJ TIMING DEV",
+            "parameter": "injection_timing_deviation_max",
+            "codeFaultTag": "injector_abnormal"
+          },
+          {
+            "ruleId": "INJ_DUTY",
+            "level": "ORANGE",
+            "legend": "INJECTOR DUTY HIGH",
+            "parameter": "injector_duty",
+            "codeFaultTag": "injector_abnormal"
+          },
+          {
+            "ruleId": "FUELF_LOW",
+            "level": "ORANGE",
+            "legend": "FUEL FLOW LOW",
+            "parameter": "fuel_flow",
+            "codeFaultTag": "injector_abnormal"
+          }
+        ],
+        "other": [],
+        "codeTaggedNotListed": [
+          {
+            "ruleId": "FUELP_LOW",
+            "level": "ORANGE",
+            "legend": "FUEL PRESS LOW",
+            "parameter": "fuel_pressure",
+            "codeFaultTag": "injector_abnormal",
+            "registerNote": "Tagged injector_abnormal in edge_rules.py, but the register states FUELP_LOW can never fire in simulation (fuel_pressure is constant rail pressure plus noise)."
+          }
+        ],
+        "registerNote": "The weak F1 is inherent: a fouling fault and natural injector fouling have the same signature and differ only in rate.",
+        "ruleIds": [
+          "EGT_SPLIT_HIGH",
+          "EGT_SPLIT_CRIT",
+          "INJ_DEV_FAULT",
+          "INJ_DEV_DEGRADED",
+          "INJ_DUTY",
+          "FUELF_LOW"
+        ]
+      },
+      "telemetry": {
+        "primary": [
+          "egt_{N}",
+          "egt_spread",
+          "injection_timing_{N}",
+          "injection_timing_deviation_max",
+          "injector_duty",
+          "fuel_flow"
+        ],
+        "context": [
+          "injection_timing_cmd",
+          "injection_timing_deviation_spread"
+        ]
+      },
+      "affectedSubsystems": [
+        "04_FUEL",
+        "01_ENGINE_CORE"
+      ],
+      "visualization": {
+        "type": "COMPONENT_HIGHLIGHT",
+        "animation": "PULSE_STEADY",
+        "camera": {
+          "primary": "ROTAX_915IS_CYLINDER_HEAD_0{N}",
+          "view": "BANK_SIDE",
+          "ghostNonInvolved": false
+        },
+        "renderStates": [
+          "HIGHLIGHT_WARNING",
+          "HIGHLIGHT_CRITICAL",
+          "HIGHLIGHT_CONTEXT",
+          "HIGHLIGHT_RECOVERING"
+        ],
+        "faultStates": [
+          "HEALTHY",
+          "WARNING",
+          "CRITICAL",
+          "RECOVERING"
+        ]
+      },
+      "limitations": [
+        "Injectors are one mesh per bank; the injectors of the selected cylinder cannot be isolated from its bank partner.",
+        "Injector identification confidence in the model is 'medium'.",
+        "No fuel leak or spray is visualised (not modelled)."
+      ],
+      "cylinderSemantics": {
+        "indexUsedByPhysics": false,
+        "nullCylinder": {
+          "resolvesTo": "ALL",
+          "basis": "InjectedFault.cylinder: None = affects all cylinders"
+        },
+        "note": "The register classifies this mode per cylinder and InjectedFault carries the cylinder, but degradation._apply_faults does not use it: injector_condition is engine-wide and the per-cylinder EGT spread comes from injector build variation x injector wear. The 3D layer localises the DECLARED cylinder, not a physically localised simulated effect."
+      },
+      "alertLevelsDocumented": [
+        "YELLOW",
+        "ORANGE"
+      ],
+      "defaultAlertLevel": "YELLOW",
+      "defaultAlertLevelBasis": "Lowest level among the rules the register lists for this fault; use only when no live alert level is available.",
+      "affectedComponentIds": [
+        "ROTAX_915IS_CYLINDER_HEAD_01",
+        "ROTAX_915IS_CYLINDER_HEAD_02",
+        "ROTAX_915IS_CYLINDER_HEAD_03",
+        "ROTAX_915IS_CYLINDER_HEAD_04",
+        "ROTAX_915IS_FUEL_INJECTORS_CYL_1_3",
+        "ROTAX_915IS_FUEL_INJECTORS_CYL_2_4",
+        "ROTAX_915IS_FUEL_RAIL_CYL_1_3",
+        "ROTAX_915IS_FUEL_RAIL_CYL_2_4",
+        "ROTAX_915IS_VALVE_COVER_01",
+        "ROTAX_915IS_VALVE_COVER_02",
+        "ROTAX_915IS_VALVE_COVER_03",
+        "ROTAX_915IS_VALVE_COVER_04"
+      ],
+      "telemetryChannels": [
+        "egt_1",
+        "egt_2",
+        "egt_3",
+        "egt_4",
+        "egt_spread",
+        "fuel_flow",
+        "injection_timing_1",
+        "injection_timing_2",
+        "injection_timing_3",
+        "injection_timing_4",
+        "injection_timing_cmd",
+        "injection_timing_deviation_max",
+        "injection_timing_deviation_spread",
+        "injector_duty"
+      ],
+      "matrixKey": "fault_component_matrix.json#/faults/INJECTOR_ABNORMAL",
+      "templateNote": "{N} = cylinder number, {CHANNEL} = drifting instrument; resolved values are in the matrix and in telemetryChannels / affectedComponentIds."
+    },
+    {
+      "faultId": "COOLING_DEGRADATION",
+      "enumValue": "cooling_degradation",
+      "displayName": "Cooling degradation",
+      "scope": "ENGINE",
+      "perCylinder": false,
+      "parameter": null,
+      "onset": "ramp · 60–300 h",
+      "healthFactors": [
+        "cooling_efficiency"
+      ],
+      "registerChips": [
+        "ramp · 60–300 h",
+        "engine-level",
+        "cooling_efficiency",
+        "Tier 3 F1 0.458"
+      ],
+      "tier3F1": 0.458,
+      "description": "Scale and fouling in the coolant jacket, or coolant-pump wear — the head-to-coolant path inside the engine.",
+      "mechanism": "cooling_efficiency ≤ 1 − 0.55·m; the cooling pathway runs ×7 faster. Scale deposition itself accelerates with head temperature (1 + 0.010 per °C above 105 °C).",
+      "signature": "CHT rises while the thermostat holds coolant steady, so the CHT-minus-coolant gap widens. Against the as-new shadow engine at the same throttle, speed, altitude and OAT the head runs 8 K hot — thermal index 0.62 — with not one certified limit exceeded.",
+      "accelerates": {
+        "cooling": 7.0
+      },
+      "detection": {
+        "rules": [
+          {
+            "ruleId": "CHT_SPREAD",
+            "level": "YELLOW",
+            "legend": "CHT SPREAD HIGH",
+            "parameter": "cht_spread",
+            "codeFaultTag": "cooling_degradation"
+          },
+          {
+            "ruleId": "CHT_HIGH",
+            "level": "ORANGE",
+            "legend": "CHT HIGH",
+            "parameter": "cht_max",
+            "codeFaultTag": "overheating_trend",
+            "registerNote": "Register: fires hundreds of hours later. Code tags it overheating_trend."
+          },
+          {
+            "ruleId": "CHT_CRIT",
+            "level": "RED",
+            "legend": "CHT HIGH",
+            "parameter": "cht_max",
+            "codeFaultTag": "overheating_trend",
+            "registerNote": "Register: fires hundreds of hours later. Code tags it overheating_trend."
+          }
+        ],
+        "other": [
+          "TWIN shadow-model residual on CHT"
+        ],
+        "registerNote": "The classifier confuses it with ordinary cooling wear for the same rate-versus-state reason as the injector class.",
+        "ruleIds": [
+          "CHT_SPREAD",
+          "CHT_HIGH",
+          "CHT_CRIT"
+        ]
+      },
+      "telemetry": {
+        "primary": [
+          "cht_1",
+          "cht_2",
+          "cht_3",
+          "cht_4",
+          "cht_max",
+          "cht_spread",
+          "coolant_temperature"
+        ],
+        "context": [],
+        "clientDerived": [
+          {
+            "name": "cht_minus_coolant",
+            "formula": "cht_max - coolant_temperature",
+            "note": "Named in the register signature; not a channel in the code - compute in the client."
+          }
+        ]
+      },
+      "affectedSubsystems": [
+        "06_COOLING",
+        "01_ENGINE_CORE"
+      ],
+      "visualization": {
+        "type": "COMPONENT_HIGHLIGHT",
+        "animation": "NONE",
+        "camera": {
+          "primary": "ROTAX_915IS_WATER_PUMP",
+          "view": "TOP_FRONT",
+          "ghostNonInvolved": false
+        },
+        "thermalState": "Represent the thermal index / CHT residual in the UI; the 3D layer only shows the render state.",
+        "renderStates": [
+          "HIGHLIGHT_WARNING",
+          "HIGHLIGHT_CRITICAL",
+          "HIGHLIGHT_CONTEXT",
+          "HIGHLIGHT_RECOVERING"
+        ],
+        "faultStates": [
+          "HEALTHY",
+          "WARNING",
+          "CRITICAL",
+          "RECOVERING"
+        ]
+      },
+      "limitations": [
+        "The coolant jacket is inside the liquid-cooled head castings and is not modelled separately; the heads are highlighted as its host.",
+        "No thermostat geometry exists.",
+        "No visible coolant damage or scale is shown."
+      ],
+      "cylinderSemantics": {
+        "indexUsedByPhysics": false,
+        "note": "The random fault scheduler may attach a cylinder index to this mode; it has no effect and must be ignored."
+      },
+      "alertLevelsDocumented": [
+        "YELLOW",
+        "ORANGE",
+        "RED"
+      ],
+      "defaultAlertLevel": "YELLOW",
+      "defaultAlertLevelBasis": "Lowest level among the rules the register lists for this fault; use only when no live alert level is available.",
+      "affectedComponentIds": [
+        "ROTAX_915IS_COOLANT_EXPANSION_TANK",
+        "ROTAX_915IS_COOLANT_HOSES",
+        "ROTAX_915IS_CYLINDER_HEAD_01",
+        "ROTAX_915IS_CYLINDER_HEAD_02",
+        "ROTAX_915IS_CYLINDER_HEAD_03",
+        "ROTAX_915IS_CYLINDER_HEAD_04",
+        "ROTAX_915IS_SENSOR_COOLANT_TEMP",
+        "ROTAX_915IS_WATER_PUMP"
+      ],
+      "telemetryChannels": [
+        "cht_1",
+        "cht_2",
+        "cht_3",
+        "cht_4",
+        "cht_max",
+        "cht_spread",
+        "coolant_temperature"
+      ],
+      "matrixKey": "fault_component_matrix.json#/faults/COOLING_DEGRADATION",
+      "templateNote": "{N} = cylinder number, {CHANNEL} = drifting instrument; resolved values are in the matrix and in telemetryChannels / affectedComponentIds."
+    },
+    {
+      "faultId": "LUBRICATION_ISSUE",
+      "enumValue": "lubrication_issue",
+      "displayName": "Lubrication issue",
+      "scope": "ENGINE",
+      "perCylinder": false,
+      "parameter": null,
+      "onset": "ramp · 10–120 h",
+      "healthFactors": [
+        "oil_quality",
+        "oil_viscosity_ratio"
+      ],
+      "registerChips": [
+        "ramp · 10–120 h",
+        "engine-level",
+        "oil_quality · viscosity",
+        "Tier 3 F1 0.805"
+      ],
+      "tier3F1": 0.805,
+      "description": "A developing leak, contamination, or thermal breakdown of the oil. Degraded oil then wears the bearings it is supposed to protect.",
+      "mechanism": "oil_quality ≤ 1 − 0.70·m, viscosity ratio ≥ 1 + 0.35·m; oil-thermal pathway ×5, bearing wear ×3. Applied after the scheduled 100 h oil change, so the fault survives a service.",
+      "signature": "Oil pressure low at speed and falling, oil temperature high; bearing clearance growing underneath.",
+      "accelerates": {
+        "oil_thermal": 5.0,
+        "bearing_wear": 3.0
+      },
+      "detection": {
+        "rules": [
+          {
+            "ruleId": "OILP_CRIT",
+            "level": "RED",
+            "legend": "OIL PRESS LOW",
+            "parameter": "oil_pressure",
+            "codeFaultTag": "lubrication_issue"
+          },
+          {
+            "ruleId": "OILP_AT_SPEED",
+            "level": "RED",
+            "legend": "OIL PRESS LOW",
+            "parameter": "oil_pressure",
+            "codeFaultTag": "lubrication_issue"
+          },
+          {
+            "ruleId": "OILP_RATE",
+            "level": "ORANGE",
+            "legend": "OIL PRESS FALLING",
+            "parameter": "oil_pressure",
+            "codeFaultTag": "lubrication_issue"
+          },
+          {
+            "ruleId": "OILP_HIGH",
+            "level": "ORANGE",
+            "legend": "OIL PRESS HIGH",
+            "parameter": "oil_pressure",
+            "codeFaultTag": "lubrication_issue",
+            "registerNote": "relief valve"
+          },
+          {
+            "ruleId": "OILT_CRIT",
+            "level": "RED",
+            "legend": "OIL TEMP HIGH",
+            "parameter": "oil_temperature",
+            "codeFaultTag": "lubrication_issue"
+          },
+          {
+            "ruleId": "OILT_HIGH",
+            "level": "YELLOW",
+            "legend": "OIL TEMP HIGH",
+            "parameter": "oil_temperature",
+            "codeFaultTag": "lubrication_issue"
+          },
+          {
+            "ruleId": "OILT_LOW",
+            "level": "YELLOW",
+            "legend": "OIL TEMP LOW",
+            "parameter": "oil_temperature",
+            "codeFaultTag": "lubrication_issue",
+            "registerNote": "warm-up, ground-inhibited"
+          }
+        ],
+        "other": [],
+        "ruleIds": [
+          "OILP_CRIT",
+          "OILP_AT_SPEED",
+          "OILP_RATE",
+          "OILP_HIGH",
+          "OILT_CRIT",
+          "OILT_HIGH",
+          "OILT_LOW"
+        ]
+      },
+      "telemetry": {
+        "primary": [
+          "oil_pressure",
+          "oil_temperature",
+          "rpm"
+        ],
+        "context": []
+      },
+      "affectedSubsystems": [
+        "07_LUBRICATION",
+        "01_ENGINE_CORE",
+        "11_INTERNAL_ENGINE"
+      ],
+      "visualization": {
+        "type": "COMPONENT_HIGHLIGHT",
+        "animation": "PULSE_STEADY",
+        "camera": {
+          "primary": "ROTAX_915IS_OIL_PUMP",
+          "view": "REAR",
+          "ghostNonInvolved": false
+        },
+        "renderStates": [
+          "HIGHLIGHT_WARNING",
+          "HIGHLIGHT_CRITICAL",
+          "HIGHLIGHT_CONTEXT",
+          "HIGHLIGHT_RECOVERING"
+        ],
+        "faultStates": [
+          "HEALTHY",
+          "WARNING",
+          "CRITICAL",
+          "RECOVERING"
+        ]
+      },
+      "limitations": [
+        "The oil itself and the leak location are not modelled; the oil-system components are highlighted as its hosts.",
+        "The bearings are not separate meshes: the crankshaft and crankcase are shown as context for bearing wear.",
+        "UNKNOWN_COMPONENT_003 (07_LUBRICATION, identification confidence low) is deliberately excluded.",
+        "The oil tank sits beside the engine in the source model, not in an installed position.",
+        "No oil leak is visualised."
+      ],
+      "cylinderSemantics": {
+        "indexUsedByPhysics": false,
+        "note": "The random fault scheduler may attach a cylinder index to this mode; it has no effect and must be ignored."
+      },
+      "alertLevelsDocumented": [
+        "YELLOW",
+        "ORANGE",
+        "RED"
+      ],
+      "defaultAlertLevel": "YELLOW",
+      "defaultAlertLevelBasis": "Lowest level among the rules the register lists for this fault; use only when no live alert level is available.",
+      "affectedComponentIds": [
+        "ROTAX_915IS_CRANKCASE_HALF_CYL_1_3",
+        "ROTAX_915IS_CRANKCASE_HALF_CYL_2_4",
+        "ROTAX_915IS_CRANKSHAFT",
+        "ROTAX_915IS_OIL_FILTER",
+        "ROTAX_915IS_OIL_LINES_TURBO",
+        "ROTAX_915IS_OIL_PUMP",
+        "ROTAX_915IS_OIL_TANK",
+        "ROTAX_915IS_SENSOR_OIL_PRESSURE",
+        "ROTAX_915IS_SENSOR_OIL_TEMP",
+        "ROTAX_915IS_TURBO_OIL_SUMP"
+      ],
+      "telemetryChannels": [
+        "oil_pressure",
+        "oil_temperature",
+        "rpm"
+      ],
+      "matrixKey": "fault_component_matrix.json#/faults/LUBRICATION_ISSUE",
+      "templateNote": "{N} = cylinder number, {CHANNEL} = drifting instrument; resolved values are in the matrix and in telemetryChannels / affectedComponentIds."
+    },
+    {
+      "faultId": "SENSOR_DRIFT",
+      "enumValue": "sensor_drift",
+      "displayName": "Sensor drift / failure",
+      "scope": "INSTRUMENT",
+      "perCylinder": false,
+      "parameter": {
+        "name": "channel",
+        "values": [
+          "oil_temperature",
+          "coolant_temperature",
+          "manifold_pressure",
+          "cht",
+          "egt",
+          "fuel_flow",
+          "oil_pressure",
+          "rpm"
+        ],
+        "note": "The driftable instrument chosen per fault instance (engine_sim.DRIFTABLE_CHANNELS)."
+      },
+      "onset": "ramp · 50–300 h (constant hazard)",
+      "healthFactors": [],
+      "registerChips": [
+        "ramp · 50–300 h",
+        "one instrument",
+        "constant hazard",
+        "Tier 3 F1 0.303"
+      ],
+      "tier3F1": 0.303,
+      "description": "A transducer drifts out of calibration. It is an electronic event, not wear-out, so its onset is the one mode kept at a flat hazard.",
+      "mechanism": "Lives in the instrument layer, not in any health factor: one of eight channels, chosen per fault instance, takes a signed bias up to the magnitude in the table below. The engine's true state stays bit-identical to a healthy one — the instrument lies while the engine is sound.",
+      "signature": "One channel disagreeing with the physics and with its redundant lane, while everything else agrees.",
+      "accelerates": {},
+      "detection": {
+        "rules": [
+          {
+            "ruleId": "SENSOR_FAULT",
+            "level": "YELLOW",
+            "legend": "SENSOR FAULT",
+            "parameter": "sensor_validity",
+            "codeFaultTag": "sensor_drift"
+          }
+        ],
+        "other": [
+          "TIER 1 lane A/B vote, range, rate-of-change, service code",
+          "TWIN residual against the shadow model"
+        ],
+        "registerNote": "Three of the eight channels cannot be seen drifting in principle (see the instrument table).",
+        "codeTaggedNotListed": [
+          {
+            "ruleId": "DATA_STALE",
+            "level": "ORANGE",
+            "legend": "TELEMETRY STALE",
+            "parameter": "sensor_validity",
+            "codeFaultTag": "sensor_drift",
+            "registerNote": "Tagged sensor_drift in edge_rules.py, but the register describes DATA_STALE as a data-path value state (STALE), not as drift detection."
+          }
+        ],
+        "ruleIds": [
+          "SENSOR_FAULT"
+        ]
+      },
+      "telemetry": {
+        "primary": [
+          "{CHANNEL}"
+        ],
+        "context": []
+      },
+      "affectedSubsystems": [
+        "08_ELECTRICAL"
+      ],
+      "visualization": {
+        "type": "INSTRUMENT_HIGHLIGHT",
+        "animation": "PULSE_STEADY",
+        "camera": {
+          "primary": "{INSTRUMENT}",
+          "view": "AUTO",
+          "ghostNonInvolved": false
+        },
+        "telemetryState": "The drifting channel(s) go SUSPECT (lane disagreement / residual) or INVALID (range / rate / service code).",
+        "renderStates": [
+          "HIGHLIGHT_SUSPECT",
+          "HIGHLIGHT_INVALID"
+        ],
+        "faultStates": [
+          "HEALTHY",
+          "SUSPECT",
+          "INVALID",
+          "RECOVERING"
+        ]
+      },
+      "limitations": [
+        "The engine is never highlighted: its true state is bit-identical to a healthy engine.",
+        "cht, fuel_flow and rpm have no instrument geometry; a drift on them is telemetry-only.",
+        "manifold_pressure and egt instruments are shared meshes (MAP+MAT sensor set, 4 EGT probes)."
+      ],
+      "cylinderSemantics": {
+        "indexUsedByPhysics": false,
+        "note": "The random fault scheduler may attach a cylinder index to this mode; it has no effect and must be ignored."
+      },
+      "alertLevelsDocumented": [
+        "YELLOW"
+      ],
+      "defaultAlertLevel": "YELLOW",
+      "defaultAlertLevelBasis": "Lowest level among the rules the register lists for this fault; use only when no live alert level is available.",
+      "affectedComponentIds": [
+        "ROTAX_915IS_EGT_SENSORS",
+        "ROTAX_915IS_SENSORS_MAP_MAT",
+        "ROTAX_915IS_SENSOR_COOLANT_TEMP",
+        "ROTAX_915IS_SENSOR_OIL_PRESSURE",
+        "ROTAX_915IS_SENSOR_OIL_TEMP"
+      ],
+      "telemetryChannels": [
+        "cht_1",
+        "cht_2",
+        "cht_3",
+        "cht_4",
+        "cht_max",
+        "coolant_temperature",
+        "egt_1",
+        "egt_2",
+        "egt_3",
+        "egt_4",
+        "egt_max",
+        "fuel_flow",
+        "manifold_pressure",
+        "oil_pressure",
+        "oil_temperature",
+        "rpm"
+      ],
+      "matrixKey": "fault_component_matrix.json#/faults/SENSOR_DRIFT",
+      "templateNote": "{N} = cylinder number, {CHANNEL} = drifting instrument; resolved values are in the matrix and in telemetryChannels / affectedComponentIds."
+    },
+    {
+      "faultId": "COMBUSTION_INSTABILITY",
+      "enumValue": "combustion_instability",
+      "displayName": "Combustion instability",
+      "scope": "PER_CYLINDER",
+      "perCylinder": true,
+      "parameter": {
+        "name": "cylinder",
+        "values": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "onset": "ramp · 20–150 h",
+      "healthFactors": [
+        "combustion_efficiency"
+      ],
+      "registerChips": [
+        "ramp · 20–150 h",
+        "per cylinder",
+        "combustion_efficiency",
+        "Tier 3 F1 0.933"
+      ],
+      "tier3F1": 0.933,
+      "description": "Mixture and ignition quality wander — deposits, knock, lean or rich excursions. Incomplete combustion is precisely what forms chamber deposits.",
+      "mechanism": "combustion_efficiency ≤ 1 − 0.10·m; the deposit pathway runs ×12 faster — the largest multiplier in the table.",
+      "signature": "EGT high, the ECU pulling ignition timing back to hold off knock, ignition-timing deviation between cylinders, energy at the firing order in the vibration waveform.",
+      "accelerates": {
+        "combustion_deposits": 12.0
+      },
+      "detection": {
+        "rules": [
+          {
+            "ruleId": "EGT_HIGH",
+            "level": "ORANGE",
+            "legend": "EGT HIGH",
+            "parameter": "egt_max",
+            "codeFaultTag": "combustion_instability"
+          },
+          {
+            "ruleId": "EGT_CRIT",
+            "level": "RED",
+            "legend": "EGT HIGH",
+            "parameter": "egt_max",
+            "codeFaultTag": "combustion_instability"
+          },
+          {
+            "ruleId": "KNOCK_RETARD",
+            "level": "YELLOW",
+            "legend": "IGN RETARD HIGH",
+            "parameter": "knock_retard",
+            "codeFaultTag": "combustion_instability"
+          },
+          {
+            "ruleId": "IGN_DEV",
+            "level": "YELLOW",
+            "legend": "IGN TIMING DEV",
+            "parameter": "ignition_timing_deviation_max",
+            "codeFaultTag": "combustion_instability"
+          }
+        ],
+        "other": [
+          "TIER 3 best-scoring class"
+        ],
+        "ruleIds": [
+          "EGT_HIGH",
+          "EGT_CRIT",
+          "KNOCK_RETARD",
+          "IGN_DEV"
+        ]
+      },
+      "telemetry": {
+        "primary": [
+          "egt_{N}",
+          "egt_max",
+          "knock_retard",
+          "ignition_timing_{N}",
+          "ignition_timing_deviation_max"
+        ],
+        "context": [
+          "ignition_timing_cmd",
+          "knock_intensity",
+          "vibration_rms_total"
+        ]
+      },
+      "affectedSubsystems": [
+        "01_ENGINE_CORE",
+        "11_INTERNAL_ENGINE"
+      ],
+      "visualization": {
+        "type": "COMPONENT_HIGHLIGHT",
+        "animation": "PULSE_IRREGULAR",
+        "camera": {
+          "primary": "ROTAX_915IS_CYLINDER_HEAD_0{N}",
+          "view": "BANK_SIDE",
+          "ghostNonInvolved": true,
+          "xray": [
+            "ROTAX_915IS_CYLINDER_0{N}",
+            "ROTAX_915IS_CYLINDER_HEAD_0{N}"
+          ]
+        },
+        "renderStates": [
+          "HIGHLIGHT_WARNING",
+          "HIGHLIGHT_CRITICAL",
+          "HIGHLIGHT_CONTEXT",
+          "HIGHLIGHT_RECOVERING"
+        ],
+        "faultStates": [
+          "HEALTHY",
+          "WARNING",
+          "CRITICAL",
+          "RECOVERING"
+        ]
+      },
+      "limitations": [
+        "The combustion chamber is not a separate mesh: head, barrel and piston of the cylinder are highlighted as its boundary.",
+        "The piston is internal; it is only visible with GHOSTED/XRAY or in the exploded view.",
+        "The alert rules evaluate engine-level aggregates (egt_max, ignition_timing_deviation_max); the cylinder number must come from the fault event."
+      ],
+      "cylinderSemantics": {
+        "indexUsedByPhysics": false,
+        "nullCylinder": {
+          "resolvesTo": "ALL",
+          "basis": "InjectedFault.cylinder: None = affects all cylinders"
+        },
+        "note": "The register classifies this mode per cylinder and InjectedFault carries the cylinder, but combustion_efficiency is an engine-wide factor. The 3D layer localises the DECLARED cylinder."
+      },
+      "alertLevelsDocumented": [
+        "YELLOW",
+        "ORANGE",
+        "RED"
+      ],
+      "defaultAlertLevel": "YELLOW",
+      "defaultAlertLevelBasis": "Lowest level among the rules the register lists for this fault; use only when no live alert level is available.",
+      "affectedComponentIds": [
+        "ROTAX_915IS_CYLINDER_01",
+        "ROTAX_915IS_CYLINDER_02",
+        "ROTAX_915IS_CYLINDER_03",
+        "ROTAX_915IS_CYLINDER_04",
+        "ROTAX_915IS_CYLINDER_HEAD_01",
+        "ROTAX_915IS_CYLINDER_HEAD_02",
+        "ROTAX_915IS_CYLINDER_HEAD_03",
+        "ROTAX_915IS_CYLINDER_HEAD_04",
+        "ROTAX_915IS_FUEL_INJECTORS_CYL_1_3",
+        "ROTAX_915IS_FUEL_INJECTORS_CYL_2_4",
+        "ROTAX_915IS_PISTON_01",
+        "ROTAX_915IS_PISTON_02",
+        "ROTAX_915IS_PISTON_03",
+        "ROTAX_915IS_PISTON_04",
+        "ROTAX_915IS_SPARK_PLUGS_CYL_1_3",
+        "ROTAX_915IS_SPARK_PLUGS_CYL_2_4",
+        "ROTAX_915IS_VALVE_COVER_01",
+        "ROTAX_915IS_VALVE_COVER_02",
+        "ROTAX_915IS_VALVE_COVER_03",
+        "ROTAX_915IS_VALVE_COVER_04"
+      ],
+      "telemetryChannels": [
+        "egt_1",
+        "egt_2",
+        "egt_3",
+        "egt_4",
+        "egt_max",
+        "ignition_timing_1",
+        "ignition_timing_2",
+        "ignition_timing_3",
+        "ignition_timing_4",
+        "ignition_timing_cmd",
+        "ignition_timing_deviation_max",
+        "knock_intensity",
+        "knock_retard",
+        "vibration_rms_total"
+      ],
+      "matrixKey": "fault_component_matrix.json#/faults/COMBUSTION_INSTABILITY",
+      "templateNote": "{N} = cylinder number, {CHANNEL} = drifting instrument; resolved values are in the matrix and in telemetryChannels / affectedComponentIds."
+    },
+    {
+      "faultId": "OVERHEATING_TREND",
+      "enumValue": "overheating_trend",
+      "displayName": "Overheating trend",
+      "scope": "ENGINE",
+      "perCylinder": false,
+      "parameter": null,
+      "onset": "ramp · 80–350 h",
+      "healthFactors": [
+        "cooling_airflow"
+      ],
+      "registerChips": [
+        "ramp · 80–350 h",
+        "engine-level",
+        "cooling_airflow",
+        "Tier 3 F1 0.586"
+      ],
+      "tier3F1": 0.586,
+      "description": "Heat rejection to air is lost — a blocked radiator, a duct or cowl-flap problem, lost cooling airflow. Distinct from cooling degradation, which is inside the engine.",
+      "mechanism": "cooling_airflow ≤ 1 − 0.75·m (a quarter of design airflow at full severity — the realistic worst case), plus a small ×1.5 on the cooling pathway.",
+      "signature": "The whole loop rises: CHT and coolant climb together and the difference between them barely moves.",
+      "accelerates": {
+        "cooling": 1.5
+      },
+      "detection": {
+        "rules": [
+          {
+            "ruleId": "CLNT_HIGH",
+            "level": "ORANGE",
+            "legend": "COOLANT TEMP HIGH",
+            "parameter": "coolant_temperature",
+            "codeFaultTag": "overheating_trend"
+          },
+          {
+            "ruleId": "CLNT_CRIT",
+            "level": "RED",
+            "legend": "COOLANT TEMP HIGH",
+            "parameter": "coolant_temperature",
+            "codeFaultTag": "overheating_trend",
+            "registerNote": "coolant is this engine's certified limit"
+          },
+          {
+            "ruleId": "CHT_RATE",
+            "level": "ORANGE",
+            "legend": "CHT RISING FAST",
+            "parameter": "cht_max",
+            "codeFaultTag": "overheating_trend"
+          },
+          {
+            "ruleId": "CHT_SUSTAINED",
+            "level": "YELLOW",
+            "legend": "CHT HIGH SUSTAINED",
+            "parameter": "cht_max",
+            "codeFaultTag": "overheating_trend"
+          },
+          {
+            "ruleId": "CHT_HIGH",
+            "level": "ORANGE",
+            "legend": "CHT HIGH",
+            "parameter": "cht_max",
+            "codeFaultTag": "overheating_trend"
+          },
+          {
+            "ruleId": "CHT_CRIT",
+            "level": "RED",
+            "legend": "CHT HIGH",
+            "parameter": "cht_max",
+            "codeFaultTag": "overheating_trend"
+          }
+        ],
+        "other": [],
+        "ruleIds": [
+          "CLNT_HIGH",
+          "CLNT_CRIT",
+          "CHT_RATE",
+          "CHT_SUSTAINED",
+          "CHT_HIGH",
+          "CHT_CRIT"
+        ]
+      },
+      "telemetry": {
+        "primary": [
+          "coolant_temperature",
+          "cht_max",
+          "cht_1",
+          "cht_2",
+          "cht_3",
+          "cht_4"
+        ],
+        "context": [],
+        "clientDerived": [
+          {
+            "name": "cht_minus_coolant",
+            "formula": "cht_max - coolant_temperature",
+            "note": "Barely moves for this fault - the discriminator against COOLING_DEGRADATION."
+          }
+        ]
+      },
+      "affectedSubsystems": [
+        "10_EXTERNAL",
+        "01_ENGINE_CORE",
+        "06_COOLING"
+      ],
+      "visualization": {
+        "type": "COMPONENT_HIGHLIGHT",
+        "animation": "NONE",
+        "camera": {
+          "primary": "ROTAX_915IS_AIR_BAFFLES",
+          "view": "TOP_FRONT",
+          "ghostNonInvolved": false
+        },
+        "thermalState": "Represent the whole-loop temperature rise in the UI; the 3D layer only shows the render state.",
+        "renderStates": [
+          "HIGHLIGHT_WARNING",
+          "HIGHLIGHT_CRITICAL",
+          "HIGHLIGHT_CONTEXT",
+          "HIGHLIGHT_RECOVERING"
+        ],
+        "faultStates": [
+          "HEALTHY",
+          "WARNING",
+          "CRITICAL",
+          "RECOVERING"
+        ]
+      },
+      "limitations": [
+        "The radiator, ducts and cowl flaps are airframe-side and not in the model (OM p69: radiator installed below the engine).",
+        "The air baffle sits beside the engine in the source model, not in its installed position.",
+        "No airflow or heat-shimmer effect is shown."
+      ],
+      "cylinderSemantics": {
+        "indexUsedByPhysics": false,
+        "note": "The random fault scheduler may attach a cylinder index to this mode; it has no effect and must be ignored."
+      },
+      "alertLevelsDocumented": [
+        "YELLOW",
+        "ORANGE",
+        "RED"
+      ],
+      "defaultAlertLevel": "YELLOW",
+      "defaultAlertLevelBasis": "Lowest level among the rules the register lists for this fault; use only when no live alert level is available.",
+      "affectedComponentIds": [
+        "ROTAX_915IS_AIR_BAFFLES",
+        "ROTAX_915IS_COOLANT_EXPANSION_TANK",
+        "ROTAX_915IS_COOLANT_HOSES",
+        "ROTAX_915IS_CYLINDER_01",
+        "ROTAX_915IS_CYLINDER_02",
+        "ROTAX_915IS_CYLINDER_03",
+        "ROTAX_915IS_CYLINDER_04",
+        "ROTAX_915IS_CYLINDER_HEAD_01",
+        "ROTAX_915IS_CYLINDER_HEAD_02",
+        "ROTAX_915IS_CYLINDER_HEAD_03",
+        "ROTAX_915IS_CYLINDER_HEAD_04",
+        "ROTAX_915IS_SENSOR_COOLANT_TEMP"
+      ],
+      "telemetryChannels": [
+        "cht_1",
+        "cht_2",
+        "cht_3",
+        "cht_4",
+        "cht_max",
+        "coolant_temperature"
+      ],
+      "matrixKey": "fault_component_matrix.json#/faults/OVERHEATING_TREND",
+      "templateNote": "{N} = cylinder number, {CHANNEL} = drifting instrument; resolved values are in the matrix and in telemetryChannels / affectedComponentIds."
+    },
+    {
+      "faultId": "ABNORMAL_VIBRATION",
+      "enumValue": "abnormal_vibration",
+      "displayName": "Abnormal vibration",
+      "scope": "ENGINE",
+      "perCylinder": false,
+      "parameter": null,
+      "onset": "ramp · 20–150 h",
+      "healthFactors": [
+        "bearing_condition",
+        "bearing_clearance_mm"
+      ],
+      "registerChips": [
+        "ramp · 20–150 h",
+        "bearing_condition · clearance",
+        "Tier 3 F1 0.909"
+      ],
+      "tier3F1": 0.909,
+      "description": "A rolling-element bearing spalls — outer race or inner race — and the damage propagates from first detectable to failure. Wear also raises gear-mesh amplitude.",
+      "mechanism": "bearing_condition ≤ 1 − 0.65·m, clearance ≥ C₀(1 + m); bearing-wear pathway ×9. The 10 kHz waveform carries 1× unbalance, 2× misalignment, gear mesh, firing frequency and — once wear passes 2 % — amplitude-modulated impulse trains at BPFO and BPFI on a 2600 Hz resonance.",
+      "signature": "RMS and kurtosis rise. In the order domain the defects sit at 3.589× (outer race) and 5.411× (inner race) for this 9-ball bearing.",
+      "accelerates": {
+        "bearing_wear": 9.0
+      },
+      "detection": {
+        "rules": [
+          {
+            "ruleId": "VIB_HIGH",
+            "level": "ORANGE",
+            "legend": "VIBRATION HIGH",
+            "parameter": "vibration_rms_total",
+            "codeFaultTag": "abnormal_vibration"
+          },
+          {
+            "ruleId": "VIB_CRIT",
+            "level": "RED",
+            "legend": "VIBRATION HIGH",
+            "parameter": "vibration_rms_total",
+            "codeFaultTag": "abnormal_vibration"
+          },
+          {
+            "ruleId": "VIB_KURT",
+            "level": "YELLOW",
+            "legend": "VIB IMPULSIVE",
+            "parameter": "vibration_kurtosis",
+            "codeFaultTag": "abnormal_vibration"
+          }
+        ],
+        "other": [
+          "EDGE order_analysis.py names the race (BPFO 3.5888×, BPFI 5.4112×)"
+        ],
+        "ruleIds": [
+          "VIB_HIGH",
+          "VIB_CRIT",
+          "VIB_KURT"
+        ]
+      },
+      "telemetry": {
+        "primary": [
+          "vibration_rms_total",
+          "vibration_kurtosis",
+          "vibration_rms_x",
+          "vibration_rms_y",
+          "vibration_rms_z"
+        ],
+        "context": [],
+        "eventFields": [
+          {
+            "name": "orderFinding",
+            "note": "Edge order-analysis finding (e.g. 'bearing outer race defect (BPFO …x envelope floor)'); not a bus channel."
+          }
+        ]
+      },
+      "affectedSubsystems": [
+        "11_INTERNAL_ENGINE",
+        "01_ENGINE_CORE",
+        "09_GEARBOX"
+      ],
+      "visualization": {
+        "type": "COMPONENT_HIGHLIGHT",
+        "animation": "MICRO_JITTER_LOCAL",
+        "camera": {
+          "primary": "ROTAX_915IS_CRANKSHAFT",
+          "view": "SIDE",
+          "ghostNonInvolved": true,
+          "xray": [
+            "ROTAX_915IS_CRANKCASE_HALF_CYL_1_3",
+            "ROTAX_915IS_CRANKCASE_HALF_CYL_2_4"
+          ]
+        },
+        "renderStates": [
+          "HIGHLIGHT_WARNING",
+          "HIGHLIGHT_CRITICAL",
+          "HIGHLIGHT_CONTEXT",
+          "HIGHLIGHT_RECOVERING"
+        ],
+        "faultStates": [
+          "HEALTHY",
+          "WARNING",
+          "CRITICAL",
+          "RECOVERING"
+        ]
+      },
+      "limitations": [
+        "The register's scope chip is absent for this mode; the modelled factors are engine-wide, so it is treated as engine-level.",
+        "The simulator models one generic 9-ball rolling-element bearing whose defect orders are referenced to engine speed; no bearing mesh exists, so the crankshaft is used as the direct locus (APPROXIMATE).",
+        "The gearbox has no independent wear factor (register: gear mesh scales with bearing wear) and sits beside the engine in the source model.",
+        "The accelerometer is not modelled.",
+        "The whole engine must never be shaken; MICRO_JITTER_LOCAL is optional and off by default."
+      ],
+      "cylinderSemantics": {
+        "indexUsedByPhysics": false,
+        "note": "The random fault scheduler may attach a cylinder index to this mode; it has no effect and must be ignored."
+      },
+      "alertLevelsDocumented": [
+        "YELLOW",
+        "ORANGE",
+        "RED"
+      ],
+      "defaultAlertLevel": "YELLOW",
+      "defaultAlertLevelBasis": "Lowest level among the rules the register lists for this fault; use only when no live alert level is available.",
+      "affectedComponentIds": [
+        "ROTAX_915IS_CRANKCASE_HALF_CYL_1_3",
+        "ROTAX_915IS_CRANKCASE_HALF_CYL_2_4",
+        "ROTAX_915IS_CRANKSHAFT",
+        "ROTAX_915IS_GEARBOX"
+      ],
+      "telemetryChannels": [
+        "vibration_kurtosis",
+        "vibration_rms_total",
+        "vibration_rms_x",
+        "vibration_rms_y",
+        "vibration_rms_z"
+      ],
+      "matrixKey": "fault_component_matrix.json#/faults/ABNORMAL_VIBRATION",
+      "templateNote": "{N} = cylinder number, {CHANNEL} = drifting instrument; resolved values are in the matrix and in telemetryChannels / affectedComponentIds."
+    }
+  ]
+}

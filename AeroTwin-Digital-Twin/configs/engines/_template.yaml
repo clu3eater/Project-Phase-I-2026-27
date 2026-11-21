@@ -1,0 +1,63 @@
+# ==============================================================================
+# TEMPLATE FOR A NEW ENGINE
+#
+# 1. Copy this file to configs/engines/<your_engine_key>.yaml (lowercase, no
+#    leading underscore -- files starting with "_" are not listed as engines).
+# 2. Change the identity and every number you have data for. Anything you leave
+#    out is inherited from the engine named in `extends:`.
+# 3. Check it:        python run.py --check-engine <your_engine_key>
+#    or in the console: ENGINES page (commander) -- it lists every missing key.
+# 4. Run it:          python run.py --engine <your_engine_key>
+#    or select it on the ENGINES page, or set DT_ENGINE=<your_engine_key>.
+#
+# Lists and numbers REPLACE the inherited value; sections (mappings) MERGE key
+# by key. Set a section to null to opt out of it (e.g. `performance_table: null`
+# when you have no manufacturer performance table).
+#
+# Inherited values are the base engine's data, not yours. Keep
+# `identity.validated: false` until the file has been calibrated against real
+# engine or rig data; the console and the reports show the engine as
+# unvalidated while it is.
+# ==============================================================================
+schema_version: 1
+extends: rotax_915is
+
+identity:
+  engine_type: MY_ENGINE
+  display_name: "My engine (unvalidated)"
+  ignition: SPARK                  # SPARK or COMPRESSION -- selects the combustion model
+  validated: false
+
+# geometry:
+#   cylinders: 4
+#   bore_mm: 84.0
+#   stroke_mm: 61.0
+#   displacement_total_L: 1.352
+#   compression_ratio: 9.0
+
+# ratings:
+#   max_power_kW: 104.0
+#   max_power_rpm: 5800
+#   continuous_power_kW: 99.0
+#   continuous_power_rpm: 5500
+#   tbo_hours: 1200.0
+
+# limits:
+#   egt_max_C: 950.0
+#   oil_temperature_C: [50.0, 130.0]
+#   coolant_temperature_max_C: 120.0
+
+# performance_table: null          # no manufacturer table for this engine
+
+# Alert and health limits that differ for THIS engine, laid over
+# configs/thresholds.yaml while it is the active engine.
+# thresholds_override:
+#   parameters:
+#     vibration_rms:
+#       normal_max: 3.5
+#       alert_max: 5.0
+#       critical_max: 8.0
+#   health:
+#     mhi:
+#       vib_nominal: 3.0
+#       vib_limit: 8.0

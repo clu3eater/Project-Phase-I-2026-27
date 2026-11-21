@@ -1,0 +1,99 @@
+{
+  "engine": "Rotax 912 (Altus II, two-stage turbo, EFI) vs twin rotax_915is as-new",
+  "flights": 54,
+  "steady_points": 202,
+  "channels": {
+    "cht_c": {
+      "unit": "degC",
+      "n": 202,
+      "offset": -12.67,
+      "scatter_after_offset": 43.76,
+      "trend_r": 0.429,
+      "measured_min": 63.6,
+      "measured_max": 105.9
+    },
+    "coolant_c": {
+      "unit": "degC",
+      "n": 202,
+      "offset": -1.15,
+      "scatter_after_offset": 32.12,
+      "trend_r": 0.796,
+      "measured_min": 21.3,
+      "measured_max": 82.5
+    },
+    "oil_temperature_c": {
+      "unit": "degC",
+      "n": 202,
+      "offset": 31.23,
+      "scatter_after_offset": 8.17,
+      "trend_r": 0.107,
+      "measured_min": 49.0,
+      "measured_max": 97.0
+    },
+    "oil_pressure_psi": {
+      "unit": "psi",
+      "n": 202,
+      "offset": -13.43,
+      "scatter_after_offset": 13.0,
+      "trend_r": -0.36,
+      "measured_min": 53.0,
+      "measured_max": 70.0
+    },
+    "egt_max_c": {
+      "unit": "degC",
+      "n": 202,
+      "offset": -6.33,
+      "scatter_after_offset": 76.78,
+      "trend_r": 0.716,
+      "measured_min": 521.4,
+      "measured_max": 752.1
+    },
+    "fuel_flow_lph": {
+      "unit": "L/h",
+      "n": 202,
+      "offset": -5.56,
+      "scatter_after_offset": 9.4,
+      "trend_r": 0.804,
+      "measured_min": 3.4,
+      "measured_max": 44.6
+    }
+  },
+  "sensors": {
+    "cht_c": {
+      "unit": "degC",
+      "resolution": 1.113,
+      "steady_noise_sd": 0.558,
+      "dropout_pct": 0.0
+    },
+    "coolant_c": {
+      "unit": "degC",
+      "resolution": 1.113,
+      "steady_noise_sd": 0.558,
+      "dropout_pct": 0.0
+    },
+    "oil_temperature_c": {
+      "unit": "degC",
+      "resolution": 1.0,
+      "steady_noise_sd": 0.269,
+      "dropout_pct": 0.0
+    },
+    "oil_pressure_psi": {
+      "unit": "psi",
+      "resolution": 1.0,
+      "steady_noise_sd": 0.637,
+      "dropout_pct": 0.0
+    },
+    "egt_max_c": {
+      "unit": "degC",
+      "resolution": 3.606,
+      "steady_noise_sd": 1.833,
+      "dropout_pct": 0.0
+    },
+    "fuel_flow_lph": {
+      "unit": "L/h",
+      "resolution": 0.0,
+      "steady_noise_sd": 0.585,
+      "dropout_pct": 1.76
+    }
+  }
+}

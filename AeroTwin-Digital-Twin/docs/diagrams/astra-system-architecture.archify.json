@@ -1,0 +1,1659 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Aerospace Engine Health Monitoring & Digital Twin System Architecture",
+    "output": "docs/diagrams/astra-system-architecture.html",
+    "quality_profile": "standard",
+    "viewBox": [
+      2147,
+      934
+    ],
+    "views": [
+      {
+        "id": "acquisition",
+        "label": "Acquisition",
+        "focus": [
+          "p_sensor",
+          "p_rpm",
+          "p_cht",
+          "p_egt",
+          "p_oilp",
+          "p_oilt",
+          "p_fuel",
+          "p_vib",
+          "p_batt",
+          "p_inj",
+          "a_can",
+          "a_ecu",
+          "a_ingest",
+          "a_valid",
+          "a_fusion",
+          "a_edgeai",
+          "a_buffer",
+          "a_reject",
+          "a_vib",
+          "a_tier1",
+          "a_sec",
+          "a_mqtt"
+        ],
+        "note": "Sensors to the edge node: acquire, validate, fuse, buffer, downlink."
+      },
+      {
+        "id": "twin",
+        "label": "Digital twin",
+        "focus": [
+          "b_thermo",
+          "b_perfmap",
+          "b_faillogic",
+          "b_vem",
+          "b_asnew",
+          "b_residual",
+          "b_state",
+          "b_history"
+        ],
+        "note": "The virtual engine and the residual it forms against an as-new reference."
+      },
+      {
+        "id": "detection",
+        "label": "Detection",
+        "focus": [
+          "c_t1",
+          "c_t2",
+          "c_t3",
+          "c_hold",
+          "c_fusion",
+          "c_agree",
+          "c_detect",
+          "c_fault8",
+          "c_f1",
+          "c_f2",
+          "c_f3",
+          "c_f4",
+          "c_f5",
+          "c_f6",
+          "c_f7",
+          "c_f8"
+        ],
+        "note": "Three tiers, fused and gated, resolved into the eight fault modes."
+      },
+      {
+        "id": "prognostics",
+        "label": "Prognostics",
+        "focus": [
+          "c_health",
+          "c_degrade",
+          "c_trend",
+          "c_kalman",
+          "c_rul",
+          "c_prob",
+          "c_xai",
+          "c_advisory"
+        ],
+        "note": "Remaining life, failure probability and the advisory they justify."
+      },
+      {
+        "id": "operations",
+        "label": "Operations",
+        "focus": [
+          "d_env",
+          "d_mission",
+          "d_rel",
+          "d_go",
+          "d_golim",
+          "d_nogo",
+          "d_c1",
+          "d_c2",
+          "d_c3",
+          "d_c4",
+          "d_replay",
+          "d_post",
+          "e_advisory",
+          "e_alerts",
+          "f_pm",
+          "f_or",
+          "f_mp",
+          "f_lcm"
+        ],
+        "note": "Simulation, replay, the operator dashboard and the programme outcomes."
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "p_sensor",
+      "type": "external",
+      "label": "ENGINE SENSOR",
+      "pos": [
+        344,
+        40
+      ],
+      "size": [
+        110,
+        34
+      ]
+    },
+    {
+      "id": "p_rpm",
+      "type": "external",
+      "label": "RPM",
+      "pos": [
+        484,
+        40
+      ],
+      "size": [
+        104,
+        34
+      ]
+    },
+    {
+      "id": "p_cht",
+      "type": "external",
+      "label": "CHT",
+      "pos": [
+        618,
+        40
+      ],
+      "size": [
+        104,
+        34
+      ]
+    },
+    {
+      "id": "p_egt",
+      "type": "external",
+      "label": "EGT",
+      "pos": [
+        752,
+        40
+      ],
+      "size": [
+        104,
+        34
+      ]
+    },
+    {
+      "id": "p_oilp",
+      "type": "external",
+      "label": "OIL PRESSURE",
+      "pos": [
+        886,
+        40
+      ],
+      "size": [
+        104,
+        34
+      ]
+    },
+    {
+      "id": "p_oilt",
+      "type": "external",
+      "label": "OIL TEMPERATURE",
+      "pos": [
+        1020,
+        40
+      ],
+      "size": [
+        123,
+        34
+      ]
+    },
+    {
+      "id": "p_fuel",
+      "type": "external",
+      "label": "FUEL FLOW",
+      "pos": [
+        1174,
+        40
+      ],
+      "size": [
+        104,
+        34
+      ]
+    },
+    {
+      "id": "p_vib",
+      "type": "external",
+      "label": "VIBRATION SIGNATURE",
+      "pos": [
+        1308,
+        40
+      ],
+      "size": [
+        150,
+        34
+      ]
+    },
+    {
+      "id": "p_batt",
+      "type": "external",
+      "label": "BATTERY / ALTERNATOR",
+      "pos": [
+        1488,
+        40
+      ],
+      "size": [
+        156,
+        34
+      ]
+    },
+    {
+      "id": "p_inj",
+      "type": "external",
+      "label": "INJECTION TIMING",
+      "pos": [
+        1674,
+        40
+      ],
+      "size": [
+        130,
+        34
+      ]
+    },
+    {
+      "id": "a_can",
+      "type": "messagebus",
+      "label": "CAN Bus Data Acquisition",
+      "pos": [
+        301,
+        110
+      ],
+      "size": [
+        183,
+        34
+      ]
+    },
+    {
+      "id": "a_ecu",
+      "type": "messagebus",
+      "label": "ECU/FADEC - Communication Interface",
+      "pos": [
+        514,
+        110
+      ],
+      "size": [
+        255,
+        34
+      ]
+    },
+    {
+      "id": "a_ingest",
+      "type": "backend",
+      "label": "Real-Time Data Ingestion",
+      "pos": [
+        799,
+        110
+      ],
+      "size": [
+        183,
+        34
+      ]
+    },
+    {
+      "id": "a_valid",
+      "type": "cloud",
+      "label": "Reading Valid?",
+      "tag": "decision",
+      "pos": [
+        1012,
+        110
+      ],
+      "size": [
+        117,
+        34
+      ]
+    },
+    {
+      "id": "a_fusion",
+      "type": "backend",
+      "label": "Sensor Fusion",
+      "pos": [
+        1159,
+        110
+      ],
+      "size": [
+        110,
+        34
+      ]
+    },
+    {
+      "id": "a_edgeai",
+      "type": "backend",
+      "label": "Lightweight Onboard Analytics - Edge AI",
+      "pos": [
+        1299,
+        110
+      ],
+      "size": [
+        282,
+        34
+      ]
+    },
+    {
+      "id": "a_buffer",
+      "type": "database",
+      "label": "72-Hour Store-and-Forward Buffer",
+      "pos": [
+        1611,
+        110
+      ],
+      "size": [
+        236,
+        34
+      ]
+    },
+    {
+      "id": "a_reject",
+      "type": "external",
+      "label": "Reject Invalid Value - noise substitute",
+      "pos": [
+        490,
+        168
+      ],
+      "size": [
+        282,
+        34
+      ]
+    },
+    {
+      "id": "a_vib",
+      "type": "backend",
+      "label": "Vibration Order Analysis",
+      "pos": [
+        802,
+        168
+      ],
+      "size": [
+        183,
+        34
+      ]
+    },
+    {
+      "id": "a_tier1",
+      "type": "backend",
+      "label": "Tier-1 Safety Rules On Board",
+      "pos": [
+        1016,
+        168
+      ],
+      "size": [
+        209,
+        34
+      ]
+    },
+    {
+      "id": "a_sec",
+      "type": "security",
+      "label": "On-Board Security",
+      "pos": [
+        1254,
+        168
+      ],
+      "size": [
+        137,
+        34
+      ]
+    },
+    {
+      "id": "a_mqtt",
+      "type": "messagebus",
+      "label": "MQTT Telemetry - QoS + last will",
+      "pos": [
+        1422,
+        168
+      ],
+      "size": [
+        236,
+        34
+      ]
+    },
+    {
+      "id": "b_thermo",
+      "type": "backend",
+      "label": "Thermodynamic Behaviour Model",
+      "pos": [
+        738,
+        238
+      ],
+      "size": [
+        216,
+        34
+      ]
+    },
+    {
+      "id": "b_perfmap",
+      "type": "backend",
+      "label": "Engine Performance Map",
+      "pos": [
+        984,
+        238
+      ],
+      "size": [
+        170,
+        34
+      ]
+    },
+    {
+      "id": "b_faillogic",
+      "type": "backend",
+      "label": "Failure/Degradation Logic",
+      "pos": [
+        1184,
+        238
+      ],
+      "size": [
+        189,
+        34
+      ]
+    },
+    {
+      "id": "b_vem",
+      "type": "backend",
+      "label": "Virtual Engine Model - synchronized with live engine data",
+      "pos": [
+        273,
+        296
+      ],
+      "size": [
+        401,
+        34
+      ]
+    },
+    {
+      "id": "b_asnew",
+      "type": "backend",
+      "label": "As-New Reference - predicts at same operating point",
+      "pos": [
+        704,
+        296
+      ],
+      "size": [
+        361,
+        34
+      ]
+    },
+    {
+      "id": "b_residual",
+      "type": "backend",
+      "label": "RESIDUAL = Measured - Predicted",
+      "pos": [
+        1095,
+        296
+      ],
+      "size": [
+        229,
+        34
+      ]
+    },
+    {
+      "id": "b_state",
+      "type": "backend",
+      "label": "Real Time Engine State Estimation",
+      "pos": [
+        1354,
+        296
+      ],
+      "size": [
+        242,
+        34
+      ]
+    },
+    {
+      "id": "b_history",
+      "type": "database",
+      "label": "Flight History - record per sortie",
+      "pos": [
+        1626,
+        296
+      ],
+      "size": [
+        249,
+        34
+      ]
+    },
+    {
+      "id": "c_t1",
+      "type": "backend",
+      "label": "Tier 1 - Rule Based Threshold",
+      "pos": [
+        561,
+        366
+      ],
+      "size": [
+        216,
+        34
+      ]
+    },
+    {
+      "id": "c_t2",
+      "type": "backend",
+      "label": "Tier 2 - Statistical Anomaly Detection",
+      "pos": [
+        807,
+        366
+      ],
+      "size": [
+        275,
+        34
+      ]
+    },
+    {
+      "id": "c_t3",
+      "type": "backend",
+      "label": "Tier 3 - Deep Learning LSTM Autoencoder",
+      "pos": [
+        1112,
+        366
+      ],
+      "size": [
+        282,
+        34
+      ]
+    },
+    {
+      "id": "c_hold",
+      "type": "external",
+      "label": "Hold - No False Alarm",
+      "pos": [
+        1424,
+        366
+      ],
+      "size": [
+        163,
+        34
+      ]
+    },
+    {
+      "id": "c_fusion",
+      "type": "backend",
+      "label": "Score Fusion",
+      "pos": [
+        770,
+        424
+      ],
+      "size": [
+        104,
+        34
+      ]
+    },
+    {
+      "id": "c_agree",
+      "type": "cloud",
+      "label": "Tiers 2 & 3 Agree?",
+      "tag": "decision",
+      "pos": [
+        904,
+        424
+      ],
+      "size": [
+        143,
+        34
+      ]
+    },
+    {
+      "id": "c_detect",
+      "type": "backend",
+      "label": "Detection Of Abnormal Operating Conditions",
+      "pos": [
+        1076,
+        424
+      ],
+      "size": [
+        302,
+        34
+      ]
+    },
+    {
+      "id": "c_fault8",
+      "type": "backend",
+      "label": "Fault Prediction - 8 Modes",
+      "pos": [
+        282,
+        482
+      ],
+      "size": [
+        196,
+        34
+      ]
+    },
+    {
+      "id": "c_f1",
+      "type": "external",
+      "label": "Misfire",
+      "pos": [
+        504,
+        482
+      ],
+      "size": [
+        104,
+        34
+      ]
+    },
+    {
+      "id": "c_f2",
+      "type": "external",
+      "label": "Injector Abnormality",
+      "pos": [
+        634,
+        482
+      ],
+      "size": [
+        156,
+        34
+      ]
+    },
+    {
+      "id": "c_f3",
+      "type": "external",
+      "label": "Cooling Degradation",
+      "pos": [
+        816,
+        482
+      ],
+      "size": [
+        150,
+        34
+      ]
+    },
+    {
+      "id": "c_f4",
+      "type": "external",
+      "label": "Lubrication Issues",
+      "pos": [
+        992,
+        482
+      ],
+      "size": [
+        143,
+        34
+      ]
+    },
+    {
+      "id": "c_f5",
+      "type": "external",
+      "label": "Sensor Drift / Failure",
+      "pos": [
+        1162,
+        482
+      ],
+      "size": [
+        170,
+        34
+      ]
+    },
+    {
+      "id": "c_f6",
+      "type": "external",
+      "label": "Combustion Instability",
+      "pos": [
+        1358,
+        482
+      ],
+      "size": [
+        170,
+        34
+      ]
+    },
+    {
+      "id": "c_f7",
+      "type": "external",
+      "label": "Overheating Trends",
+      "pos": [
+        1554,
+        482
+      ],
+      "size": [
+        143,
+        34
+      ]
+    },
+    {
+      "id": "c_f8",
+      "type": "external",
+      "label": "Abnormal Vibration",
+      "pos": [
+        1722,
+        482
+      ],
+      "size": [
+        143,
+        34
+      ]
+    },
+    {
+      "id": "c_health",
+      "type": "backend",
+      "label": "Health Indicators & Indices - per sub-system",
+      "pos": [
+        449,
+        540
+      ],
+      "size": [
+        315,
+        34
+      ]
+    },
+    {
+      "id": "c_degrade",
+      "type": "backend",
+      "label": "Degradation Tracking",
+      "pos": [
+        794,
+        540
+      ],
+      "size": [
+        156,
+        34
+      ]
+    },
+    {
+      "id": "c_trend",
+      "type": "backend",
+      "label": "Trend Analysis",
+      "pos": [
+        980,
+        540
+      ],
+      "size": [
+        117,
+        34
+      ]
+    },
+    {
+      "id": "c_kalman",
+      "type": "backend",
+      "label": "Physics-Based Kalman Filter - conformal interval - narrows the hour-remaining range",
+      "pos": [
+        1127,
+        540
+      ],
+      "size": [
+        572,
+        34
+      ]
+    },
+    {
+      "id": "c_rul",
+      "type": "backend",
+      "label": "RUL Estimation With Confidence Interval",
+      "pos": [
+        184,
+        598
+      ],
+      "size": [
+        282,
+        34
+      ]
+    },
+    {
+      "id": "c_prob",
+      "type": "backend",
+      "label": "Failure Probability - Next Sortie - calibrated: will it survive the mission?",
+      "pos": [
+        496,
+        598
+      ],
+      "size": [
+        526,
+        34
+      ]
+    },
+    {
+      "id": "c_xai",
+      "type": "backend",
+      "label": "Explainable AI - every alert traced to a physical quantity and ATA chapter",
+      "pos": [
+        1052,
+        598
+      ],
+      "size": [
+        513,
+        34
+      ]
+    },
+    {
+      "id": "c_advisory",
+      "type": "backend",
+      "label": "Maintenance Advisory - part - ATA chapter - deadline",
+      "pos": [
+        1596,
+        598
+      ],
+      "size": [
+        368,
+        34
+      ]
+    },
+    {
+      "id": "d_env",
+      "type": "backend",
+      "label": "Environmental Condition Simulation",
+      "pos": [
+        46,
+        668
+      ],
+      "size": [
+        249,
+        34
+      ]
+    },
+    {
+      "id": "d_mission",
+      "type": "backend",
+      "label": "Mission Profile Simulation",
+      "pos": [
+        326,
+        668
+      ],
+      "size": [
+        196,
+        34
+      ]
+    },
+    {
+      "id": "d_rel",
+      "type": "cloud",
+      "label": "Mission Reliability?",
+      "tag": "decision",
+      "pos": [
+        552,
+        668
+      ],
+      "size": [
+        156,
+        34
+      ]
+    },
+    {
+      "id": "d_go",
+      "type": "backend",
+      "label": "Go",
+      "pos": [
+        738,
+        668
+      ],
+      "size": [
+        104,
+        34
+      ]
+    },
+    {
+      "id": "d_golim",
+      "type": "messagebus",
+      "label": "Go With Limits",
+      "pos": [
+        872,
+        668
+      ],
+      "size": [
+        117,
+        34
+      ]
+    },
+    {
+      "id": "d_nogo",
+      "type": "security",
+      "label": "No Go",
+      "pos": [
+        1018,
+        668
+      ],
+      "size": [
+        104,
+        34
+      ]
+    },
+    {
+      "id": "d_c1",
+      "type": "external",
+      "label": "High Altitude",
+      "pos": [
+        46,
+        726
+      ],
+      "size": [
+        110,
+        34
+      ]
+    },
+    {
+      "id": "d_c2",
+      "type": "external",
+      "label": "Endurance Mission",
+      "pos": [
+        186,
+        726
+      ],
+      "size": [
+        137,
+        34
+      ]
+    },
+    {
+      "id": "d_c3",
+      "type": "external",
+      "label": "Hot-Weather Operation",
+      "pos": [
+        354,
+        726
+      ],
+      "size": [
+        163,
+        34
+      ]
+    },
+    {
+      "id": "d_c4",
+      "type": "external",
+      "label": "Rapid Throttle Transitions",
+      "pos": [
+        546,
+        726
+      ],
+      "size": [
+        196,
+        34
+      ]
+    },
+    {
+      "id": "d_replay",
+      "type": "backend",
+      "label": "Replay Of Historical Mission Data",
+      "pos": [
+        772,
+        726
+      ],
+      "size": [
+        242,
+        34
+      ]
+    },
+    {
+      "id": "d_post",
+      "type": "backend",
+      "label": "Post-Flight Analysis & Mission Replay",
+      "pos": [
+        1044,
+        726
+      ],
+      "size": [
+        269,
+        34
+      ]
+    },
+    {
+      "id": "e_advisory",
+      "type": "frontend",
+      "label": "Maintenance Advisory",
+      "pos": [
+        1434,
+        668
+      ],
+      "size": [
+        156,
+        34
+      ]
+    },
+    {
+      "id": "e_alerts",
+      "type": "frontend",
+      "label": "Fault Alerts With Recommended Action",
+      "pos": [
+        1620,
+        668
+      ],
+      "size": [
+        262,
+        34
+      ]
+    },
+    {
+      "id": "e_param",
+      "type": "frontend",
+      "label": "Real-Time Engine Parameter Visualization",
+      "pos": [
+        1434,
+        726
+      ],
+      "size": [
+        288,
+        34
+      ]
+    },
+    {
+      "id": "e_abn",
+      "type": "frontend",
+      "label": "Detection Of Abnormal Conditions - operator view",
+      "pos": [
+        1752,
+        726
+      ],
+      "size": [
+        341,
+        34
+      ]
+    },
+    {
+      "id": "e_health",
+      "type": "frontend",
+      "label": "Real-Time Engine Health Status",
+      "pos": [
+        1434,
+        784
+      ],
+      "size": [
+        222,
+        34
+      ]
+    },
+    {
+      "id": "e_eff",
+      "type": "frontend",
+      "label": "Engine Efficiency Trends",
+      "pos": [
+        1686,
+        784
+      ],
+      "size": [
+        183,
+        34
+      ]
+    },
+    {
+      "id": "e_reports",
+      "type": "frontend",
+      "label": "Mission-Wise Health Reports",
+      "pos": [
+        1898,
+        784
+      ],
+      "size": [
+        203,
+        34
+      ]
+    },
+    {
+      "id": "f_pm",
+      "type": "cloud",
+      "label": "Predictive Maintenance",
+      "pos": [
+        710,
+        854
+      ],
+      "size": [
+        170,
+        34
+      ]
+    },
+    {
+      "id": "f_or",
+      "type": "cloud",
+      "label": "Operational Reliability",
+      "pos": [
+        910,
+        854
+      ],
+      "size": [
+        176,
+        34
+      ]
+    },
+    {
+      "id": "f_mp",
+      "type": "cloud",
+      "label": "Mission Planning",
+      "pos": [
+        1116,
+        854
+      ],
+      "size": [
+        130,
+        34
+      ]
+    },
+    {
+      "id": "f_lcm",
+      "type": "cloud",
+      "label": "Life Cycle Management",
+      "pos": [
+        1276,
+        854
+      ],
+      "size": [
+        163,
+        34
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "1. PHYSICAL LAYER - AERO PISTON ENGINE ON MALE UAV - ISR, COMMUNICATION RELAY, MARITIME SURVEILLANCE",
+      "wraps": [
+        "p_sensor",
+        "p_rpm",
+        "p_cht",
+        "p_egt",
+        "p_oilp",
+        "p_oilt",
+        "p_fuel",
+        "p_vib",
+        "p_batt",
+        "p_inj"
+      ],
+      "pad": 16
+    },
+    {
+      "kind": "security-group",
+      "label": "A. EDGE COMPUTING ARCHITECTURE - EMBEDDED SYSTEMS ON THE AIRCRAFT",
+      "wraps": [
+        "a_can",
+        "a_ecu",
+        "a_ingest",
+        "a_valid",
+        "a_fusion",
+        "a_edgeai",
+        "a_buffer",
+        "a_reject",
+        "a_vib",
+        "a_tier1",
+        "a_sec",
+        "a_mqtt"
+      ],
+      "pad": 16
+    },
+    {
+      "kind": "region",
+      "label": "B. DIGITAL TWIN CORE FRAMEWORK - CENTRAL INTELLIGENCE LAYER CONTINUOUSLY SYNCHRONIZED & VIRTUAL REPRESENTATION",
+      "wraps": [
+        "b_thermo",
+        "b_perfmap",
+        "b_faillogic",
+        "b_vem",
+        "b_asnew",
+        "b_residual",
+        "b_state",
+        "b_history"
+      ],
+      "pad": 16
+    },
+    {
+      "kind": "region",
+      "label": "C. AI/ML LAYER - PHYSICS-INFORMED, HYBRID THERMODYNAMIC + DATA-DRIVEN, ADAPTIVE LEARNING",
+      "wraps": [
+        "c_t1",
+        "c_t2",
+        "c_t3",
+        "c_hold",
+        "c_fusion",
+        "c_agree",
+        "c_detect",
+        "c_fault8",
+        "c_f1",
+        "c_f2",
+        "c_f3",
+        "c_f4",
+        "c_f5",
+        "c_f6",
+        "c_f7",
+        "c_f8",
+        "c_health",
+        "c_degrade",
+        "c_trend",
+        "c_kalman",
+        "c_rul",
+        "c_prob",
+        "c_xai",
+        "c_advisory"
+      ],
+      "pad": 16
+    },
+    {
+      "kind": "region",
+      "label": "D. SIMULATION AND REPLAY",
+      "wraps": [
+        "d_env",
+        "d_mission",
+        "d_rel",
+        "d_go",
+        "d_golim",
+        "d_nogo",
+        "d_c1",
+        "d_c2",
+        "d_c3",
+        "d_c4",
+        "d_replay",
+        "d_post"
+      ],
+      "pad": 16
+    },
+    {
+      "kind": "region",
+      "label": "E. VISUALIZATION DASHBOARD / HMI",
+      "wraps": [
+        "e_advisory",
+        "e_alerts",
+        "e_param",
+        "e_abn",
+        "e_health",
+        "e_eff",
+        "e_reports"
+      ],
+      "pad": 16
+    },
+    {
+      "kind": "region",
+      "label": "F. OUTCOME",
+      "wraps": [
+        "f_pm",
+        "f_or",
+        "f_mp",
+        "f_lcm"
+      ],
+      "pad": 16
+    }
+  ],
+  "connections": [
+    {
+      "from": "p_sensor",
+      "to": "a_can",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "a_can",
+      "to": "a_ecu",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "from": "a_ecu",
+      "to": "a_ingest",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "from": "a_ingest",
+      "to": "a_valid",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "from": "a_valid",
+      "to": "a_reject",
+      "label": "invalid",
+      "variant": "dashed",
+      "labelAt": [
+        1070,
+        157
+      ],
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "a_valid",
+      "to": "a_fusion",
+      "label": "valid",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "from": "a_fusion",
+      "to": "a_edgeai",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "from": "a_edgeai",
+      "to": "a_buffer",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "from": "a_ingest",
+      "to": "a_vib",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "a_vib",
+      "to": "a_tier1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "from": "a_tier1",
+      "to": "a_sec",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "from": "a_sec",
+      "to": "a_mqtt",
+      "variant": "security",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "from": "a_buffer",
+      "to": "a_mqtt",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "a_mqtt",
+      "to": "b_vem",
+      "label": "downlink",
+      "variant": "emphasis",
+      "labelAt": [
+        473,
+        247
+      ],
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "b_thermo",
+      "to": "b_vem",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "b_perfmap",
+      "to": "b_vem",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "b_faillogic",
+      "to": "b_vem",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "b_vem",
+      "to": "b_asnew",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "from": "b_asnew",
+      "to": "b_residual",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "from": "b_residual",
+      "to": "b_state",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "from": "b_state",
+      "to": "b_history",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "from": "b_state",
+      "to": "c_t1",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "b_state",
+      "to": "c_t2",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "b_state",
+      "to": "c_t3",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "c_t1",
+      "to": "c_fusion",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "c_t2",
+      "to": "c_fusion",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "c_t3",
+      "to": "c_fusion",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "c_fusion",
+      "to": "c_agree",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "from": "c_agree",
+      "to": "c_hold",
+      "label": "no",
+      "variant": "dashed",
+      "labelAt": [
+        1164,
+        413
+      ],
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "from": "c_agree",
+      "to": "c_detect",
+      "label": "yes",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "from": "c_detect",
+      "to": "c_fault8",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "c_fault8",
+      "to": "c_f1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "from": "c_fault8",
+      "to": "c_health",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "c_fault8",
+      "to": "c_degrade",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "c_fault8",
+      "to": "c_trend",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "c_health",
+      "to": "c_rul",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "c_degrade",
+      "to": "c_rul",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "c_trend",
+      "to": "c_rul",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "c_kalman",
+      "to": "c_rul",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "c_rul",
+      "to": "c_prob",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "from": "c_rul",
+      "to": "c_xai",
+      "fromSide": "bottom",
+      "toSide": "bottom"
+    },
+    {
+      "from": "c_prob",
+      "to": "c_advisory",
+      "fromSide": "bottom",
+      "toSide": "bottom"
+    },
+    {
+      "from": "c_xai",
+      "to": "c_advisory",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "from": "c_prob",
+      "to": "d_rel",
+      "label": "mission risk",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "d_c1",
+      "to": "d_env",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "from": "d_c2",
+      "to": "d_env",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "from": "d_c3",
+      "to": "d_env",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "from": "d_c4",
+      "to": "d_env",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "from": "d_env",
+      "to": "d_mission",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "from": "d_mission",
+      "to": "d_rel",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "from": "d_rel",
+      "to": "d_go",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "from": "d_rel",
+      "to": "d_golim",
+      "fromSide": "top",
+      "toSide": "top"
+    },
+    {
+      "from": "d_rel",
+      "to": "d_nogo",
+      "variant": "security",
+      "fromSide": "top",
+      "toSide": "top"
+    },
+    {
+      "from": "d_rel",
+      "to": "d_replay",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "d_replay",
+      "to": "d_post",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "from": "d_post",
+      "to": "f_pm",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "e_eff",
+      "to": "f_or",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "e_reports",
+      "to": "f_mp",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "e_health",
+      "to": "f_lcm",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top"
+    }
+  ]
+}

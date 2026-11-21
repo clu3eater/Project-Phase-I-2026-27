@@ -1,0 +1,118 @@
+erDiagram
+    USERS {
+        string username PK
+        string role
+        string hash
+        int disabled
+        int must_change
+        int token_epoch
+    }
+    ENGINE_CONFIG_YAML {
+        string engine_key "YAML filename key"
+        string identity
+        object geometry
+        object thermodynamics
+    }
+    AIRCRAFT {
+        string tail PK
+        string engine_key
+        int released
+        string release_by
+        string limitations "JSON"
+        string last_health "JSON"
+    }
+    MISSIONS {
+        string id PK
+        string tail
+        string operator
+        string created_by
+        string approved_by
+        string status
+        float engine_hours
+    }
+    DEFECTS {
+        int id PK
+        string tail
+        string mission_id
+        string status
+        string raised_by
+        string disposed_by
+        string rectified_by
+    }
+    LOGBOOK {
+        int id PK
+        string tail
+        string by
+        string role
+        string kind
+        string data "JSON"
+    }
+    STATION_LOCAL {
+        string key PK
+        string value
+    }
+    FLIGHTS {
+        int flight_id PK
+        string engine_key
+        string aircraft_id
+        float flight_hours
+        float health_chi
+        string health_json
+        string events_json
+    }
+    OUTBOX {
+        int id PK
+        string record_uuid UK
+        string kind
+        string payload
+        int synced
+    }
+    TELEMETRY {
+        int id PK
+        float t_s
+        int uploaded
+        string payload
+    }
+    ALERTS {
+        int id PK
+        float t_s
+        string rule_id
+        int level
+        string category
+    }
+    STATIONS_CENTRAL {
+        string station_id PK
+        string name
+        string api_key_hash
+        boolean disabled
+    }
+    FLIGHT_RECORDS_CENTRAL {
+        uuid record_uuid PK
+        string station_id FK
+        string engine_key
+        string aircraft_id
+        jsonb payload
+    }
+    DIRECTORY_CENTRAL {
+        string username PK
+        string role
+        string hash
+        boolean disabled
+        string full_name
+    }
+    ENGINE_CONFIG_YAML ||..o{ AIRCRAFT : engine_key
+    ENGINE_CONFIG_YAML ||..o{ FLIGHTS : engine_key
+    AIRCRAFT o|..o{ MISSIONS : tail
+    USERS o|..o{ MISSIONS : "commander creates approves"
+    USERS o|..o{ MISSIONS : "operator assigned"
+    USERS o|..o{ AIRCRAFT : "maintainer releases"
+    AIRCRAFT ||..o{ DEFECTS : tail
+    MISSIONS o|..o{ DEFECTS : mission_id
+    USERS o|..o{ DEFECTS : "raise disposition rectify"
+    AIRCRAFT o|..o{ LOGBOOK : tail
+    USERS o|..o{ LOGBOOK : by
+    AIRCRAFT o|..o{ FLIGHTS : aircraft_id
+    FLIGHTS o|..o| OUTBOX : "serialized flight payload"
+    OUTBOX o|..o| FLIGHT_RECORDS_CENTRAL : record_uuid
+    STATIONS_CENTRAL ||--o{ FLIGHT_RECORDS_CENTRAL : station_id
+    DIRECTORY_CENTRAL o|..o{ USERS : "username synchronized across stations"

@@ -1,0 +1,326 @@
+/* Design tokens -- docs/PRD_Part4_Defence_HMI_Standard.md section 3.2.
+ *
+ * These are normative. Every colour that carries meaning in this console is
+ * defined here and nowhere else, because the ">= 6 coding colours" rule of
+ * RTCA DO-257A only holds if there is one place to count them.
+ *
+ * Six meaning-bearing hues: red, amber, green, cyan, white, magenta. Greys are
+ * not coding colours. Nothing else may carry meaning.
+ */
+
+:root {
+  /* --- surfaces ------------------------------------------------------- */
+  --bg-void: #05070a;
+  --bg-panel: #0b1018;
+  --bg-raised: #121a25;
+  --line: #1e2a38;
+
+  /* --- text ----------------------------------------------------------- */
+  --ink: #e8f0f8;       /* current values, scales   [R3] Table 3.7.1 */
+  --ink-dim: #9baabb;   /* units, labels */
+  /* 4.83:1 on the lightest night surface. It was #63748a, which measured
+   * 3.66:1 -- under the 4.5:1 that s3.4a sets for body text, on a token the
+   * console uses for real readable content (map attribution, hints, notes)
+   * and not only for disabled controls. */
+  --ink-mute: #77889d;  /* inactive / unavailable   MIL-STD-1472H Table XL */
+
+  /* --- the six coding colours ----------------------------------------- */
+  --state-normal: #37d17a;   /* green  = normal, in tolerance */
+  --alert-advis: #35c6e8;    /* cyan   = ADVISORY (green is taken by normal) */
+  --alert-caut: #ffb302;     /* amber  = CAUTION */
+  --alert-caut-hi: #ff8c33;  /* amber, escalated -- 7.54:1 */
+  --alert-warn: #ff3b30;     /* red    = WARNING */
+  --ref-selected: #e056c9;   /* magenta = operator setpoints, bugs */
+  /* Text ON a cyan fill (a selected toggle). Not a coding colour: it is the
+   * legend of a lit button, so it has to flip with the palette -- dark on the
+   * bright night cyan, white on the deep day teal. A fixed dark legend here
+   * measured 1.5:1 on the day fill, unreadable. */
+  --on-advis: #04222b;       /* 8.19:1 on the night cyan */
+
+  /* --- the same alerts, as TEXT ----------------------------------------
+   * SATURATED RED ON A DARK CONSOLE IS A LAMP, NOT A TYPEFACE.
+   *
+   * s3.4a asks for 7:1 on alert legends. Measured, #ff3b30 reaches only
+   * 4.93:1 on --bg-raised, and lightening it far enough to pass turns
+   * aviation red into coral -- which would be the wrong answer for the
+   * master warning lamp, whose whole job is to be the most saturated thing
+   * on the panel.
+   *
+   * s3.3c already resolves this and the code simply had not followed it:
+   * "our red and amber alert text is NEVER placed directly on the near-black
+   * void ... and a solid left status bar carries the saturated hue". So the
+   * saturated tokens above stay exactly as certified and are used for BARS,
+   * LAMPS, ICONS AND STROKES; these two are for TEXT and meet 7:1.
+   *
+   * This is also the human-factors answer rather than a concession to a
+   * contrast table: fully saturated red on black focuses at a different depth
+   * from the surrounding white text (longitudinal chromatic aberration), which
+   * is why avionics practice lightens red legends rather than deepening them.
+   *
+   * Not a s3.3e violation: that rule forbids shades of one colour carrying
+   * DIFFERENT meanings. These carry the same meaning in a different medium. */
+  --alert-warn-ink: #ff8a82;     /* 7.67:1 -- WARNING text */
+  /* STATUS SYMBOLS (ui/status.tsx): a fill that carries the HUE and an edge
+     that carries the CONTRAST. On the dark panels the saturated hue does
+     both, so fill and edge are the same. The day palette splits them. */
+  --sym-normal-fill: #37d17a;  --sym-normal-edge: #37d17a;
+  --sym-advis-fill: #35c6e8;   --sym-advis-edge: #35c6e8;
+  --sym-caut-fill: #ffb302;    --sym-caut-edge: #ffb302;
+  --sym-warn-fill: #ff3b30;    --sym-warn-edge: #ff3b30;
+  --ref-selected-ink: #e78fd6;   /* 7.75:1 -- setpoint text */
+
+  /* Not a coding colour. The physics overlay is distinguished by LINE STYLE
+   * first and colour second, so it survives monochrome and colour-vision
+   * deficiency (principle P4). */
+  --phys: #8a9bb0;
+
+  /* ALSO NOT A CODING COLOUR, AND THE COUNT STILL COMES OUT AT SIX.
+   *
+   * The six above are the ALERT vocabulary. This one is for the GEOMETRY of a
+   * measurement -- a bar, a stem, a trace -- where what is drawn is a reading
+   * and not a state. It never carries a status, never appears in a status
+   * word, and never stands for an alert level. That is the same ground the
+   * greys and --phys stand on, outside the count.
+   *
+   * Keeping it off the alert vocabulary is the entire point: this file removed
+   * a seventh hue once already (HIGHLIGHT_SUSPECT's purple) because it had
+   * begun to mean something alongside the alert colours.
+   *
+   * 8.53:1 on --bg-panel, 7.83:1 on --bg-raised. */
+  --data: #74b0ff;
+
+  /* --- typography ------------------------------------------------------
+   * 16 px is the absolute floor and 30 px the readout size, from section 5.
+   * MIL-STD-1472H requires 15-20 arcmin character height; at a 700 mm console
+   * viewing distance that is 3.1-4.1 mm, and 16 px on a 96 dpi panel is
+   * 4.2 mm. Nothing meaning-bearing may go below it. */
+  --font-ui: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-num: "SF Mono", "Cascadia Mono", "Consolas", ui-monospace, monospace;
+  --size-readout: 30px;
+  --size-body: 16px;
+  /* 16px, not 13. PRD Part 4 s5.1 sets the floor for LABELS AND UNITS as
+     well as values -- "Labels / units 4.2 mm -> 16 px [SHALL]" -- and states
+     outright that there is no 12 px or 14 px text anywhere in this console.
+     This token read 13px with a comment reasoning that labels were exempt.
+     They are not: the floor comes from MIL-STD-1472H 5.4.7.1 subtending 20
+     minutes of arc at a 700 mm seated viewing distance, and an operator reads
+     a label at the same distance as the value it names. */
+  --size-label: 16px;
+
+  --radius: 3px;
+
+  /* --- spacing ---------------------------------------------------------
+   * A 4 px scale, because the console had 21 different spacing values in it:
+   * 0 2 3 4 5 6 7 8 9 10 11 12 14 16 18 20 22 26 30 34 52. Values like 5, 7,
+   * 9, 11, 22 and 26 appeared once or twice each and carried no meaning -- a
+   * panel inset 10 px beside one inset 12 px reads as a misalignment, not as
+   * two kinds of panel, and an operator scanning a grid of readouts pays for
+   * every edge that does not line up.
+   *
+   * Four is the base because the type floor is 16 px (s5.1) and the gap was
+   * already 12, so 4 divides both and nothing has to move to adopt it.
+   *
+   * MIL-STD-1472H 5.4.3.4 requires grouping by function to be VISIBLE; equal
+   * spacing within a group and a larger step between groups is how a layout
+   * says that without drawing a box around everything. --space-3 separates
+   * items, --space-5 separates groups. */
+  --space-1: 4px;    /* hairline: between a value and its unit */
+  --space-2: 8px;    /* tight: label to value, chips in a row */
+  --space-3: 12px;   /* default: between controls, inside a panel */
+  --space-4: 16px;   /* panel padding */
+  --space-5: 24px;   /* between functional groups */
+  --space-6: 32px;   /* between page regions */
+
+  /* Kept: --gap is --space-3 under its original name, so the 18 places already
+   * using it stay correct and this is a rename rather than a reflow. */
+  --gap: var(--space-3);
+
+  /* ZONE D, THE FIXED ALERT RAIL (PRD Part 4 s6.1).
+     s6.3 targets a 1920x1080 operator display and requires the console to
+     "remain usable at 1366x768 (a common ruggedised panel resolution) by
+     collapsing Zone D to a badge count, never by shrinking text below s5.1
+     minima". Both halves of that rule live here: the width below, and the
+     media query at the foot of this file that removes the rail rather than
+     squeezing it. The alert COUNT does not disappear with it -- the master
+     annunciators in Zone A are always visible and are what s4.2 makes
+     responsible for telling the operator something is active. */
+  --alert-rail-w: 300px;
+  --alert-rail-display: flex;
+
+}
+
+/* High-ambient palette. MIL-STD-411F 5.2.3 requires legibility in up to
+ * 10,000 fc through the windows, which a dark console cannot give. Two
+ * brightness levels at roughly 2:1, per MIL-STD-1472H -- not a continuous
+ * dimmer, which invites an operator to set it wrong. */
+:root[data-ambient="day"] {
+  --bg-void: #e9edf2;
+  --bg-panel: #f6f8fb;
+  --bg-raised: #ffffff;
+  --line: #c3ccd8;
+  --ink: #0a0f16;
+  --ink-dim: #3d4a5a;
+  /* Every one of these was measured against the three day surfaces and
+   * deepened until it met s3.4a -- 4.5:1 for body text, 7:1 for the numeric
+   * readouts and alert legends. The previous values ran 3.10:1 to 5.87:1 and
+   * had never been checked, because the CONTRAST TEST that s15 calls for did
+   * not exist. On a light background deepening a hue keeps it recognisably
+   * that hue, so unlike the night palette no separate text tokens are needed
+   * and the -ink aliases below simply point at the certified values. */
+  --ink-mute: #5c6675;       /* 4.94:1 */
+  --state-normal: #065428;   /* 7.74:1 */
+  --alert-advis: #034f64;    /* 7.74:1 */
+  --on-advis: #ffffff;       /* 9.09:1 on the day teal */
+  --alert-caut: #664300;     /* 7.54:1 */
+  --alert-caut-hi: #802f00;  /* 7.68:1 */
+  --alert-warn: #960b04;     /* 7.61:1 */
+  --ref-selected: #8c1479;   /* already 7:1+ */
+  --alert-warn-ink: #960b04;
+  --ref-selected-ink: #8c1479;
+  --phys: #55637a;
+  --data: #0d4a99;           /* 8.03:1 on panel, 8.55:1 on raised */
+  /* The day values above are deepened for TEXT, and deepened far enough
+     that a small amber triangle reads as brown and a red square as maroon:
+     the hue that names the state is lost on the symbol. Astro UXDS's light
+     theme solves exactly this -- a saturated status fill inside a dark
+     border, because the fills alone do not reach contrast on white. Same
+     here: the fill keeps aviation amber/red/green/cyan recognisable, the
+     edge (the certified day text colour) gives the shape its contrast, and
+     the saturated hue never touches white directly (AC 25-11A 31.c(5)(g):
+     no yellow-on-white). */
+  --sym-normal-fill: #2ebd5f;  --sym-normal-edge: #065428;
+  --sym-advis-fill: #22b8dd;   --sym-advis-edge: #034f64;
+  --sym-caut-fill: #ffb302;    --sym-caut-edge: #664300;
+  --sym-warn-fill: #f0281d;    --sym-warn-edge: #960b04;
+}
+
+/* THE MAP IS A PHOTOGRAPH, AND A PHOTOGRAPH DOES NOT CHANGE WITH THE ROOM.
+ * Satellite, terrain and night tiles are the same imagery in both palettes,
+ * and every overlay on them sits on a dark halo or a black plate. The day
+ * values above are deepened for a WHITE panel; on dark imagery they vanish
+ * (dark-teal radar rings, dark-amber notices on black). So on the map the
+ * coding colours keep their night values in both palettes: the same six hues
+ * with the same meanings, only at the brightness the ground behind them needs.
+ * After the day block on purpose, so hmi_check reads both palettes unchanged. */
+.on-imagery {
+  --ink: #e8f0f8;
+  --ink-dim: #9baabb;
+  --ink-mute: #77889d;
+  --state-normal: #37d17a;
+  --alert-advis: #35c6e8;
+  --on-advis: #04222b;
+  --alert-caut: #ffb302;
+  --alert-caut-hi: #ff8c33;
+  --alert-warn: #ff3b30;
+  --ref-selected: #e056c9;
+  --alert-warn-ink: #ff8a82;
+  --ref-selected-ink: #e78fd6;
+  --sym-normal-fill: #37d17a;  --sym-normal-edge: #37d17a;
+  --sym-advis-fill: #35c6e8;   --sym-advis-edge: #35c6e8;
+  --sym-caut-fill: #ffb302;    --sym-caut-edge: #ffb302;
+  --sym-warn-fill: #ff3b30;    --sym-warn-edge: #ff3b30;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  background: var(--bg-void);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: var(--size-body);
+  /* An operator drags nothing and selects nothing on a console; accidental
+   * text selection during a scrub gesture just looks broken. */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Section 8: ONE flash rate for the whole console, 3 Hz, within the
+ * MIL-STD-411F 0.8-5 Hz band. Two different rates on one screen read as two
+ * different meanings, and there is only one meaning: unacknowledged. */
+@keyframes annunciate {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0.25; }
+}
+.flash { animation: annunciate 0.333s step-end infinite; }
+
+/* Section 8 again: an operator who cannot tolerate motion must be able to stop
+ * it without losing the information the motion carried, so flashing degrades
+ * to a solid annunciator rather than disappearing. */
+/* s9.4: "Full keyboard operability, visible focus ring (2 px, --ink, never
+ * red/amber per s3.3a)". There was no focus style anywhere in the console and
+ * the login fields set `outline: none`, so an operator working without a
+ * pointer -- which s9.4 requires to be possible -- had nothing telling them
+ * where they were. The ring is --ink, which is also the one choice s3.3a
+ * permits: a red or amber focus ring would be spending the alerting colours on
+ * a cursor.
+ *
+ * :focus-visible rather than :focus, so a mouse click does not leave a ring
+ * behind on a console where nothing decorative is allowed to linger. */
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+  border-radius: var(--radius);
+}
+
+/* s8.1c(ii) permits a bar moving to a new value with "<=150 ms linear easing".
+ * One class, so the budget is stated once and the reduced-motion rule below
+ * has something to switch off. */
+.bar-fill { transition: width 150ms linear; }
+
+@media (prefers-reduced-motion: reduce) {
+  /* s8.1d: "prefers-reduced-motion SHALL disable (ii) and (iii) entirely."
+   * The block used to disable only the flash, leaving the bar transitions
+   * running -- which is (ii), named in the rule. The flash keeps a static
+   * outline so an unacknowledged WARNING is still distinguishable without
+   * motion, which is what s8.2(a) is actually for. */
+  .flash { animation: none; outline: 2px solid currentColor; }
+  .bar-fill { transition: none; }
+  /* Zone B still folds away for the view that carries the four itself -- it
+     just arrives folded instead of folding. */
+  .zone-b { transition: none; }
+}
+
+/* A PANEL THAT HAS MORE TO SAY MUST LOOK LIKE IT.
+ *
+ * Panel bodies scroll when their content does not fit, which is the right
+ * behaviour -- one long panel must not drag a row past the bottom of the
+ * screen. But the scrollbar was the platform default, which overlays and
+ * fades, so an overflowing panel simply showed a row cut in half: on the
+ * health page, "CHI (smoothed) 0.9266" sat sliced by the panel edge with
+ * nothing to say the rest was there.
+ *
+ * MIL-STD-1472H 5.4.3.2 requires the operator to be able to tell when
+ * information is present but not displayed. A permanent track is the plainest
+ * way to say it, and it is furniture rather than a coding colour -- drawn in
+ * --line, the same grey as the panel borders, so it carries no meaning of its
+ * own and cannot be mistaken for one of the six. */
+.panel-body {
+  /* NO scrollbar-width HERE, deliberately.
+   *
+   * `scrollbar-width: thin` takes precedence over ::-webkit-scrollbar in
+   * current Chromium and gives an OVERLAY scrollbar: measured on the health
+   * page, the ground-truth panel hid 23 px of content behind a scrollbar
+   * 0 px wide. Zero width means it reserves no space and draws nothing until
+   * the pointer is over it, so the panel simply showed a row sliced in half.
+   * Leaving this property out lets the rules below apply, and a classic
+   * scrollbar takes layout width -- which is the whole point: the operator
+   * can SEE that there is more. Firefox draws classic scrollbars anyway. */
+  overscroll-behavior: contain;
+}
+.panel-body::-webkit-scrollbar { width: 10px; height: 10px; }
+.panel-body::-webkit-scrollbar-track { background: transparent; }
+.panel-body::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: var(--radius);
+}
+.panel-body::-webkit-scrollbar-thumb:hover { background: var(--ink-mute); }
+
+
+/* Below the ruggedised-panel width the work area needs every pixel it has, so
+   Zone D collapses rather than competing with it (PRD Part 4 s6.3). Nothing
+   shrinks: the rail is removed and its content remains reachable on the HEALTH
+   page, which mounts the same AlertStack. */
+@media (max-width: 1500px) {
+  :root { --alert-rail-display: none; }
+}
